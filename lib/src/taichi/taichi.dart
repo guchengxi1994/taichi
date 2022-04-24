@@ -1,9 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
+
+import 'package:provider/provider.dart';
+import 'package:taichi/src/taichi/t_rotate_controller.dart';
 
 part './t_stateless_widget.dart';
 part './t_custom_stateless_widget.dart';
 part './t_style.dart';
+part './t_overlay_widget.dart';
+part './t_auto_rotate_widget.dart';
 
 class TaichiGraph {
   static Widget simple({required double size}) {
@@ -115,6 +122,31 @@ class TaichiGraph {
             borderRadius: BorderRadius.circular(0.5 * style.size),
             border: Border.all(color: style.color1)),
       ),
+    );
+  }
+}
+
+class TaichiAutoRotateGraph {
+  static Widget simple({double size = 300, int fps = 24}) {
+    return ChangeNotifierProvider(
+      create: (_) => TaichiGraphRotateController()..init(initialAngle: 0.0),
+      child: _SimpleTaichiAutoRotateWidget(
+        size: size,
+        fps: fps,
+      ),
+    );
+  }
+}
+
+class TaichiOverlay {
+  static Widget simple(bool isLoading, Widget child,
+      {double opacity = 0.5, Color? color, double size = 100}) {
+    return _SimpleTaichiLoadingOverlay(
+      isLoading: isLoading,
+      child: child,
+      color: color,
+      opacity: opacity,
+      size: size,
     );
   }
 }

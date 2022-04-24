@@ -23,6 +23,9 @@ taichi:
 > parameter ```size``` is required.
 
 ```dart
+import 'package:flutter/material.dart';
+import 'package:taichi/taichi.dart';
+
 class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -39,6 +42,9 @@ class MainPage extends StatelessWidget {
 > others are optional
 
 ``` dart
+import 'package:flutter/material.dart';
+import 'package:taichi/taichi.dart';
+
 class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -57,6 +63,9 @@ class MainPage extends StatelessWidget {
 ### 2.3 draw a taichi graph from style
 
 ```dart
+import 'package:flutter/material.dart';
+import 'package:taichi/taichi.dart';
+
 class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -71,9 +80,7 @@ class MainPage extends StatelessWidget {
     );
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: TaichiGraph.fromStyle(style),
-      ),
+      body: TaichiGraph.fromStyle(style),
     );
   }
 }
@@ -82,3 +89,79 @@ class MainPage extends StatelessWidget {
 | ![image-20220424172310394](./md_images/image-20220424172310394.png) | ![image-20220424172450290](./md_images/image-20220424172450290.png) | ![image-20220424172753461](./md_images/image-20220424172753461.png) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 
+### 2.4 auto rotate taichi
+
+> parameter ```size``` is required.
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:taichi/taichi.dart';
+
+class Page2 extends StatelessWidget {
+  const Page2({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: TaichiAutoRotateGraph.simple(size: 100),
+      ),
+    );
+  }
+}
+```
+
+![20220424_1](./md_images/20220424_1.gif)
+
+### 2.5 taichi overlay
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:taichi/taichi.dart';
+
+class Page3 extends StatefulWidget {
+  const Page3({Key? key}) : super(key: key);
+
+  @override
+  State<Page3> createState() => _Page3State();
+}
+
+class _Page3State extends State<Page3> {
+  bool isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return TaichiOverlay.simple(
+        isLoading,
+        Scaffold(
+          appBar: AppBar(
+              leading: IconButton(
+            icon: const Icon(Icons.arrow_left),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          )),
+          body: SizedBox(
+            height: 100,
+            width: 200,
+            child: ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  isLoading = !isLoading;
+                });
+                Future.delayed(const Duration(milliseconds: 2000))
+                    .then((value) {
+                  setState(() {
+                    isLoading = !isLoading;
+                  });
+                });
+              },
+              child: const Text("change state"),
+            ),
+          ),
+        ));
+  }
+}
+```
+
+![20220424_2](./md_images/20220424_2.gif)
