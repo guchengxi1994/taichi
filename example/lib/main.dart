@@ -31,6 +31,8 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
+    TaichiGraphStyle style = TaichiGraphStyle();
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(

@@ -19,7 +19,7 @@ class _CustomTaichiStatelessWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     assert(color1 != color2 && size > 0);
-    print(HexColor(color1!.value.toRadixString(16)).alpha);
+    // print(HexColor(color1!.value.toRadixString(16)).alpha);
 
     return Transform.rotate(
       angle: angle! / 180 * math.pi,
