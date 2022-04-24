@@ -31,19 +31,52 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    TaichiGraphStyle style = TaichiGraphStyle();
+    TaichiGraphStyle style = TaichiGraphStyle(
+      color1: Colors.amber,
+      color2: Colors.indigo,
+      dotFactor: 0.15,
+      dotColor1: Colors.brown,
+      dotColor2: Colors.deepOrange,
+      size: 400,
+      angle: 45,
+    );
 
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
+            const SizedBox(
+              height: 50,
+            ),
+            const Text(
+              "Simple:",
+              style: TextStyle(fontSize: 20),
+            ),
             TaichiGraph.simple(size: 300),
+            const SizedBox(
+              height: 50,
+            ),
+            const Text(
+              "Custom:",
+              style: TextStyle(fontSize: 20),
+            ),
             TaichiGraph.custom(
               size: 300,
               color1: Colors.amber,
               color2: Colors.indigo,
-              angle: 180,
-            )
+              angle: 90,
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            const Text(
+              "FromStyle:",
+              style: TextStyle(fontSize: 20),
+            ),
+            TaichiGraph.fromStyle(style),
+            const SizedBox(
+              height: 50,
+            ),
           ],
         ),
       ),

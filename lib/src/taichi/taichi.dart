@@ -22,21 +22,99 @@ class TaichiGraph {
 
   static Widget fromStyle(TaichiGraphStyle style) {
     assert(style.validate());
-    List<Color> colors1 = [];
-    List<Color> colors2 = [];
 
-    if (style.gradient) {
-      var alpha1 = style.color1.alpha;
-      var r1 = style.color1.red;
-      var g1 = style.color1.green;
-      var b1 = style.color1.blue;
+    return Transform.rotate(
+      angle: style.angle,
+      child: Container(
+        height: style.size,
+        width: style.size,
+        child: Stack(children: [
+          // left side
+          Positioned(
+              child: ClipRRect(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(style.size),
+                topLeft: Radius.circular(style.size)),
+            child: Container(
+                height: style.size,
+                width: 0.5 * style.size,
+                decoration: BoxDecoration(
+                    color: style.color1,
+                    border: Border(left: BorderSide(color: style.color1)))),
+          )),
 
-      var alpha2 = style.color2.alpha;
-      var r2 = style.color2.red;
-      var g2 = style.color2.green;
-      var b2 = style.color2.blue;
-    }
+          // center  circle
+          Positioned(
+              top: 0,
+              left: 0.25 * style.size,
+              child: ClipRRect(
+                borderRadius:
+                    BorderRadius.all(Radius.circular(0.25 * style.size)),
+                // BorderRadius.only(bottomLeft: Radius.circular(0.25 * size)),
+                child: Container(
+                    height: 0.5 * style.size,
+                    width: 0.5 * style.size,
+                    decoration: BoxDecoration(
+                      color: style.color2,
+                    )),
+              )),
 
-    return Container();
+          // center  circle
+          Positioned(
+              bottom: 0,
+              right: 0.25 * style.size,
+              child: ClipRRect(
+                borderRadius:
+                    BorderRadius.all(Radius.circular(0.25 * style.size)),
+                // BorderRadius.only(bottomLeft: Radius.circular(0.25 * size)),
+                child: Container(
+                  height: 0.5 * style.size,
+                  width: 0.5 * style.size,
+                  decoration: BoxDecoration(
+                    color: style.color1,
+                  ),
+                ),
+              )),
+
+          // small  dot
+          Positioned(
+              top: style.dotFactor *
+                  style.size *
+                  1.5 /
+                  (style.dotFactor / 0.125),
+              left: 0.5 * style.size - style.dotFactor * 0.5 * style.size,
+              height: style.dotFactor * style.size,
+              width: style.dotFactor * style.size,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: style.dotColor1,
+                  borderRadius:
+                      BorderRadius.circular(style.dotFactor * style.size),
+                ),
+              )),
+
+          // small  dot
+          Positioned(
+              bottom: style.dotFactor *
+                  1.5 *
+                  style.size /
+                  (style.dotFactor / 0.125),
+              left: 0.5 * style.size - style.dotFactor * 0.5 * style.size,
+              height: style.dotFactor * style.size,
+              width: style.dotFactor * style.size,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: style.dotColor2,
+                  borderRadius:
+                      BorderRadius.circular(style.dotFactor * style.size),
+                ),
+              )),
+        ]),
+        decoration: BoxDecoration(
+            color: style.color2,
+            borderRadius: BorderRadius.circular(0.5 * style.size),
+            border: Border.all(color: style.color1)),
+      ),
+    );
   }
 }

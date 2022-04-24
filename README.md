@@ -23,14 +23,7 @@ taichi:
 > parameter ```size``` is required.
 
 ```dart
-class MainPage extends StatefulWidget {
-  MainPage({Key? key}) : super(key: key);
-
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
+class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,14 +39,7 @@ class _MainPageState extends State<MainPage> {
 > others are optional
 
 ``` dart
-class MainPage extends StatefulWidget {
-  MainPage({Key? key}) : super(key: key);
-
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
+class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,3 +53,32 @@ class _MainPageState extends State<MainPage> {
   }
 }
 ```
+
+### 2.3 draw a taichi graph from style
+
+```dart
+class MainPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    TaichiGraphStyle style = TaichiGraphStyle(
+      color1: Colors.amber,
+      color2: Colors.indigo,
+      dotFactor: 0.15,
+      dotColor1: Colors.brown,
+      dotColor2: Colors.deepOrange,
+      size: 400,
+      angle: 45,
+    );
+
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: TaichiGraph.fromStyle(style),
+      ),
+    );
+  }
+}
+```
+
+| ![image-20220424172310394](./md_images/image-20220424172310394.png) | ![image-20220424172450290](./md_images/image-20220424172450290.png) | ![image-20220424172753461](./md_images/image-20220424172753461.png) |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+

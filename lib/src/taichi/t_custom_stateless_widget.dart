@@ -41,7 +41,7 @@ class _CustomTaichiStatelessWidget extends StatelessWidget {
                     border: Border(left: BorderSide(color: color1!)))),
           )),
 
-          // center white circle
+          // center  circle
           Positioned(
               top: 0,
               left: 0.25 * size,
@@ -56,7 +56,7 @@ class _CustomTaichiStatelessWidget extends StatelessWidget {
                     )),
               )),
 
-          // center black circle
+          // center  circle
           Positioned(
               bottom: 0,
               right: 0.25 * size,
