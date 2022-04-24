@@ -13,7 +13,7 @@
 taichi:
     git:
         url: https://github.com/guchengxi1994/taichi
-        ref: main
+        ref: stable
 ```
 
 ## 2. Features
