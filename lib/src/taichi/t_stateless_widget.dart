@@ -1,12 +1,14 @@
-import 'package:flutter/material.dart';
+part of 'taichi.dart';
 
 /// a simple taichi sample
-class TaichiStatelessWidget extends StatelessWidget {
-  const TaichiStatelessWidget({Key? key, required this.size}) : super(key: key);
+class _TaichiStatelessWidget extends StatelessWidget {
+  const _TaichiStatelessWidget({Key? key, required this.size})
+      : super(key: key);
   final double size;
 
   @override
   Widget build(BuildContext context) {
+    assert(size > 0);
     return Container(
       height: size,
       width: size,
