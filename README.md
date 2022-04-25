@@ -16,9 +16,15 @@ taichi:
         ref: stable
 ```
 
+
 ## 2. Features
 
 ### 2.1 draw a simple taichi graph
+
+<details>
+  <summary>
+    example
+  </summary>
 
 > parameter ```size``` is required.
 
@@ -35,8 +41,16 @@ class MainPage extends StatelessWidget {
   }
 }
 ```
+</details>
+
+
 
 ### 2.2 draw a custom taichi graph
+
+<details>
+  <summary>
+    example
+  </summary>
 
 > parameter ```size``` is required.
 > others are optional
@@ -59,8 +73,17 @@ class MainPage extends StatelessWidget {
   }
 }
 ```
+</details>
+
+
 
 ### 2.3 draw a taichi graph from style
+
+
+<details>
+  <summary>
+    example
+  </summary>
 
 ```dart
 import 'package:flutter/material.dart';
@@ -85,11 +108,19 @@ class MainPage extends StatelessWidget {
   }
 }
 ```
+</details>
+
+
 
 | ![image-20220424172310394](./md_images/image-20220424172310394.png) | ![image-20220424172450290](./md_images/image-20220424172450290.png) | ![image-20220424172753461](./md_images/image-20220424172753461.png) |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 
 ### 2.4 auto rotate taichi
+
+<details>
+  <summary>
+    example
+  </summary>
 
 > parameter ```size``` is required.
 
@@ -112,8 +143,17 @@ class Page2 extends StatelessWidget {
 ```
 
 ![20220424_1](./md_images/20220424_1.gif)
+</details>
+
+
 
 ### 2.5 taichi overlay
+
+
+<details>
+  <summary>
+    example
+  </summary>
 
 ```dart
 import 'package:flutter/material.dart';
@@ -165,3 +205,20 @@ class _Page3State extends State<Page3> {
 ```
 
 ![20220424_2](./md_images/20220424_2.gif)
+</details>
+
+### 2.6 custom rotate taichi 
+
+<details>
+  <summary>
+    example
+  </summary>
+</details>
+
+### 2.7 custom taichi overlay
+
+<details>
+  <summary>
+    example
+  </summary>
+</details>

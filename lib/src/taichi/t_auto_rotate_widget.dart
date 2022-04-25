@@ -51,3 +51,50 @@ class __SimpleTaichiAutoRotateWidgetState
     );
   }
 }
+
+class _CustomTaichiAutoRotateWidget extends StatefulWidget {
+  const _CustomTaichiAutoRotateWidget(
+      {Key? key,
+      this.size = 100,
+      this.fps = 24,
+      required this.autoRotateWidget})
+      : super(key: key);
+
+  final double size;
+  final int fps;
+  final Widget autoRotateWidget;
+
+  @override
+  State<_CustomTaichiAutoRotateWidget> createState() =>
+      __CustomTaichiAutoRotateWidgetState();
+}
+
+class __CustomTaichiAutoRotateWidgetState
+    extends State<_CustomTaichiAutoRotateWidget> {
+  late Timer? _timer;
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      _timer = Timer.periodic(
+          Duration(milliseconds: (1000 / widget.fps).round()), (timer) {
+        context.read<TaichiGraphRotateController>().addAngle();
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.rotate(
+      angle: context.watch<TaichiGraphRotateController>().angle,
+      child: widget.autoRotateWidget,
+    );
+  }
+}

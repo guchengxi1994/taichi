@@ -3,12 +3,12 @@ part of 'taichi.dart';
 /// a simple taichi sample
 class _TaichiStatelessWidget extends StatelessWidget {
   const _TaichiStatelessWidget({Key? key, required this.size})
-      : super(key: key);
+      : assert(size > 0),
+        super(key: key);
   final double size;
 
   @override
   Widget build(BuildContext context) {
-    assert(size > 0);
     return Container(
       height: size,
       width: size,
