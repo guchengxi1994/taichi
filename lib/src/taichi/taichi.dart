@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import 'package:provider/provider.dart';
-import 'package:taichi/src/taichi/t_rotate_controller.dart';
-import 'package:taichi/src/utils/unfinished.dart';
+
+import '_basic_widget.dart';
+import 't_rotate_controller.dart';
+import '../utils/unfinished.dart';
 
 part './t_stateless_widget.dart';
 part './t_custom_stateless_widget.dart';
@@ -13,6 +15,7 @@ part './t_style.dart';
 part './t_overlay_widget.dart';
 part './t_auto_rotate_widget.dart';
 part './t_split_widget.dart';
+part './t_uchiha.dart';
 
 class TaichiGraph {
   static Widget simple({required double size}) {
@@ -26,6 +29,13 @@ class TaichiGraph {
       color1: color1,
       color2: color2,
       angle: angle,
+    );
+  }
+
+  static Widget uchiha({double size = 300, Color color = Colors.blue}) {
+    return _Uchiha(
+      size: size,
+      color: color,
     );
   }
 

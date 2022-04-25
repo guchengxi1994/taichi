@@ -1,16 +1,13 @@
-# taichi(太极)
-
-[EN](./README_en.md)
-
+# taichi
 <img src="./md_images/taichi.gif" alt="taichi" style="zoom:20%;" />
 
-> 别盯着logo看，搞不好晃眼睛
+> Don't stare at the logo, it may make you dizzy.
 
-一个包含一个或者多个组件的组件库。
+ A(n) (combinition of) interesting UI widget(s).
 
-## 1.安装
+## 1.Install
 
-> 前两天我想发布到 ```pub.dev```上的，但是又是身份验证又是要梯子，把我整不会了，所以现在只支持通过```git```这种方式安装。或者下载源码之后相对路径导入。
+> because I upload package to pub.dev failed, so just ```github``` is supported.
 
 ```
 taichi:
@@ -19,16 +16,17 @@ taichi:
         ref: stable
 ```
 
-## 2.支持的特性
 
-### 2.1 画一个简单而又普通的太极图
+## 2. Features
+
+### 2.1 draw a simple taichi graph
 
 <details>
   <summary>
-    例如：
+    example
   </summary>
 
-> 需要填入 ```size``` 参数.
+> parameter ```size``` is required.
 
 ```dart
 import 'package:flutter/material.dart';
@@ -45,15 +43,17 @@ class MainPage extends StatelessWidget {
 ```
 </details>
 
-### 2.2 画一个自定义的太极图
+
+
+### 2.2 draw a custom taichi graph
 
 <details>
   <summary>
-    例如：
+    example
   </summary>
 
-> 参数 ```size``` 是必须的.
-> 其它随意
+> parameter ```size``` is required.
+> others are optional
 
 ``` dart
 import 'package:flutter/material.dart';
@@ -75,12 +75,14 @@ class MainPage extends StatelessWidget {
 ```
 </details>
 
-### 2.3 定义一个自定义太极图样式
+
+
+### 2.3 draw a taichi graph from style
 
 
 <details>
   <summary>
-    例如：
+    example
   </summary>
 
 ```dart
@@ -108,20 +110,19 @@ class MainPage extends StatelessWidget {
 ```
 </details>
 
-#### 看以上的效果
+
 
 | ![image-20220424172310394](./md_images/image-20220424172310394.png) | ![image-20220424172450290](./md_images/image-20220424172450290.png) | ![image-20220424172753461](./md_images/image-20220424172753461.png) |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 
-### 2.4 自动旋转的太极图
-> 这里用了第三方package ```provider```
+### 2.4 auto rotate taichi
 
 <details>
   <summary>
-    例如：
+    example
   </summary>
 
-> 参数 ```size``` 是必须的.
+> parameter ```size``` is required.
 
 ```dart
 import 'package:flutter/material.dart';
@@ -144,11 +145,14 @@ class Page2 extends StatelessWidget {
 ![20220424_1](./md_images/20220424_1.gif)
 </details>
 
-### 2.5 基于会自动旋转的太极图的载入动画
+
+
+### 2.5 taichi overlay
+
 
 <details>
   <summary>
-    例如：
+    example
   </summary>
 
 ```dart
@@ -203,18 +207,18 @@ class _Page3State extends State<Page3> {
 ![20220424_2](./md_images/20220424_2.gif)
 </details>
 
-### 2.6 自定义旋转太极图
+### 2.6 custom rotate taichi 
 
 <details>
   <summary>
-    例如：
+    example
   </summary>
 </details>
 
-### 2.7 基于2.6的载入动画
+### 2.7 custom taichi overlay
 
 <details>
   <summary>
-    例如：
+    example
   </summary>
 </details>
