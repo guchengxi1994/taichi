@@ -160,8 +160,12 @@ class TaichiAutoRotateGraph {
 }
 
 class TaichiOverlay {
-  static Widget simple(bool isLoading, Widget child,
-      {double opacity = 0.5, Color? color, double size = 100}) {
+  static Widget simple(
+      {required bool isLoading,
+      required Widget child,
+      double opacity = 0.5,
+      Color? color,
+      double size = 100}) {
     return _SimpleTaichiLoadingOverlay(
       isLoading: isLoading,
       child: child,

@@ -24,8 +24,8 @@ class _Page3State extends State<Page3> {
   @override
   Widget build(BuildContext context) {
     return TaichiOverlay.simple(
-        isLoading,
-        Scaffold(
+        isLoading: isLoading,
+        child: Scaffold(
           appBar: AppBar(
               leading: IconButton(
             icon: const Icon(Icons.arrow_left),
