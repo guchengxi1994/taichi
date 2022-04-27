@@ -5,9 +5,14 @@ class ProcessLoaderController extends ChangeNotifier {
 
   double get value => _value;
 
+  double _max = 100;
+  double _min = 0;
+
+  bool get canFinish => (_value >= _max) || (_value <= _min);
+
   changeValue({double step = 1}) {
     _value += step;
-    if ((_value <= 100) && (_value >= 0)) {
+    if ((_value <= _max) && (_value >= _min)) {
       notifyListeners();
     }
   }
@@ -15,6 +20,19 @@ class ProcessLoaderController extends ChangeNotifier {
   setInitialValue(double v) {
     assert(v >= 0);
     _value = v;
+    notifyListeners();
+  }
+
+  setMax({double max = 100}) {
+    assert(max > _min);
+    _max = max;
+    notifyListeners();
+  }
+
+  @Deprecated("unnecessary")
+  setMin({double min = 0}) {
+    assert(min < _max);
+    _min = min;
     notifyListeners();
   }
 }

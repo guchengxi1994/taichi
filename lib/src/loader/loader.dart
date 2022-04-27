@@ -11,16 +11,20 @@ import 't_loader_controller.dart';
 part './t_wave_loader.dart';
 
 class ProcessLoader {
-  static Widget customWaveLoader(
-      {double initialValue = 0,
-      double width = 80,
-      double height = 160,
-      Color frontColor = LoaderTheme.nearlyDarkBlue,
-      Color backColor = Colors.blue,
-      double? duration,
-      double? percentageValue}) {
+  static Widget customWaveLoader({
+    double initialValue = 0,
+    double width = 80,
+    double height = 160,
+    Color frontColor = LoaderTheme.nearlyDarkBlue,
+    Color backColor = Colors.blue,
+    double? duration,
+    double? percentageValue,
+    double maxVal = 100,
+  }) {
     return ChangeNotifierProvider(
-      create: (_) => ProcessLoaderController()..setInitialValue(initialValue),
+      create: (_) => ProcessLoaderController()
+        ..setInitialValue(initialValue)
+        ..setMax(max: maxVal),
       child: _WaveView(
         width: width,
         height: height,

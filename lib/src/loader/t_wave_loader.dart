@@ -319,7 +319,10 @@ class _WaveViewState extends State<_WaveView> {
 
   @override
   void dispose() {
-    timer?.cancel();
+    if (duration != null) {
+      timer?.cancel();
+    }
+
     super.dispose();
   }
 
@@ -334,8 +337,7 @@ class _WaveViewState extends State<_WaveView> {
                     .round()), (timer) {
           context.read<ProcessLoaderController>().changeValue(step: 1);
 
-          if (context.read<ProcessLoaderController>().value >= 100 ||
-              context.read<ProcessLoaderController>().value <= 0) {
+          if (context.read<ProcessLoaderController>().canFinish) {
             debugPrint("timer cancelling");
             timer.cancel();
             debugPrint("timer canceled");
