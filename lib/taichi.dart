@@ -1,4 +1,4 @@
 library taichi;
 
-export './src/taichi/taichi.dart';
-export './src/loader/loader.dart';
+export './src/UI/taichi/taichi.dart';
+export './src/UI/loader/loader.dart';

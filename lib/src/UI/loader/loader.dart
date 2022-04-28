@@ -2,7 +2,8 @@ import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:taichi/src/loader/_extension.dart';
+import 'package:taichi/src/UI/loader/_extension.dart';
+
 import 'package:vector_math/vector_math.dart' as vector;
 
 import '_theme.dart';

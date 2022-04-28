@@ -30,7 +30,6 @@ android/
 ios/
 linux/
 windows/
-test/
 web/
 .idea/
 .vscode/
