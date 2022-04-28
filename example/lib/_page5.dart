@@ -16,7 +16,7 @@ class Page5 extends StatelessWidget {
       )),
       body: Center(
         child: Container(
-          color: Colors.amber,
+          color: Colors.white,
           child: TaichiGraph.uchiha(size: 100),
         ),
       ),

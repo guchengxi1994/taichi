@@ -14,6 +14,7 @@ import '_page2.dart';
 import '_page3.dart';
 import '_page4.dart';
 import '_page5.dart';
+import '_page6.dart';
 
 void main() {
   runApp(const MyApp());
@@ -98,6 +99,12 @@ class _MainPageState extends State<MainPage> {
             const SizedBox(
               height: 20,
             ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const Page6()));
+                },
+                child: const Text("page6")),
           ],
         ),
       ),

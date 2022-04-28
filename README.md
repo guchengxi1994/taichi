@@ -218,3 +218,153 @@ class _Page3State extends State<Page3> {
     例如：
   </summary>
 </details>
+
+### 2.8 分裂的太极图 （整活第一步）
+
+<details>
+  <summary>
+    例如：
+  </summary>
+
+  ``` dart
+import 'package:flutter/material.dart';
+import 'package:taichi/taichi.dart';
+
+class Page4 extends StatelessWidget {
+  const Page4({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child:
+            TaichiGraph.splited(color: Colors.blue, size: 500, gradient: true),
+      ),
+    );
+  }
+}
+  ```
+![image](./md_images/0427-1.png)
+
+</details>
+
+### 2.9 写轮眼 （整活第二步）
+<details>
+  <summary>
+    例如：
+  </summary>
+  
+  ``` dart
+import 'package:flutter/material.dart';
+import 'package:taichi/taichi.dart';
+
+class Page5 extends StatelessWidget {
+  const Page5({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Container(
+          color: Colors.white,
+          child: TaichiGraph.uchiha(size: 100),
+        ),
+      ),
+    );
+  }
+}
+  ```
+![image](./md_images/0427-2.png)
+
+</details>
+
+### 2.10 动态加载器
+
+> 参数表
+> double initialValue ， 进程初始值，值域 0~100,
+>
+> double width ， 组件宽度 默认 80,
+>
+> double height ， 组件高度，默认 160,
+>
+> Color frontColor ，组件前景颜色（会随着进程改变的区域），默认是深蓝色 
+>
+> Color backColor ，组件背景颜色，默认为蓝色 
+>
+> double? duration, 如果定义了这个参数，代表会动态更新进程值，否则是静态的
+>
+> double? percentageValue 如果定义了duration参数，这个值的初始值就是initialValue的值，然后随着时间推移发生变化（基于provider）；如果没有定义duration参数，那么initialValue失效，静态展示的是这个值
+>
+> double maxVal ，进程最大值，0~100%，默认 100,
+>
+> double minVal ，进程最小值，默认为0
+
+> 当前这个还只支持胶囊形状的container,后续考虑拓展一下形状
+
+<details>
+  <summary>
+    例如：
+  </summary>
+  
+
+
+
+``` dart
+import 'package:flutter/material.dart';
+import 'package:taichi/taichi.dart';
+
+class Page6 extends StatelessWidget {
+  const Page6({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+          leading: IconButton(
+        icon: const Icon(Icons.arrow_left),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      )),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: ProcessLoader.customWaveLoader(
+                percentageValue: 30,
+                maxVal: 80,
+                backColor: const Color.fromARGB(255, 200, 43, 43),
+                frontColor: const Color.fromARGB(255, 7, 255, 156)),
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          Center(
+            child: ProcessLoader.customWaveLoader(
+                percentageValue: 30,
+                duration: 2,
+                maxVal: 80,
+                backColor: Colors.white,
+                frontColor: Colors.amber),
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          Center(
+            child: ProcessLoader.customWaveLoader(
+                percentageValue: 30,
+                duration: 5,
+                maxVal: 100,
+                backColor: const Color.fromARGB(255, 255, 255, 255),
+                frontColor: const Color.fromARGB(255, 38, 68, 138)),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+![image](./md_images/20220427_01.gif)
+
+</details>
