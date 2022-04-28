@@ -2,20 +2,20 @@ part of './t_complex.dart';
 
 extension TComplex on double {
   Complex toComplex() {
-    return Complex(real: this, imag: 0, operator: Operator.plus);
-  }
-}
-
-enum Operator { plus, minus }
-
-extension Op on Operator {
-  Operator _oppo() {
-    if (this == Operator.minus) {
-      return Operator.plus;
-    } else {
-      return Operator.minus;
-    }
+    return Complex(real: this, imag: 0);
   }
 
-  Operator get oppo => _oppo();
+  Complex plus(Complex complex) {
+    return Complex(
+      real: this + (complex.real ?? 0),
+      imag: complex.imag,
+    );
+  }
+
+  Complex minus(Complex complex) {
+    return Complex(
+      real: this - (complex.real ?? 0),
+      imag: complex.imag,
+    );
+  }
 }
