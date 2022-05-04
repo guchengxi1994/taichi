@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-03 12:59:38
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-04 18:29:32
+ * @LastEditTime: 2022-05-04 19:50:36
  */
 
 import 'package:flutter/material.dart';
@@ -75,6 +75,13 @@ extension SizeExtension on num {
   }
 
   double get h => TaichiFitnessUtil().setHeight(toDouble());
+
+  double setSp(BuildContext? context) {
+    TaichiFitnessUtil.init(context);
+    return TaichiFitnessUtil().setSp(toDouble());
+  }
+
+  double get sp => TaichiFitnessUtil().setSp(toDouble());
 }
 
 /// v0.0.1-alpha
@@ -113,7 +120,7 @@ class TaichiFitnessUtil {
   }
 
   static void init(BuildContext? context) {
-    debugPrint("call init function");
+    // debugPrint("call init function");
     _instance = TaichiFitnessUtil._()..context = context;
   }
 
@@ -135,5 +142,12 @@ class TaichiFitnessUtil {
       return v;
     }
     return v * context!.watch<FitnessController>().scaleHeight;
+  }
+
+  double setSp(double v) {
+    if (context == null) {
+      return v;
+    }
+    return v * context!.watch<FitnessController>().scaleText;
   }
 }

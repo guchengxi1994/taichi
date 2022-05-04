@@ -5,8 +5,10 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-03 20:30:58
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-03 21:01:47
+ * @LastEditTime: 2022-05-04 19:50:54
  */
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class FitnessController extends ChangeNotifier {
@@ -23,6 +25,8 @@ class FitnessController extends ChangeNotifier {
 
   double get scaleHeight => _screenHeight / (designHeight ?? 700);
 
+  double get scaleText => min(scaleWidth, scaleHeight);
+
   changeWidth(double v) {
     _screenWidth = v;
     notifyListeners();
@@ -34,8 +38,8 @@ class FitnessController extends ChangeNotifier {
   }
 
   init({double? designWidth, double? designHeight}) {
-    designWidth = designWidth;
-    designHeight = designHeight;
+    designWidth = designWidth ?? 360;
+    designHeight = designHeight ?? 700;
     notifyListeners();
   }
 }
