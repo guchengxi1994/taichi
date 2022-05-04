@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-03 20:30:58
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-04 19:50:54
+ * @LastEditTime: 2022-05-04 20:43:17
  */
 import 'dart:math';
 
@@ -15,15 +15,15 @@ class FitnessController extends ChangeNotifier {
   double _screenWidth = 0;
   double _screenHeight = 0;
 
-  final double? designWidth = 360;
-  final double? designHeight = 700;
+  double _designWidth = 360;
+  double _designHeight = 700;
 
   double get width => _screenWidth;
   double get height => _screenHeight;
 
-  double get scaleWidth => _screenWidth / (designWidth ?? 360);
+  double get scaleWidth => _screenWidth / _designWidth;
 
-  double get scaleHeight => _screenHeight / (designHeight ?? 700);
+  double get scaleHeight => _screenHeight / _designHeight;
 
   double get scaleText => min(scaleWidth, scaleHeight);
 
@@ -38,8 +38,8 @@ class FitnessController extends ChangeNotifier {
   }
 
   init({double? designWidth, double? designHeight}) {
-    designWidth = designWidth ?? 360;
-    designHeight = designHeight ?? 700;
+    _designWidth = designWidth ?? 360;
+    _designHeight = designHeight ?? 700;
     notifyListeners();
   }
 }

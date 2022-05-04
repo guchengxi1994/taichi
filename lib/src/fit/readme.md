@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-03 12:55:34
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-04 20:10:52
+ * @LastEditTime: 2022-05-04 20:42:08
 -->
 # 太极 屏幕自适应
 
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-然后需要在首页（真正意义上的第一个页面）```build```方法中写入：
+然后需要在```build```方法中写入：
 
 ```dart
 TaichiFitnessUtil.init(context);
