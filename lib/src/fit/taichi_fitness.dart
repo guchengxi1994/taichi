@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-03 12:59:38
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-03 21:53:59
+ * @LastEditTime: 2022-05-04 09:39:46
  */
 
 import 'package:flutter/material.dart';
@@ -34,21 +34,6 @@ class TaichiFitness extends StatefulWidget {
             child: child,
           ));
     };
-  }
-
-  double setWidth(double v) {
-    if (context == null) {
-      return v;
-    }
-
-    return v * context!.watch<FitnessController>().scaleWidth;
-  }
-
-  double setHeight(double v) {
-    if (context == null) {
-      return v;
-    }
-    return v * context!.watch<FitnessController>().scaleHeight;
   }
 
   @override
@@ -80,16 +65,65 @@ class _TaichiFitnessState extends State<TaichiFitness> {
 
 extension SizeExtension on num {
   double w({BuildContext? context}) {
-    return TaichiFitness(
-      context: context,
-      child: null,
-    ).setWidth(toDouble());
+    _TaichiFitnessUtil.init(context);
+    return _TaichiFitnessUtil().setWidth(toDouble());
   }
 
   double h({BuildContext? context}) {
-    return TaichiFitness(
-      context: context,
-      child: null,
-    ).setWidth(toDouble());
+    _TaichiFitnessUtil.init(context);
+    return _TaichiFitnessUtil().setHeight(toDouble());
+  }
+}
+
+/// v0.0.1-alpha
+/// ``` dart
+/// class _TaichiFitnessUtil {
+///   BuildContext? context;
+///   _TaichiFitnessUtil(this.context);
+
+///   double setWidth(double v) {
+///     if (context == null) {
+///       return v;
+///     }
+
+///     return v * context!.watch<FitnessController>().scaleWidth;
+///   }
+
+///   double setHeight(double v) {
+///     if (context == null) {
+///       return v;
+///     }
+///     return v * context!.watch<FitnessController>().scaleHeight;
+///   }
+/// }
+/// ```
+///
+/// current version 0.0.2-alpha
+class _TaichiFitnessUtil {
+  BuildContext? context;
+  static late _TaichiFitnessUtil _instance;
+
+  _TaichiFitnessUtil._();
+  factory _TaichiFitnessUtil() {
+    return _instance;
+  }
+
+  static void init(BuildContext? context) {
+    _instance = _TaichiFitnessUtil._()..context = context;
+  }
+
+  double setWidth(double v) {
+    if (context == null) {
+      return v;
+    }
+
+    return v * context!.watch<FitnessController>().scaleWidth;
+  }
+
+  double setHeight(double v) {
+    if (context == null) {
+      return v;
+    }
+    return v * context!.watch<FitnessController>().scaleHeight;
   }
 }
