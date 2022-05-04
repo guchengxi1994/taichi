@@ -7,7 +7,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-03 13:11:42
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-04 12:42:11
+ * @LastEditTime: 2022-05-04 18:29:35
  */
 import 'package:flutter/material.dart';
 import 'package:taichi/taichi.dart';
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const MainPage(),
-      builder: TaichiFitness.init(),
+      builder: TaichiFitnessUtil.rootBuilder(),
     );
   }
 }
@@ -38,12 +38,15 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TaichiFitnessUtil.init(context);
     return Scaffold(
       body: Container(
           child: Container(
         color: Colors.amber,
-        width: 300.setWidth(context),
-        height: 300.setHeight(context),
+        // width: 300.setWidth(context),
+        // height: 300.setHeight(context),
+        width: 300.w,
+        height: 300.h,
         child: Text("这是一个测试页面"),
       )),
     );
