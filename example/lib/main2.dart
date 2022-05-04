@@ -7,7 +7,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-03 13:11:42
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-03 21:26:13
+ * @LastEditTime: 2022-05-04 12:42:11
  */
 import 'package:flutter/material.dart';
 import 'package:taichi/taichi.dart';
@@ -42,8 +42,8 @@ class MainPage extends StatelessWidget {
       body: Container(
           child: Container(
         color: Colors.amber,
-        width: 300.w(context: context),
-        height: 300.h(context: context),
+        width: 300.setWidth(context),
+        height: 300.setHeight(context),
         child: Text("这是一个测试页面"),
       )),
     );

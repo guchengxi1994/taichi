@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-03 12:59:38
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-04 09:39:46
+ * @LastEditTime: 2022-05-04 13:15:43
  */
 
 import 'package:flutter/material.dart';
@@ -57,6 +57,7 @@ class _TaichiFitnessState extends State<TaichiFitness> {
 
   @override
   Widget build(BuildContext context) {
+    _TaichiFitnessUtil.init(context);
     return Material(
       child: widget.child,
     );
@@ -64,12 +65,12 @@ class _TaichiFitnessState extends State<TaichiFitness> {
 }
 
 extension SizeExtension on num {
-  double w({BuildContext? context}) {
+  double setWidth(BuildContext? context) {
     _TaichiFitnessUtil.init(context);
     return _TaichiFitnessUtil().setWidth(toDouble());
   }
 
-  double h({BuildContext? context}) {
+  double setHeight(BuildContext? context) {
     _TaichiFitnessUtil.init(context);
     return _TaichiFitnessUtil().setHeight(toDouble());
   }
@@ -116,7 +117,6 @@ class _TaichiFitnessUtil {
     if (context == null) {
       return v;
     }
-
     return v * context!.watch<FitnessController>().scaleWidth;
   }
 
