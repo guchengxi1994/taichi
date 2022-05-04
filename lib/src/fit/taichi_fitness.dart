@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-03 12:59:38
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-04 13:15:43
+ * @LastEditTime: 2022-05-04 13:34:52
  */
 
 import 'package:flutter/material.dart';
@@ -57,7 +57,6 @@ class _TaichiFitnessState extends State<TaichiFitness> {
 
   @override
   Widget build(BuildContext context) {
-    _TaichiFitnessUtil.init(context);
     return Material(
       child: widget.child,
     );
