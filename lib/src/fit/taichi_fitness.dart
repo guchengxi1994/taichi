@@ -5,14 +5,17 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-03 12:59:38
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-04 19:50:36
+ * @LastEditTime: 2022-05-04 21:02:15
  */
 
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taichi/src/fit/_fitness_provider.dart';
 
-const _fitnessVersion = "0.0.2-alpha";
+const _fitnessVersion = "0.0.2-alpha+1";
 
 class _TaichiFitness extends StatefulWidget {
   const _TaichiFitness({Key? key, required this.child, required this.context})
@@ -107,10 +110,12 @@ extension SizeExtension on num {
 /// }
 /// ```
 ///
-/// current version 0.0.2-alpha
+/// current version 0.0.2-alpha+1
 class TaichiFitnessUtil {
   BuildContext? context;
   static late TaichiFitnessUtil _instance;
+
+  bool? onlyOnMobiles = true;
 
   static String get version => _fitnessVersion;
 
@@ -119,9 +124,11 @@ class TaichiFitnessUtil {
     return _instance;
   }
 
-  static void init(BuildContext? context) {
+  static void init(BuildContext? context, {bool? onlyOnMobiles}) {
     // debugPrint("call init function");
-    _instance = TaichiFitnessUtil._()..context = context;
+    _instance = TaichiFitnessUtil._()
+      ..context = context
+      ..onlyOnMobiles = onlyOnMobiles ?? true;
   }
 
   static Widget Function(BuildContext context, Widget? child)? rootBuilder(
@@ -130,21 +137,40 @@ class TaichiFitnessUtil {
         designHeight: designHeight, designWidth: designWidth);
   }
 
+  /// kIsWeb for test
   double setWidth(double v) {
+    if (onlyOnMobiles ?? true) {
+      if (!(Platform.isIOS || Platform.isAndroid || kIsWeb)) {
+        return v;
+      }
+    }
+
     if (context == null) {
       return v;
     }
     return v * context!.watch<FitnessController>().scaleWidth;
   }
 
+  /// kIsWeb for test
   double setHeight(double v) {
+    if (onlyOnMobiles ?? true) {
+      if (!(Platform.isIOS || Platform.isAndroid || kIsWeb)) {
+        return v;
+      }
+    }
     if (context == null) {
       return v;
     }
     return v * context!.watch<FitnessController>().scaleHeight;
   }
 
+  /// kIsWeb for test
   double setSp(double v) {
+    if (onlyOnMobiles ?? true) {
+      if (!(Platform.isIOS || Platform.isAndroid || kIsWeb)) {
+        return v;
+      }
+    }
     if (context == null) {
       return v;
     }

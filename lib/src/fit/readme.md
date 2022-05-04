@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-03 12:55:34
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-04 20:42:08
+ * @LastEditTime: 2022-05-04 21:05:59
 -->
 # 太极 屏幕自适应
 
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-然后需要在```build```方法中写入：
+然后需要在```build```方法中写入(一般来说在首页添加以下代码就可以了，但是测试下来如果首页采用的是 ```pushReplacement``` 这种跳转方式会有空值异常，所以使用这种跳转方式的需要重新init一下,而```pushNamed```或者```push```这种方式的则不需要重新init)：
 
 ```dart
 TaichiFitnessUtil.init(context);
