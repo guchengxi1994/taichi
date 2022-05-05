@@ -8,13 +8,11 @@
  * @LastEditTime: 2022-05-04 21:02:15
  */
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taichi/src/fit/_fitness_provider.dart';
 
-const _fitnessVersion = "0.0.2-alpha+1";
+const _fitnessVersion = "0.0.2-alpha+2";
 
 class _TaichiFitness extends StatefulWidget {
   const _TaichiFitness({Key? key, required this.child, required this.context})
@@ -114,8 +112,6 @@ class TaichiFitnessUtil {
   BuildContext? context;
   static late TaichiFitnessUtil _instance;
 
-  bool? onlyOnMobiles = true;
-
   static String get version => _fitnessVersion;
 
   TaichiFitnessUtil._();
@@ -125,9 +121,7 @@ class TaichiFitnessUtil {
 
   static void init(BuildContext? context, {bool? onlyOnMobiles}) {
     // debugPrint("call init function");
-    _instance = TaichiFitnessUtil._()
-      ..context = context
-      ..onlyOnMobiles = onlyOnMobiles ?? true;
+    _instance = TaichiFitnessUtil._()..context = context;
   }
 
   static Widget Function(BuildContext context, Widget? child)? rootBuilder(
@@ -138,12 +132,6 @@ class TaichiFitnessUtil {
 
   /// kIsWeb for test
   double setWidth(double v) {
-    if (onlyOnMobiles ?? true) {
-      if ((Platform.isWindows || Platform.isLinux)) {
-        return v;
-      }
-    }
-
     if (context == null) {
       return v;
     }
@@ -152,11 +140,6 @@ class TaichiFitnessUtil {
 
   /// kIsWeb for test
   double setHeight(double v) {
-    if (onlyOnMobiles ?? true) {
-      if ((Platform.isWindows || Platform.isLinux)) {
-        return v;
-      }
-    }
     if (context == null) {
       return v;
     }
@@ -165,11 +148,6 @@ class TaichiFitnessUtil {
 
   /// kIsWeb for test
   double setSp(double v) {
-    if (onlyOnMobiles ?? true) {
-      if ((Platform.isWindows || Platform.isLinux)) {
-        return v;
-      }
-    }
     if (context == null) {
       return v;
     }
