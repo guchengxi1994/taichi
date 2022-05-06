@@ -135,7 +135,9 @@ class TaichiFitnessUtil {
     if (context == null) {
       return v;
     }
-    return v * context!.watch<FitnessController>().scaleWidth;
+    // return v * context!.watch<FitnessController>().scaleWidth;
+    return v *
+        Provider.of<FitnessController>(context!, listen: false).scaleWidth;
   }
 
   /// kIsWeb for test
@@ -143,7 +145,9 @@ class TaichiFitnessUtil {
     if (context == null) {
       return v;
     }
-    return v * context!.watch<FitnessController>().scaleHeight;
+    // return v * context!.watch<FitnessController>().scaleHeight;
+    return v *
+        Provider.of<FitnessController>(context!, listen: false).scaleHeight;
   }
 
   /// kIsWeb for test
@@ -151,6 +155,8 @@ class TaichiFitnessUtil {
     if (context == null) {
       return v;
     }
-    return v * context!.watch<FitnessController>().scaleText;
+    // return v * context!.watch<FitnessController>().scaleText;
+    return v *
+        Provider.of<FitnessController>(context!, listen: false).scaleText;
   }
 }
