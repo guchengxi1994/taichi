@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-03 12:59:38
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-04 21:02:15
+ * @LastEditTime: 2022-05-06 21:11:24
  */
 
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:taichi/src/fit/_fitness_provider.dart';
 import 'package:taichi/src/utils/taichi_utils.dart';
 
-const _fitnessVersion = "0.0.2-alpha+2";
+const _fitnessVersion = "0.0.2-alpha+3";
 
 class _TaichiFitness extends StatefulWidget {
   const _TaichiFitness({Key? key, required this.child, required this.context})
@@ -47,7 +47,7 @@ class _TaichiFitnessState extends State<_TaichiFitness> {
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      debugPrint(MediaQuery.of(context).size.toString());
+      // debugPrint(MediaQuery.of(context).size.toString());
       context
           .read<FitnessController>()
           .changeHeight(MediaQuery.of(context).size.height);
@@ -131,7 +131,7 @@ class TaichiFitnessUtil {
   }
 
   static void init(BuildContext? context) {
-    debugPrint(" ===== [call init function]");
+    // debugPrint(" ===== [call init function]");
     _instance = TaichiFitnessUtil._()..context = context;
   }
 
@@ -143,7 +143,7 @@ class TaichiFitnessUtil {
 
   double setWidth(double v) {
     if (context == null) {
-      debugPrint(" <<<<<<< [context is null] ");
+      // debugPrint(" <<<<<<< [context is null] ");
       return v;
     }
 
@@ -152,8 +152,11 @@ class TaichiFitnessUtil {
       return v;
     }
 
-    debugPrint(
-        "[set width] ... ${v * context!.watch<FitnessController>().scaleWidth}");
+    // debugPrint("[origin width] ... $v");
+    // debugPrint(
+    //     "[ width factor] ... ${context!.watch<FitnessController>().scaleWidth}");
+    // debugPrint(
+    //     "[set width] ... ${v * context!.watch<FitnessController>().scaleWidth}");
     return v * context!.watch<FitnessController>().scaleWidth;
   }
 
@@ -168,8 +171,11 @@ class TaichiFitnessUtil {
         return v;
       }
     }
-    debugPrint(
-        "[set height] ... ${v * context!.watch<FitnessController>().scaleWidth}");
+    // debugPrint("[origin height] ... $v");
+    // debugPrint(
+    //     "[ height factor] ... ${context!.watch<FitnessController>().scaleHeight}");
+    // debugPrint(
+    //     "[set height] ... ${v * context!.watch<FitnessController>().scaleHeight}");
     return v * context!.watch<FitnessController>().scaleHeight;
   }
 
