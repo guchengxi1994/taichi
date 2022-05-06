@@ -11,6 +11,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taichi/src/fit/_fitness_provider.dart';
+import 'package:taichi/src/utils/taichi_utils.dart';
 
 const _fitnessVersion = "0.0.2-alpha+2";
 
@@ -22,11 +23,14 @@ class _TaichiFitness extends StatefulWidget {
   final BuildContext? context;
 
   static Widget Function(BuildContext context, Widget? child)? init(
-      {double? designWidth, double? designHeight}) {
+      {double? designWidth, double? designHeight, bool? onlyOnMobiles}) {
     return (BuildContext context, Widget? child) {
       return ChangeNotifierProvider(
           create: (_) => FitnessController()
-            ..init(designHeight: designHeight, designWidth: designWidth),
+            ..init(
+                designHeight: designHeight,
+                designWidth: designWidth,
+                onlyOnMobiles: onlyOnMobiles),
           child: _TaichiFitness(
             context: context,
             child: child,
@@ -63,21 +67,28 @@ class _TaichiFitnessState extends State<_TaichiFitness> {
 
 extension SizeExtension on num {
   double setWidth(BuildContext? context) {
-    TaichiFitnessUtil.init(context);
+    if (TaichiFitnessUtil().context == null) {
+      TaichiFitnessUtil.init(context);
+    }
+
     return TaichiFitnessUtil().setWidth(toDouble());
   }
 
   double get w => TaichiFitnessUtil().setWidth(toDouble());
 
   double setHeight(BuildContext? context) {
-    TaichiFitnessUtil.init(context);
+    if (TaichiFitnessUtil().context == null) {
+      TaichiFitnessUtil.init(context);
+    }
     return TaichiFitnessUtil().setHeight(toDouble());
   }
 
   double get h => TaichiFitnessUtil().setHeight(toDouble());
 
   double setSp(BuildContext? context) {
-    TaichiFitnessUtil.init(context);
+    if (TaichiFitnessUtil().context == null) {
+      TaichiFitnessUtil.init(context);
+    }
     return TaichiFitnessUtil().setSp(toDouble());
   }
 
@@ -119,44 +130,60 @@ class TaichiFitnessUtil {
     return _instance;
   }
 
-  static void init(BuildContext? context, {bool? onlyOnMobiles}) {
-    // debugPrint("call init function");
+  static void init(BuildContext? context) {
+    debugPrint(" ===== [call init function]");
     _instance = TaichiFitnessUtil._()..context = context;
   }
 
   static Widget Function(BuildContext context, Widget? child)? rootBuilder(
-      {double? designWidth, double? designHeight}) {
+      {double? designWidth, double? designHeight, bool? onlyOnMobiles}) {
     return _TaichiFitness.init(
         designHeight: designHeight, designWidth: designWidth);
   }
 
-  /// kIsWeb for test
   double setWidth(double v) {
     if (context == null) {
+      debugPrint(" <<<<<<< [context is null] ");
       return v;
     }
-    // return v * context!.watch<FitnessController>().scaleWidth;
-    return v *
-        Provider.of<FitnessController>(context!, listen: false).scaleWidth;
+
+    if (!TaichiDevUtils.isMobile &&
+        !context!.watch<FitnessController>().onlyOnMobiles) {
+      return v;
+    }
+
+    debugPrint(
+        "[set width] ... ${v * context!.watch<FitnessController>().scaleWidth}");
+    return v * context!.watch<FitnessController>().scaleWidth;
   }
 
-  /// kIsWeb for test
   double setHeight(double v) {
     if (context == null) {
       return v;
     }
-    // return v * context!.watch<FitnessController>().scaleHeight;
-    return v *
-        Provider.of<FitnessController>(context!, listen: false).scaleHeight;
+
+    if (!TaichiDevUtils.isMobile &&
+        !context!.watch<FitnessController>().onlyOnMobiles) {
+      if (!TaichiDevUtils.isMobile) {
+        return v;
+      }
+    }
+    debugPrint(
+        "[set height] ... ${v * context!.watch<FitnessController>().scaleWidth}");
+    return v * context!.watch<FitnessController>().scaleHeight;
   }
 
-  /// kIsWeb for test
   double setSp(double v) {
     if (context == null) {
       return v;
     }
-    // return v * context!.watch<FitnessController>().scaleText;
-    return v *
-        Provider.of<FitnessController>(context!, listen: false).scaleText;
+
+    if (!TaichiDevUtils.isMobile &&
+        !context!.watch<FitnessController>().onlyOnMobiles) {
+      if (!TaichiDevUtils.isMobile) {
+        return v;
+      }
+    }
+    return v * context!.watch<FitnessController>().scaleText;
   }
 }

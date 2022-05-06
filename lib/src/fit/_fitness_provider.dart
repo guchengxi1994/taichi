@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 class FitnessController extends ChangeNotifier {
   double _screenWidth = 0;
   double _screenHeight = 0;
+  bool onlyOnMobiles = true;
 
   double _designWidth = 360;
   double _designHeight = 700;
@@ -37,9 +38,10 @@ class FitnessController extends ChangeNotifier {
     notifyListeners();
   }
 
-  init({double? designWidth, double? designHeight}) {
+  init({double? designWidth, double? designHeight, bool? onlyOnMobiles}) {
     _designWidth = designWidth ?? 360;
     _designHeight = designHeight ?? 700;
+    onlyOnMobiles = onlyOnMobiles ?? true;
     notifyListeners();
   }
 }

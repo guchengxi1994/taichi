@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const MainPage(),
-      builder: TaichiFitnessUtil.rootBuilder(),
+      builder: TaichiFitnessUtil.rootBuilder(onlyOnMobiles: false),
     );
   }
 }
@@ -39,6 +39,9 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TaichiFitnessUtil.init(context);
+
+    debugPrint(" >>>>>>>>>>>>> [ rebuild ] <<<<<<<<<<<<< ");
+
     return Scaffold(
       body: InkWell(
           onTap: () {
@@ -47,7 +50,7 @@ class MainPage extends StatelessWidget {
           },
           child: Container(
             color: Colors.amber,
-            height: 300.setHeight(context),
+            height: 300.h,
             width: 300.w,
             child: Text(
               "这是一个测试页面",
@@ -64,6 +67,13 @@ class MainPage2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          leading: IconButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        icon: Icon(Icons.close),
+      )),
       body: Container(
           child: Container(
         color: Colors.red,
