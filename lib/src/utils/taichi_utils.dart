@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 
 part './t_platform_utils.dart';
+part './version_annotation.dart';
 
 class TaichiDevUtils {
   TaichiDevUtils._();
