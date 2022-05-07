@@ -16,6 +16,15 @@ class Counter extends ChangeNotifier {
     _count++;
     notifyListeners();
   }
+
+  dontAddCount() {
+    notifyListeners();
+  }
+
+  @override
+  String toString() {
+    return "[current count] $_count";
+  }
 }
 
 class MyApp extends StatefulWidget {
@@ -42,6 +51,11 @@ class _MyAppState extends State<MyApp> {
               TaichiYin.of<Counter>(context)?.addCount();
             },
             child: const Text("add")),
+        ElevatedButton(
+            onPressed: () {
+              TaichiYin.of<Counter>(context)?.dontAddCount();
+            },
+            child: const Text("dont add")),
       ])),
     );
   }
