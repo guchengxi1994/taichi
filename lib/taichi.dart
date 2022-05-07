@@ -11,5 +11,5 @@ library taichi;
 
 export './src/UI/taichi/taichi.dart';
 export './src/UI/loader/loader.dart';
-export './src/fit/taichi_fitness.dart';
+// export './src/fit/taichi_fitness.dart';
 export './src/utils/taichi_utils.dart' show TaichiDevUtils;
