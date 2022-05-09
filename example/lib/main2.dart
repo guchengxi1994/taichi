@@ -10,7 +10,8 @@
  * @LastEditTime: 2022-05-06 21:10:18
  */
 import 'package:flutter/material.dart';
-import 'package:taichi/taichi.dart';
+// ignore: implementation_imports
+import 'package:taichi/src/fit/taichi_fitness.dart';
 import 'package:provider/provider.dart';
 
 void main() {
