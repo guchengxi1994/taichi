@@ -2,11 +2,15 @@
 
 [EN](./README_en.md)
 
+[dart实现的复数](./lib/src/complex/readme.md)
+
+[太极屏幕自适应](./lib/src/fit/readme.md)
+
 <img src="./md_images/taichi.gif" alt="taichi" style="zoom:20%;" />
 
 > 别盯着logo看，搞不好晃眼睛
 
-一个包含一个或者多个组件的组件库。
+一个包含一个或者多个组件的组件以及工具库。
 
 ## 1.安装
 
@@ -253,7 +257,7 @@ class Page4 extends StatelessWidget {
   <summary>
     例如：
   </summary>
-  
+
   ``` dart
 import 'package:flutter/material.dart';
 import 'package:taichi/taichi.dart';
