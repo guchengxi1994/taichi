@@ -24,14 +24,14 @@ class ProcessLoaderController extends ChangeNotifier {
   }
 
   setMax({double max = 100}) {
-    assert(max > _min);
+    assert(max >= _min);
     _max = max;
     notifyListeners();
   }
 
   @Deprecated("unnecessary")
   setMin({double min = 0}) {
-    assert(min < _max);
+    assert(min <= _max);
     _min = min;
     notifyListeners();
   }
