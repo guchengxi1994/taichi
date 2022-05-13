@@ -330,7 +330,7 @@ class _WaveViewState extends State<_WaveView> {
   void initState() {
     super.initState();
     if (duration != null) {
-      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         timer = Timer.periodic(
             Duration(
                 milliseconds: (duration! / (100 - percentageValue!) * 1000)

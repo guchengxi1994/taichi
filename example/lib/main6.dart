@@ -40,11 +40,21 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  late Widget body;
+
+  @override
+  void initState() {
+    super.initState();
+    body = TaichiGroupChoose.simple(
+        [Text("1"), Text("2")], [Text("3"), Text("4")]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: TaichiGroupChoose.simple(
-          [Text("1"), Text("2")], [Text("3"), Text("4")]),
+      body: Column(
+        children: [body, ElevatedButton(onPressed: () {}, child: Text("test"))],
+      ),
     );
   }
 }

@@ -42,7 +42,10 @@ class ChangeRegionController extends ChangeNotifier {
     }
   }
 
-  void init(List<Widget> left, List<Widget> right) {
+  void init({
+    required List<Widget> left,
+    required List<Widget> right,
+  }) {
     var count = 0;
     _leftWidgets.clear();
     _rightWidgets.clear();
@@ -68,7 +71,7 @@ class _wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      /// use double tap to change side
+      ///  double tap to change side
       onDoubleTap: () {
         context.read<ChangeRegionController>().changeSide(index);
       },
@@ -77,12 +80,20 @@ class _wrapper extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class GroupChooseWidget extends StatelessWidget {
-  const GroupChooseWidget({Key? key, required this.width, required this.height})
+  GroupChooseWidget(
+      {Key? key,
+      required this.width,
+      required this.height,
+      this.leftSideColor,
+      this.rightSideColor})
       : super(key: key);
 
   final double width;
   final double height;
+  Color? leftSideColor;
+  Color? rightSideColor;
 
   @override
   Widget build(BuildContext context) {
@@ -96,8 +107,7 @@ class GroupChooseWidget extends StatelessWidget {
               child: Container(
             height: height,
             margin: const EdgeInsets.only(right: 3),
-            decoration:
-                const BoxDecoration(color: Colors.greenAccent, boxShadow: [
+            decoration: BoxDecoration(color: leftSideColor, boxShadow: const [
               BoxShadow(
                 color: Color(0xFFE8E8E8),
                 offset: Offset(8, 8),
@@ -116,8 +126,7 @@ class GroupChooseWidget extends StatelessWidget {
               child: Container(
             height: height,
             margin: const EdgeInsets.only(left: 3),
-            decoration:
-                const BoxDecoration(color: Colors.blueAccent, boxShadow: [
+            decoration: BoxDecoration(color: rightSideColor, boxShadow: const [
               BoxShadow(
                 color: Color(0xFFE8E8E8),
                 offset: Offset(8, 8),
@@ -140,14 +149,22 @@ class GroupChooseWidget extends StatelessWidget {
 
 class TaichiGroupChoose {
   static Widget simple(List<Widget> left, List<Widget> right,
-      {double height = 300, double width = 300}) {
+      {double height = 300,
+      double width = 300,
+      Color leftSideColor = Colors.greenAccent,
+      Color rightSideColor = Colors.blueAccent}) {
     return ChangeNotifierProvider(
-      create: (_) => ChangeRegionController()..init(left, right),
+      create: (_) => ChangeRegionController()
+        ..init(
+          left: left,
+          right: right,
+        ),
       builder: (context, _) {
-        return const GroupChooseWidget(
-          height: 300,
-          width: 300,
-        );
+        return GroupChooseWidget(
+            height: height,
+            width: width,
+            leftSideColor: leftSideColor,
+            rightSideColor: rightSideColor);
       },
     );
   }
