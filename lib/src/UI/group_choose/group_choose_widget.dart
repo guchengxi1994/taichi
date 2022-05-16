@@ -148,6 +148,11 @@ class GroupChooseWidget extends StatelessWidget {
 }
 
 class TaichiGroupChoose {
+  /// NP, short for no provider
+  static Widget simpleNP() {
+    return Container();
+  }
+
   static Widget simple(List<Widget> left, List<Widget> right,
       {double height = 300,
       double width = 300,
