@@ -162,6 +162,7 @@ class MonthViewState<T> extends State<MonthView<T>> {
 
   // late EventController<T> _controller;
 
+  // ignore: unused_field
   late VoidCallback _reloadCallback;
 
   @override

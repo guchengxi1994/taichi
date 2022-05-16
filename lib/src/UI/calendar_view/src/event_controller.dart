@@ -139,21 +139,24 @@ class EventController<T> extends ChangeNotifier {
 
     final daysFromRange = <DateTime>[];
 
-    // debugPrint("[_rangingEventList] : ${_rangingEventList.length}");
-    var count = 0;
-
     for (final rangingEvent in _rangingEventList) {
+      // debugPrint(
+      //     "[rangingEvent date] : ${rangingEvent.date}   [rangingEvent enddate] : ${rangingEvent.endDate}");
+      daysFromRange.clear();
       for (var i = 0;
           i <= rangingEvent.endDate.difference(rangingEvent.date).inDays;
           i++) {
         daysFromRange.add(rangingEvent.date.add(Duration(days: i)));
       }
+      // debugPrint("[daysFromRange] : ${daysFromRange.length}");
       if (rangingEvent.date.isBefore(rangingEvent.endDate)) {
         for (final eventDay in daysFromRange) {
           if (eventDay.year == date.year &&
               eventDay.month == date.month &&
               eventDay.day == date.day) {
             // events.add(rangingEvent);
+            // debugPrint(
+            //     "[event day  ${eventDay.toString()}]   [event day  ${date.toString()}]");
             events.add(CalendarEventData(
                 startTime: rangingEvent.startTime,
                 endTime: rangingEvent.endTime,
@@ -163,9 +166,8 @@ class EventController<T> extends ChangeNotifier {
                 endDate: date,
                 title: rangingEvent.title,
                 event: rangingEvent.event));
-            count += 1;
 
-            debugPrint("[count ] ::::: $count");
+            // debugPrint("[count ] ::::: $count");
           }
         }
       }

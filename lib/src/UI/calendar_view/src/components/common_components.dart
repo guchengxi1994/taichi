@@ -35,6 +35,11 @@ class CalendarPageHeader extends StatelessWidget {
   /// Color of icons at both sides of header.
   final Color iconColor;
 
+  // 支持自定义icon
+  final IconData? leftIcon;
+
+  final IconData? rightIcon;
+
   /// Common header for month and day view In this header user can define format
   /// in which date will be displayed by providing [dateStringBuilder] function.
   const CalendarPageHeader({
@@ -47,6 +52,8 @@ class CalendarPageHeader extends StatelessWidget {
     this.secondaryDate,
     this.backgroundColor = Constants.headerBackground,
     this.iconColor = Constants.black,
+    this.leftIcon,
+    this.rightIcon,
   }) : super(key: key);
 
   @override
@@ -68,7 +75,7 @@ class CalendarPageHeader extends StatelessWidget {
             padding:
                 const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
             icon: Icon(
-              Icons.chevron_left,
+              leftIcon ?? Icons.chevron_left,
               size: 30,
               color: iconColor,
             ),
@@ -91,7 +98,7 @@ class CalendarPageHeader extends StatelessWidget {
             padding:
                 const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             icon: Icon(
-              Icons.chevron_right,
+              rightIcon ?? Icons.chevron_right,
               size: 30,
               color: iconColor,
             ),
