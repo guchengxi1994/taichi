@@ -37,17 +37,21 @@ class CalendarEventData<T> {
 
   final DateTime? _endDate;
 
+  /// status ,0 undergoing,1 done,2 delayed
+  final int? eventStatus;
+
   /// Stores all the events on [date]
-  const CalendarEventData({
-    required this.title,
-    this.description = "",
-    this.event,
-    this.color = Colors.blue,
-    this.startTime,
-    this.endTime,
-    DateTime? endDate,
-    required this.date,
-  }) : _endDate = endDate;
+  const CalendarEventData(
+      {required this.title,
+      this.description = "",
+      this.event,
+      this.color = Colors.blue,
+      this.startTime,
+      this.endTime,
+      DateTime? endDate,
+      required this.date,
+      this.eventStatus = 0})
+      : _endDate = endDate;
 
   DateTime get endDate => _endDate ?? date;
 
