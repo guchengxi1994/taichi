@@ -93,11 +93,11 @@ class __SimpleTaichiLoadingOverlayState
         child: Stack(
           children: <Widget>[
             Opacity(
+              opacity: widget.opacity,
               child: ModalBarrier(
                 dismissible: false,
                 color: widget.color ?? Theme.of(context).colorScheme.background,
               ),
-              opacity: widget.opacity,
             ),
             Center(child: loadingWidget),
           ],
@@ -202,18 +202,18 @@ class __CustomTaichiLoadingOverlayState
         child: Stack(
           children: <Widget>[
             Opacity(
+              opacity: widget.opacity,
               child: ModalBarrier(
                 dismissible: false,
                 color: widget.color ?? Theme.of(context).colorScheme.background,
               ),
-              opacity: widget.opacity,
             ),
             Positioned(
-              child: widget.loadingWidget,
               left: widget.left,
               right: widget.right,
               top: widget.top,
               bottom: widget.bottom,
+              child: widget.loadingWidget,
             ),
           ],
         ),

@@ -81,3 +81,9 @@ class CalendarEventData<T> {
   @override
   int get hashCode => title.hashCode;
 }
+
+extension CalendarEventExtension on CalendarEventData {
+  DateTime getStartTime() {
+    return date;
+  }
+}

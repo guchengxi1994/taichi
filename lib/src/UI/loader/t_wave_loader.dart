@@ -96,6 +96,7 @@ class _WaveAnimationViewState extends State<_WaveAnimationView>
         builder: (context, child) => Stack(
           children: <Widget>[
             ClipPath(
+              clipper: WaveClipper(animationController!.value, animList1),
               child: Container(
                 decoration: BoxDecoration(
                   color: widget.frontColor.withOpacity(0.5),
@@ -114,9 +115,9 @@ class _WaveAnimationViewState extends State<_WaveAnimationView>
                   ),
                 ),
               ),
-              clipper: WaveClipper(animationController!.value, animList1),
             ),
             ClipPath(
+              clipper: WaveClipper(animationController!.value, animList2),
               child: Container(
                 decoration: BoxDecoration(
                   color: widget.frontColor,
@@ -135,7 +136,6 @@ class _WaveAnimationViewState extends State<_WaveAnimationView>
                       topRight: Radius.circular(80.0)),
                 ),
               ),
-              clipper: WaveClipper(animationController!.value, animList2),
             ),
             SizedBox(
               // padding: const EdgeInsets.only(top: 48),

@@ -12,3 +12,4 @@ export './src/modals.dart';
 export './src/month_view/month_view.dart';
 export './src/typedefs.dart';
 export './src/week_view/week_view.dart';
+export './src/year_view/year_view.dart';
