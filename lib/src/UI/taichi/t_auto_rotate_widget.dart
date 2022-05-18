@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 /*
  * @Descripttion: 
  * @version: 
@@ -35,7 +37,7 @@ class __SimpleTaichiAutoRotateWidgetState
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _timer = Timer.periodic(
           Duration(milliseconds: (1000 / widget.fps).round()), (timer) {
         context.read<TaichiGraphRotateController>().addAngle();
@@ -82,7 +84,7 @@ class __CustomTaichiAutoRotateWidgetState
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _timer = Timer.periodic(
           Duration(milliseconds: (1000 / widget.fps).round()), (timer) {
         context.read<TaichiGraphRotateController>().addAngle();

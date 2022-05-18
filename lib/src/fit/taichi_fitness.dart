@@ -46,7 +46,7 @@ class _TaichiFitnessState extends State<_TaichiFitness> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // debugPrint(MediaQuery.of(context).size.toString());
       context
           .read<FitnessController>()

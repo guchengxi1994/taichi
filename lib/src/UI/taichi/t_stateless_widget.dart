@@ -12,6 +12,10 @@ class _TaichiStatelessWidget extends StatelessWidget {
     return Container(
       height: size,
       width: size,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(0.5 * size),
+          border: Border.all(color: Colors.black)),
       child: Stack(children: [
         // left side
         Positioned(
@@ -85,10 +89,6 @@ class _TaichiStatelessWidget extends StatelessWidget {
               ),
             )),
       ]),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(0.5 * size),
-          border: Border.all(color: Colors.black)),
     );
   }
 }
