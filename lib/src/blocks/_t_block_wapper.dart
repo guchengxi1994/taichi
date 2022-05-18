@@ -1,23 +1,52 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: xiaoshuyui
+ * @email: guchengxi1994@qq.com
+ * @Date: 2022-05-18 19:18:00
+ * @LastEditors: xiaoshuyui
+ * @LastEditTime: 2022-05-18 22:00:38
+ */
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '_drag_controller.dart';
 import 'constants.dart';
 
 // ignore: must_be_immutable
 class BlocksWrapperWidget extends StatefulWidget {
-  BlocksWrapperWidget({Key? key, required this.child, required this.index})
+  BlocksWrapperWidget(
+      {Key? key,
+      required this.child,
+      required this.index,
+      required this.initialLeft,
+      required this.initialTop,
+      this.widgetType = "Container"})
       : super(key: key);
   Widget child;
   int index;
+  double initialTop;
+  double initialLeft;
+  String widgetType;
 
   @override
-  State<BlocksWrapperWidget> createState() => _BlocksWrapperWidgetState();
+  State<BlocksWrapperWidget> createState() => BlocksWrapperWidgetState();
 }
 
-class _BlocksWrapperWidgetState extends State<BlocksWrapperWidget> {
-  double width = taichiDraggableWidgetSize;
-  double height = taichiDraggableWidgetSize;
-  Color color = bodyWidgetInitialColor;
-  bool isSelected = false;
+class BlocksWrapperWidgetState extends State<BlocksWrapperWidget> {
+  double width = BlockConstants.taichiDraggableWidgetSize;
+  double height = BlockConstants.taichiDraggableWidgetSize;
+  Color color = BlockConstants.bodyWidgetInitialColor;
+
+  late double left;
+  late double top;
+
+  @override
+  void initState() {
+    super.initState();
+    left = widget.initialLeft;
+    top = widget.initialTop;
+  }
 
   void setWidth(double w) {
     setState(() {
@@ -39,30 +68,52 @@ class _BlocksWrapperWidgetState extends State<BlocksWrapperWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        setState(() {
-          isSelected = !isSelected;
-        });
-      },
-      child: Container(
-        decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(8.0),
-            boxShadow: isSelected
-                ? const [
-                    BoxShadow(
-                        color: Colors.black12,
-                        offset: Offset(0.0, 15.0), //阴影xy轴偏移量
-                        blurRadius: 15.0, //阴影模糊程度
-                        spreadRadius: 1.0 //阴影扩散程度
-                        )
-                  ]
-                : null),
-        width: width,
-        height: height,
-        child: widget.child,
-      ),
-    );
+    return Positioned(
+        left: left,
+        top: top,
+        child: Draggable(
+          onDragEnd: (details) {
+            double widgetWidth = context.read<BlockController>().screenWidth;
+            setState(() {
+              top = details.offset.dy - BlockConstants.appbarHeight;
+              left = details.offset.dx - widgetWidth / 6;
+            });
+          },
+          onDragStarted: () {
+            context.read<BlockController>().changeCurrentId(widget.index);
+          },
+          feedback: Container(
+            width: width,
+            height: height,
+            decoration: BoxDecoration(
+                color: Colors.transparent,
+                border: Border.all(
+                    color: const Color.fromARGB(218, 22, 20, 19),
+                    width: 5,
+                    style: BorderStyle.solid)),
+          ),
+          child: InkWell(
+            onTap: () {
+              context.read<BlockController>().changeCurrentId(widget.index);
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(8.0),
+                border:
+                    context.read<BlockController>().currentSelectedWidgetId ==
+                            widget.index
+                        ? Border.all(
+                            color: const Color.fromARGB(218, 187, 48, 24),
+                            width: 5,
+                            style: BorderStyle.solid)
+                        : null,
+              ),
+              width: width,
+              height: height,
+              child: widget.child,
+            ),
+          ),
+        ));
   }
 }
