@@ -56,6 +56,10 @@ class TaichiGraph {
       child: Container(
         height: style.size,
         width: style.size,
+        decoration: BoxDecoration(
+            color: style.color2,
+            borderRadius: BorderRadius.circular(0.5 * style.size),
+            border: Border.all(color: style.color1)),
         child: Stack(children: [
           // left side
           Positioned(
@@ -138,10 +142,6 @@ class TaichiGraph {
                 ),
               )),
         ]),
-        decoration: BoxDecoration(
-            color: style.color2,
-            borderRadius: BorderRadius.circular(0.5 * style.size),
-            border: Border.all(color: style.color1)),
       ),
     );
   }
@@ -168,10 +168,10 @@ class TaichiOverlay {
       double size = 100}) {
     return _SimpleTaichiLoadingOverlay(
       isLoading: isLoading,
-      child: child,
       color: color,
       opacity: opacity,
       size: size,
+      child: child,
     );
   }
 }
