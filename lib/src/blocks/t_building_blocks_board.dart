@@ -7,6 +7,7 @@
  * @LastEditors: xiaoshuyui
  * @LastEditTime: 2022-05-18 22:38:38
  */
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +15,8 @@ import '_drag_controller.dart';
 import '_draggable_widget.dart';
 import '_constants.dart';
 import '_right_side_widget.dart';
+import 'tools/_save_file_on_desktop.dart'
+    if (dart.library.html) 'tools/_save_file_on_web.dart';
 
 /// 绘图板
 ///
@@ -58,7 +61,10 @@ class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard> {
                 )),
             IconButton(
                 tooltip: "生成",
-                onPressed: () {},
+                onPressed: () {
+                  List<int> list = 'hello'.codeUnits;
+                  saveFile(bytes: list, downloadName: "test.dart");
+                },
                 icon: const Icon(
                   Icons.create,
                 )),

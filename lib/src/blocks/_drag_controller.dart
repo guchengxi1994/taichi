@@ -10,8 +10,8 @@
 // ignore_for_file: prefer_final_fields
 
 import 'package:flutter/material.dart';
-import 'package:taichi/src/blocks/_enums.dart';
 
+import '_enums.dart';
 import '_t_block_wapper.dart';
 import '_constants.dart';
 
