@@ -5,12 +5,13 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-18 19:18:00
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-18 22:38:38
+ * @LastEditTime: 2022-05-19 20:36:59
  */
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '_code_gen.dart';
 import '_drag_controller.dart';
 import '_draggable_widget.dart';
 import '_constants.dart';
@@ -47,8 +48,16 @@ class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(BlockConstants.appbarHeight),
         child: AppBar(
+          backgroundColor: Colors.white,
           elevation: 0,
-          title: const Text("Taichi board"),
+          title: const Text(
+            "Taichi board",
+            style: TextStyle(
+              fontSize: 25,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           centerTitle: true,
           actions: [
             IconButton(
@@ -58,15 +67,20 @@ class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard> {
                 },
                 icon: const Icon(
                   Icons.refresh,
+                  color: Colors.black,
                 )),
             IconButton(
                 tooltip: "生成",
                 onPressed: () {
-                  List<int> list = 'hello'.codeUnits;
+                  var s =
+                      codeGenerator(context.read<BlockController>(), "test");
+
+                  List<int> list = s.codeUnits;
                   saveFile(bytes: list, downloadName: "test.dart");
                 },
                 icon: const Icon(
                   Icons.create,
+                  color: Colors.black,
                 )),
           ],
         ),
@@ -76,6 +90,7 @@ class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard> {
           Expanded(
               flex: 1,
               child: Container(
+                padding: const EdgeInsets.all(5),
                 color: sideColor,
                 height: widgetHeight,
                 child: Wrap(
@@ -105,6 +120,7 @@ class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard> {
           Expanded(
               flex: 1,
               child: Container(
+                padding: const EdgeInsets.all(5),
                 color: sideColor,
                 height: widgetHeight,
                 child: SingleChildScrollView(

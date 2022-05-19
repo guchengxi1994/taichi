@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-18 19:18:00
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-18 22:00:38
+ * @LastEditTime: 2022-05-19 20:55:33
  */
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -41,6 +41,8 @@ class BlocksWrapperWidgetState extends State<BlocksWrapperWidget> {
   late double left;
   late double top;
 
+  bool isVisiable = true;
+
   @override
   void initState() {
     super.initState();
@@ -66,59 +68,78 @@ class BlocksWrapperWidgetState extends State<BlocksWrapperWidget> {
     });
   }
 
+  changeVisiable() {
+    setState(() {
+      isVisiable = !isVisiable;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (widget.widgetType == "AppBar") {
+      width = MediaQuery.of(context).size.width * 2 / 3;
+    }
+
     return Positioned(
         left: left,
         top: top,
-        child: Draggable(
-          onDragEnd: (details) {
-            double widgetWidth = context.read<BlockController>().screenWidth;
-            setState(() {
-              top = details.offset.dy - BlockConstants.appbarHeight;
-              left = details.offset.dx - widgetWidth / 6;
-            });
-            context
-                .read<BlockController>()
-                .globalRightSideKey
-                .currentState!
-                .setState(() {});
-          },
-          onDragStarted: () {
-            context.read<BlockController>().changeCurrentId(widget.index);
-          },
-          feedback: Container(
-            width: width,
-            height: height,
-            decoration: BoxDecoration(
-                color: Colors.transparent,
-                border: Border.all(
-                    color: const Color.fromARGB(218, 22, 20, 19),
-                    width: 5,
-                    style: BorderStyle.solid)),
-          ),
-          child: InkWell(
-            onTap: () {
-              context.read<BlockController>().changeCurrentId(widget.index);
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: color,
-                borderRadius: BorderRadius.circular(8.0),
-                border:
-                    context.watch<BlockController>().currentSelectedWidgetId ==
+        child: Visibility(
+            visible: isVisiable,
+            child: Draggable(
+              onDragEnd: (details) {
+                double widgetWidth =
+                    context.read<BlockController>().screenWidth;
+                setState(() {
+                  if (widget.widgetType != "AppBar") {
+                    top = details.offset.dy - BlockConstants.appbarHeight;
+                    left = details.offset.dx - widgetWidth / 6;
+                  } else {
+                    top = 0;
+                    left = 0;
+                  }
+                });
+                context
+                    .read<BlockController>()
+                    .globalRightSideKey
+                    .currentState!
+                    .setState(() {});
+              },
+              onDragStarted: () {
+                context.read<BlockController>().changeCurrentId(widget.index);
+              },
+              feedback: Container(
+                width: width,
+                height: height,
+                decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    border: Border.all(
+                        color: const Color.fromARGB(218, 22, 20, 19),
+                        width: 5,
+                        style: BorderStyle.solid)),
+              ),
+              child: InkWell(
+                onTap: () {
+                  context.read<BlockController>().changeCurrentId(widget.index);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: color,
+                    borderRadius: BorderRadius.circular(8.0),
+                    border: context
+                                .watch<BlockController>()
+                                .currentSelectedWidgetId ==
                             widget.index
                         ? Border.all(
                             color: const Color.fromARGB(218, 187, 48, 24),
                             width: 5,
                             style: BorderStyle.solid)
                         : null,
+                  ),
+                  width: width,
+                  height: height,
+                  child: widget.child,
+                ),
               ),
-              width: width,
-              height: height,
-              child: widget.child,
-            ),
-          ),
-        ));
+            )));
   }
 }

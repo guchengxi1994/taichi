@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-18 19:18:00
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-18 22:03:12
+ * @LastEditTime: 2022-05-19 20:56:18
  */
 // ignore_for_file: prefer_final_fields
 
@@ -17,7 +17,7 @@ import '_constants.dart';
 
 class BlockController extends ChangeNotifier {
   /// board type
-  BoardType boardType = BoardType.common;
+  BoardType boardType = BoardType.stack;
 
   /// board direction
   BoardDirection boardDirection = BoardDirection.ttb;
@@ -70,14 +70,27 @@ class BlockController extends ChangeNotifier {
   addWidget(Widget w, Offset offset, String widgetType) {
     if (offset.dx >= screenWidth / 6 && offset.dx <= screenWidth / 6 * 5) {
       GlobalKey<BlocksWrapperWidgetState> key = GlobalKey();
-      _currentWidgets.add(BlocksWrapperWidget(
-        key: key,
-        index: currentIndex,
-        initialTop: offset.dy - BlockConstants.appbarHeight,
-        initialLeft: offset.dx - screenWidth / 6,
-        widgetType: widgetType,
-        child: w,
-      ));
+
+      if (widgetType == "AppBar") {
+        _currentWidgets.add(BlocksWrapperWidget(
+          key: key,
+          index: currentIndex,
+          initialTop: 0,
+          initialLeft: 0,
+          widgetType: widgetType,
+          child: w,
+        ));
+      } else {
+        _currentWidgets.add(BlocksWrapperWidget(
+          key: key,
+          index: currentIndex,
+          initialTop: offset.dy - BlockConstants.appbarHeight,
+          initialLeft: offset.dx - screenWidth / 6,
+          widgetType: widgetType,
+          child: w,
+        ));
+      }
+
       _globalKeys.add(key);
       currentIndex += 1;
       notifyListeners();
@@ -90,10 +103,11 @@ class BlockController extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// 根据id移除 widget
+  /// 根据id移除(控制可见性) widget
   removeWidgetById(int id) {
-    _currentWidgets.removeAt(id);
-    _globalKeys.removeAt(id);
+    // _currentWidgets.removeAt(id);
+    // _globalKeys.removeAt(id);
+    _globalKeys[id].currentState!.changeVisiable();
     notifyListeners();
   }
 }
