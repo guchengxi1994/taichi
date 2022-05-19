@@ -10,11 +10,18 @@
 // ignore_for_file: prefer_final_fields
 
 import 'package:flutter/material.dart';
+import 'package:taichi/src/blocks/_enums.dart';
 
 import '_t_block_wapper.dart';
-import 'constants.dart';
+import '_constants.dart';
 
 class BlockController extends ChangeNotifier {
+  /// board type
+  BoardType boardType = BoardType.common;
+
+  /// board direction
+  BoardDirection boardDirection = BoardDirection.ttb;
+
   /// widgets in board
   List<Widget> _currentWidgets = [];
   List<Widget> get widgets => _currentWidgets;
@@ -23,16 +30,27 @@ class BlockController extends ChangeNotifier {
   List<GlobalKey<BlocksWrapperWidgetState>> _globalKeys = [];
   List<GlobalKey<BlocksWrapperWidgetState>> get globalKeys => _globalKeys;
 
-  /// widget index
+  /// screen width
   double screenWidth = 0;
+
+  /// screen height
+  double screenHeight = 0;
+
+  /// widget index
   int currentIndex = 1;
 
   /// current selected widget
   int _currentSelectedWidgetId = -1;
   int get currentSelectedWidgetId => _currentSelectedWidgetId;
 
+  /// 用于刷新右侧组件
+  GlobalKey globalRightSideKey = GlobalKey();
+
+  /// 获取当前操作的组件
   BlocksWrapperWidget get currentWidget =>
       _currentWidgets[_currentSelectedWidgetId - 1] as BlocksWrapperWidget;
+
+  /// 获取当前操作组件的 globalkey
   GlobalKey<BlocksWrapperWidgetState> get currentKey =>
       _globalKeys[_currentSelectedWidgetId - 1];
 
@@ -43,10 +61,12 @@ class BlockController extends ChangeNotifier {
   }
 
   /// 动态设置widget的宽度
-  changeWidth(double w) {
+  changeSize(double w, double h) {
     screenWidth = w;
+    screenHeight = h;
   }
 
+  /// 添加一个widget
   addWidget(Widget w, Offset offset, String widgetType) {
     if (offset.dx >= screenWidth / 6 && offset.dx <= screenWidth / 6 * 5) {
       GlobalKey<BlocksWrapperWidgetState> key = GlobalKey();
@@ -64,11 +84,13 @@ class BlockController extends ChangeNotifier {
     }
   }
 
+  /// 移除一个widget
   removeWidget(Widget w) {
     _currentWidgets.remove(w);
     notifyListeners();
   }
 
+  /// 根据id移除 widget
   removeWidgetById(int id) {
     _currentWidgets.removeAt(id);
     _globalKeys.removeAt(id);

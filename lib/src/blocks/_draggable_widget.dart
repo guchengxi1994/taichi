@@ -7,11 +7,12 @@
  * @LastEditors: xiaoshuyui
  * @LastEditTime: 2022-05-18 22:00:16
  */
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '_drag_controller.dart';
-import 'constants.dart';
+import '_constants.dart';
 
 /// 左侧列表中，可拖动的小部件
 ///
@@ -66,16 +67,38 @@ class Blocks extends StatelessWidget {
               decoration: TextDecoration.none),
         ),
       ),
-      child: Container(
-        height: BlockConstants.taichiDraggableWidgetSize,
-        width: BlockConstants.taichiDraggableWidgetSize,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            color: BlockConstants.leftDragglableWidgetColor,
-            borderRadius: BorderRadius.circular(10)),
-        child: Text(
-          widgetName,
-          style: const TextStyle(color: Colors.white, fontSize: 18),
+      child: InkWell(
+        onLongPress: () {
+          showCupertinoDialog(
+              context: context,
+              builder: (context) {
+                return CupertinoAlertDialog(
+                  title: const Text("Introduction"),
+                  content: Material(
+                    color: Colors.transparent,
+                    child: Text(introductionOfWidgets[widgetName]!),
+                  ),
+                  actions: [
+                    CupertinoActionSheetAction(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text("OK"))
+                  ],
+                );
+              });
+        },
+        child: Container(
+          height: BlockConstants.taichiDraggableWidgetSize,
+          width: BlockConstants.taichiDraggableWidgetSize,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              color: BlockConstants.leftDragglableWidgetColor,
+              borderRadius: BorderRadius.circular(10)),
+          child: Text(
+            widgetName,
+            style: const TextStyle(color: Colors.white, fontSize: 18),
+          ),
         ),
       ),
     );

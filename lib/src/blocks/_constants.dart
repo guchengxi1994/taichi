@@ -17,4 +17,20 @@ class BlockConstants {
   static const Color bodyWidgetInitialColor = Colors.blue;
   static const Color leftDragglableWidgetColor = Colors.red;
   static const double inputHeight = 40;
+  static const List<String> supportedTypes = [
+    "Container",
+    "SizedBox",
+    "AppBar",
+    "Text",
+    "TextField",
+  ];
 }
+
+final Map<String, String> introductionOfWidgets = {
+  "Container":
+      "A convenience widget that combines common painting, positioning, and sizing",
+  "SizedBox": "A box with a specified size.",
+  "AppBar": "A material design app bar.",
+  "Text": "A run of text with a single style.",
+  "TextField": "A material design text field."
+};

@@ -12,8 +12,8 @@ import 'package:provider/provider.dart';
 
 import '_drag_controller.dart';
 import '_draggable_widget.dart';
-import '_t_block_wapper.dart';
-import 'constants.dart';
+import '_constants.dart';
+import '_right_side_widget.dart';
 
 /// 绘图板
 ///
@@ -33,18 +33,12 @@ class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard> {
   final TextEditingController heightTextController = TextEditingController();
 
   @override
-  void dispose() {
-    widthTextController.dispose();
-    heightTextController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     double widgetHeight = MediaQuery.of(context).size.height;
     double widgetWidth = MediaQuery.of(context).size.width;
 
-    context.read<BlockController>().changeWidth(widgetWidth);
+    /// 每一次重绘就把新的尺寸传到```controller``` 里存起来
+    context.read<BlockController>().changeSize(widgetWidth, widgetHeight);
 
     return Scaffold(
       appBar: PreferredSize(
@@ -53,6 +47,22 @@ class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard> {
           elevation: 0,
           title: const Text("Taichi board"),
           centerTitle: true,
+          actions: [
+            IconButton(
+                tooltip: "刷新",
+                onPressed: () {
+                  context.read<BlockController>().changeCurrentId(-1);
+                },
+                icon: const Icon(
+                  Icons.refresh,
+                )),
+            IconButton(
+                tooltip: "生成",
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.create,
+                )),
+          ],
         ),
       ),
       body: Row(
@@ -63,7 +73,13 @@ class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard> {
                 color: sideColor,
                 height: widgetHeight,
                 child: Wrap(
-                  children: [Blocks()],
+                  spacing: 5,
+                  runSpacing: 5,
+                  children: BlockConstants.supportedTypes
+                      .map((e) => Blocks(
+                            widgetName: e,
+                          ))
+                      .toList(),
                 ),
               )),
           const Divider(
@@ -86,103 +102,14 @@ class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard> {
                 color: sideColor,
                 height: widgetHeight,
                 child: SingleChildScrollView(
-                    key: UniqueKey(), child: _buildRightSide()),
+                    key: UniqueKey(),
+                    child: RightSideWidget(
+                      key: context.read<BlockController>().globalRightSideKey,
+                    )),
               )),
         ],
       ),
     );
-  }
-
-  Widget _buildRightSide() {
-    if (context.watch<BlockController>().currentSelectedWidgetId != -1) {
-      BlocksWrapperWidget w = context.read<BlockController>().currentWidget;
-      GlobalKey<BlocksWrapperWidgetState> k =
-          context.read<BlockController>().currentKey;
-
-      widthTextController.text = k.currentState!.width.toString();
-
-      heightTextController.text = k.currentState!.height.toString();
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-              "当前主体尺寸(宽*高)\n${(MediaQuery.of(context).size.width * 0.66).ceil()}*${MediaQuery.of(context).size.height.ceil()}"),
-          const SizedBox(
-            height: 20,
-          ),
-
-          const Text("名称"),
-          Text("${w.index} ${w.widgetType}"),
-          const Divider(
-            thickness: 2,
-            color: Colors.black,
-          ),
-          const Text("宽度"),
-          SizedBox(
-            height: BlockConstants.inputHeight,
-            width: 0.9 * MediaQuery.of(context).size.width / 6,
-            child: TextField(
-              controller: widthTextController,
-              decoration: InputDecoration(
-                  hintText: "${k.currentState?.width}",
-                  suffix: IconButton(
-                      onPressed: () {
-                        try {
-                          double d = double.parse(widthTextController.text);
-                          if (k.currentState!.width != d) {
-                            k.currentState!.setWidth(d);
-                          }
-                        } catch (_) {}
-                      },
-                      icon: const Icon(
-                        Icons.done,
-                        color: Colors.green,
-                      ))),
-            ),
-          ),
-          const Text("高度"),
-          // Text("${k.currentState?.height}"),
-          SizedBox(
-            height: BlockConstants.inputHeight,
-            width: 0.9 * MediaQuery.of(context).size.width / 6,
-            child: TextField(
-              controller: heightTextController,
-              decoration: InputDecoration(
-                  hintText: "${k.currentState?.height}",
-                  suffix: IconButton(
-                      onPressed: () {
-                        try {
-                          double d = double.parse(heightTextController.text);
-                          if (k.currentState!.height != d) {
-                            k.currentState!.setHeight(d);
-                          }
-                        } catch (_) {}
-                      },
-                      icon: const Icon(
-                        Icons.done,
-                        color: Colors.green,
-                      ))),
-            ),
-          ),
-
-          const Divider(
-            thickness: 2,
-            color: Colors.black,
-          ),
-
-          Text("距离左侧距离\n${k.currentState!.left.ceil()}"),
-          Text("距离顶部距离\n${k.currentState!.top.ceil()}"),
-        ],
-      );
-    } else {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-              "当前主体尺寸(宽*高)\n${(MediaQuery.of(context).size.width * 0.66).ceil()}*${MediaQuery.of(context).size.height.ceil()}"),
-        ],
-      );
-    }
   }
 }
 

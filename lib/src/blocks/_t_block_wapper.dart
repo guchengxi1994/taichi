@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '_drag_controller.dart';
-import 'constants.dart';
+import '_constants.dart';
 
 // ignore: must_be_immutable
 class BlocksWrapperWidget extends StatefulWidget {
@@ -78,6 +78,11 @@ class BlocksWrapperWidgetState extends State<BlocksWrapperWidget> {
               top = details.offset.dy - BlockConstants.appbarHeight;
               left = details.offset.dx - widgetWidth / 6;
             });
+            context
+                .read<BlockController>()
+                .globalRightSideKey
+                .currentState!
+                .setState(() {});
           },
           onDragStarted: () {
             context.read<BlockController>().changeCurrentId(widget.index);
@@ -101,7 +106,7 @@ class BlocksWrapperWidgetState extends State<BlocksWrapperWidget> {
                 color: color,
                 borderRadius: BorderRadius.circular(8.0),
                 border:
-                    context.read<BlockController>().currentSelectedWidgetId ==
+                    context.watch<BlockController>().currentSelectedWidgetId ==
                             widget.index
                         ? Border.all(
                             color: const Color.fromARGB(218, 187, 48, 24),
