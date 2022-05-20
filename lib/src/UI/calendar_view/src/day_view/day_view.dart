@@ -303,7 +303,11 @@ class DayViewState<T> extends State<DayView<T>> {
                       onPageChanged: _onPageChange,
                       itemBuilder: (_, index) {
                         final date = DateTime(_minDate.year, _minDate.month,
-                            _minDate.day + index);
+                            _minDate.day + index + 1);
+
+                        // debugPrint("[calendar view date] :$date");
+                        // debugPrint("[calendar view min date] :${_minDate.day}");
+                        // debugPrint("[calendar view index] :$index");
 
                         return InternalDayViewPage<T>(
                           controller: context.read<EventController<T>>(),

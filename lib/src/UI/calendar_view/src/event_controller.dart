@@ -128,6 +128,10 @@ class EventController<T> extends ChangeNotifier {
               final calendarEvents = monthEvents[j]._events;
               if (calendarEvents.isNotEmpty) {
                 for (var k = 0; k < calendarEvents.length; k++) {
+                  // debugPrint(
+                  //     "[debug  calendarEvents[k].date]: ${calendarEvents[k].date.day}");
+                  // debugPrint("[debug  date.day]: ${date.day}");
+
                   if (calendarEvents[k].date.day == date.day) {
                     events.add(calendarEvents[k]);
                   }
