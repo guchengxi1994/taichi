@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-18 19:18:00
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-19 20:56:18
+ * @LastEditTime: 2022-05-20 21:02:20
  */
 // ignore_for_file: prefer_final_fields
 
@@ -22,6 +22,8 @@ class BlockController extends ChangeNotifier {
 
   /// 操作记录
   Operation _operation = Operation();
+
+  Operation get operation => _operation;
 
   /// board direction
   BoardDirection boardDirection = BoardDirection.ttb;
@@ -132,11 +134,15 @@ class BlockController extends ChangeNotifier {
       {WidgetState? prev,
       required WidgetState current,
       required int index,
+      required OperationType operationType,
       bool addOperate = true}) {
     _globalKeys[index].currentState!.changeState(current: current);
     if (addOperate) {
-      _operation.addOperate(
-          Operate(index: index, preState: prev, nextState: current));
+      _operation.addOperate(Operate(
+          index: index,
+          preState: prev,
+          nextState: current,
+          operationType: operationType));
     }
     notifyListeners();
   }
@@ -144,7 +150,11 @@ class BlockController extends ChangeNotifier {
   undo() {
     if (_operation.operates.isNotEmpty) {
       Operate op = _operation.operates.removeLast();
-      changeState(current: op.preState!, index: op.index, addOperate: false);
+      changeState(
+          current: op.preState!,
+          index: op.index,
+          addOperate: false,
+          operationType: OperationType.undo);
       notifyListeners();
     }
   }

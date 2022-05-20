@@ -27,6 +27,40 @@ class _RightSideWidgetState extends State<RightSideWidget> {
 
   @override
   Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+          flex: 5,
+          child: buildTopPart(),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Expanded(
+            flex: 1,
+            child: Container(
+              width: context.watch<BlockController>().screenWidth / 6,
+              color: Colors.grey[300],
+              child: Center(
+                child: Column(
+                  children: context
+                      .watch<BlockController>()
+                      .operation
+                      .operates
+                      .map((e) => Text(e.operationType.toStr()))
+                      .toList(),
+                ),
+              ),
+            )),
+        const Text(
+          "Powered by Xiaoshuyui",
+          maxLines: 2,
+        ),
+      ],
+    );
+  }
+
+  Widget buildTopPart() {
     if (context.watch<BlockController>().currentSelectedWidgetId != -1) {
       BlocksWrapperWidget w = context.read<BlockController>().currentWidget;
       GlobalKey<BlocksWrapperWidgetState> k =
@@ -65,6 +99,7 @@ class _RightSideWidgetState extends State<RightSideWidget> {
                           if (k.currentState!.width != d) {
                             // k.currentState!.setWidth(d);
                             context.read<BlockController>().changeState(
+                                operationType: OperationType.changeWidth,
                                 current: WidgetState(width: d),
                                 prev: WidgetState(
                                     isVisiable: true,
@@ -103,6 +138,7 @@ class _RightSideWidgetState extends State<RightSideWidget> {
                           if (k.currentState!.height != d) {
                             // k.currentState!.setHeight(d);
                             context.read<BlockController>().changeState(
+                                operationType: OperationType.changeHeight,
                                 current: WidgetState(height: d),
                                 prev: WidgetState(
                                     isVisiable: true,
@@ -143,6 +179,7 @@ class _RightSideWidgetState extends State<RightSideWidget> {
                   context.read<BlockController>().changeCurrentId(-1);
                   // context.read<BlockController>().removeWidgetById(w.index - 1);
                   context.read<BlockController>().changeState(
+                      operationType: OperationType.remove,
                       prev: WidgetState(
                           isVisiable: true,
                           width: k.currentState!.width,
@@ -166,7 +203,9 @@ class _RightSideWidgetState extends State<RightSideWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-              "当前主体尺寸(宽*高)\n${(MediaQuery.of(context).size.width * 0.66).ceil()}*${MediaQuery.of(context).size.height.ceil()}"),
+            "当前主体尺寸(宽*高)\n${(MediaQuery.of(context).size.width * 0.66).ceil()}*${MediaQuery.of(context).size.height.ceil()}",
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+          ),
         ],
       );
     }

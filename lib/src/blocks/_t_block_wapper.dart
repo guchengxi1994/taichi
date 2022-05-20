@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-18 19:18:00
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-19 20:55:33
+ * @LastEditTime: 2022-05-20 20:39:10
  */
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -123,6 +123,7 @@ class BlocksWrapperWidgetState extends State<BlocksWrapperWidget> {
                 }
 
                 context.read<BlockController>().changeState(
+                    operationType: OperationType.moveTo,
                     current: WidgetState(offset: Offset(left, top)),
                     index: widget.index - 1, // widget id 从1开始的
                     prev: prev);

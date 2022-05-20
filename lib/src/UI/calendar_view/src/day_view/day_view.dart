@@ -305,7 +305,7 @@ class DayViewState<T> extends State<DayView<T>> {
                         final date = DateTime(_minDate.year, _minDate.month,
                             _minDate.day + index);
 
-                        // debugPrint("[calendar view date] :$date");
+                        // debugPrint("[calendar view date] :$_minDate");
                         // debugPrint("[calendar view min date] :${_minDate.day}");
                         // debugPrint("[calendar view index] :$index");
 

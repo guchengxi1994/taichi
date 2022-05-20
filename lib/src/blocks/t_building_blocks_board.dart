@@ -5,11 +5,12 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-18 19:18:00
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-19 20:36:59
+ * @LastEditTime: 2022-05-20 21:31:16
  */
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:taichi/src/UI/taichi/taichi.dart';
 
 import '../UI/toast_mixin/t_toast_mixin.dart';
 import '_code_gen.dart';
@@ -52,13 +53,22 @@ class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard>
         child: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
-          title: const Text(
-            "Taichi board",
-            style: TextStyle(
-              fontSize: 25,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TaichiGraph.simple(size: 40),
+              const SizedBox(
+                width: 10,
+              ),
+              const Text(
+                "Taichi board",
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            ],
           ),
           centerTitle: true,
           actions: [
@@ -111,16 +121,18 @@ class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard>
               flex: 1,
               child: Container(
                 padding: const EdgeInsets.all(5),
-                color: sideColor,
                 height: widgetHeight,
-                child: Wrap(
-                  spacing: 5,
-                  runSpacing: 5,
-                  children: BlockConstants.supportedTypes
-                      .map((e) => Blocks(
-                            widgetName: e,
-                          ))
-                      .toList(),
+                color: sideColor,
+                child: SingleChildScrollView(
+                  child: Wrap(
+                    spacing: 5,
+                    runSpacing: 5,
+                    children: BlockConstants.supportedTypes
+                        .map((e) => Blocks(
+                              widgetName: e,
+                            ))
+                        .toList(),
+                  ),
                 ),
               )),
           const Divider(
@@ -143,11 +155,9 @@ class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard>
                 padding: const EdgeInsets.all(5),
                 color: sideColor,
                 height: widgetHeight,
-                child: SingleChildScrollView(
-                    key: UniqueKey(),
-                    child: RightSideWidget(
-                      key: context.read<BlockController>().globalRightSideKey,
-                    )),
+                child: RightSideWidget(
+                  key: context.read<BlockController>().globalRightSideKey,
+                ),
               )),
         ],
       ),
