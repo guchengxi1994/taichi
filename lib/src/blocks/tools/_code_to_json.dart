@@ -1,6 +1,6 @@
 import 'package:taichi/src/blocks/_enums.dart';
 
-import '../_drag_controller.dart';
+import '../_block_controller.dart';
 
 /// 生成 ```json``` 格式的组件样式，
 ///

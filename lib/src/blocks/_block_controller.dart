@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-18 19:18:00
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-20 21:02:20
+ * @LastEditTime: 2022-05-20 22:51:14
  */
 // ignore_for_file: prefer_final_fields
 
@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 
 import '_enums.dart';
 import '_operation.dart';
-import '_t_block_wapper.dart';
+import '_block_wapper.dart';
 import '_constants.dart';
 
 class BlockController extends ChangeNotifier {
@@ -102,6 +102,9 @@ class BlockController extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  /// 修改父节点
+  changeAncestor({required int ancestorIndex}) {}
 
   /// 移除一个widget
   @Deprecated("use ```changeState``` instead")

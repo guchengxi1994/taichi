@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-18 19:18:00
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-20 21:31:16
+ * @LastEditTime: 2022-05-20 22:03:44
  */
 
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ import 'package:taichi/src/UI/taichi/taichi.dart';
 
 import '../UI/toast_mixin/t_toast_mixin.dart';
 import '_code_gen.dart';
-import '_drag_controller.dart';
+import '_block_controller.dart';
 import '_draggable_widget.dart';
 import '_constants.dart';
 import '_right_side_widget.dart';

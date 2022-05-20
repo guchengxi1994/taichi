@@ -5,12 +5,12 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-18 19:18:00
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-18 22:27:58
+ * @LastEditTime: 2022-05-20 22:54:43
  */
 import 'package:flutter/material.dart';
 
 class BlockConstants {
-  static const String version = "alpha+2";
+  static const String version = "alpha+3-pre";
   BlockConstants._();
   static const double appbarHeight = 50;
   static const double taichiDraggableWidgetSize = 100;

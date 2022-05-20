@@ -1,9 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taichi/src/blocks/_operation.dart';
 
-import '_drag_controller.dart';
-import '_t_block_wapper.dart';
+import '_block_controller.dart';
+import '_block_wapper.dart';
 import '_constants.dart';
 
 class RightSideWidget extends StatefulWidget {
@@ -22,6 +23,7 @@ class _RightSideWidgetState extends State<RightSideWidget> {
   void dispose() {
     widthTextController.dispose();
     heightTextController.dispose();
+    _ancestorController.dispose();
     super.dispose();
   }
 
@@ -167,6 +169,15 @@ class _RightSideWidgetState extends State<RightSideWidget> {
 
           Text("距离左侧距离\n${k.currentState!.left.ceil()}"),
           Text("距离顶部距离\n${k.currentState!.top.ceil()}"),
+          Container(
+            height: 5,
+            color: Colors.black,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+
+          _changeRelationRegion(),
 
           const SizedBox(
             height: 20,
@@ -209,5 +220,87 @@ class _RightSideWidgetState extends State<RightSideWidget> {
         ],
       );
     }
+  }
+
+  Widget _changeRelationRegion() {
+    return Card(
+      child: SizedBox(
+        width: context.watch<BlockController>().screenWidth / 6,
+        child: Column(
+          children: [
+            _ancestor(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  final TextEditingController _ancestorController = TextEditingController();
+
+  Widget _ancestor() {
+    return SizedBox(
+      width: context.watch<BlockController>().screenWidth / 7,
+      height: 50,
+      child: Container(
+        color: Colors.transparent,
+
+        ///Alignment 用来对齐 Widget
+        alignment: const Alignment(0, 0),
+
+        ///文本输入框
+        child: InkWell(
+          onTap: () async {
+            showCupertinoDialog(
+                context: context,
+                builder: (context) {
+                  return CupertinoAlertDialog(
+                    title: const Text("设置父节点"),
+                    content: Material(
+                        color: Colors.transparent,
+                        child: SingleChildScrollView()),
+                    actions: [
+                      CupertinoActionSheetAction(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("取消")),
+                      CupertinoActionSheetAction(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("确定"))
+                    ],
+                  );
+                });
+          },
+          child: TextField(
+            ///是否可编辑
+            enabled: false,
+            controller: _ancestorController,
+
+            ///用来配置 TextField 的样式风格
+            decoration: const InputDecoration(
+              labelText: "父节点:  0.Taichi board(root)",
+              hintMaxLines: 2,
+              labelStyle: TextStyle(color: Colors.black),
+              hintText: "选择结束时间",
+              disabledBorder: OutlineInputBorder(
+                ///设置边框四个角的弧度
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+
+                ///用来配置边框的样式
+                borderSide: BorderSide(
+                  ///设置边框的颜色
+                  color: Colors.blue,
+
+                  ///设置边框的粗细
+                  width: 2.0,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

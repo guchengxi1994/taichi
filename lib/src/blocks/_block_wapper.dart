@@ -5,12 +5,12 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-18 19:18:00
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-20 20:39:10
+ * @LastEditTime: 2022-05-20 22:52:55
  */
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '_drag_controller.dart';
+import '_block_controller.dart';
 import '_constants.dart';
 import '_operation.dart';
 
@@ -22,13 +22,23 @@ class BlocksWrapperWidget extends StatefulWidget {
       required this.index,
       required this.initialLeft,
       required this.initialTop,
-      this.widgetType = "Container"})
+      this.widgetType = "Container",
+      this.ancestorIndex = 0})
       : super(key: key);
   Widget child;
   int index;
   double initialTop;
   double initialLeft;
   String widgetType;
+
+  /// alpha + 3 版本加入 ancestor index
+  ///
+  /// 0 代表根节点，其余从1开始
+  ///
+  /// 默认是根节点。
+  ///
+  /// 用于绘制树形图
+  int ancestorIndex;
 
   @override
   State<BlocksWrapperWidget> createState() => BlocksWrapperWidgetState();
