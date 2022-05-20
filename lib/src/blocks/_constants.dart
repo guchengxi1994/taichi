@@ -10,7 +10,7 @@
 import 'package:flutter/material.dart';
 
 class BlockConstants {
-  static const String version = "alpha+1";
+  static const String version = "alpha+2";
   BlockConstants._();
   static const double appbarHeight = 50;
   static const double taichiDraggableWidgetSize = 100;

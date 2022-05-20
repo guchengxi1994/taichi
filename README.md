@@ -21,10 +21,14 @@ taichi:
         ref: stable
 ```
 
+> 如果想尝试新功能，可以使用 dev 分支或者 builder 分支
+
 ## 2. 功能
 
-[dart实现的复数](./readme_complex.md)
+[1.dart实现的复数](./readme_complex.md)
 
-[太极屏幕自适应](./readme_fit.md)
+[2.太极屏幕自适应](./readme_fit.md)  ```未开发完成，移动端release包可能存在问题，但是debug包测试没有问题```
 
-[太极UI组件](./readme_ui.md)
+[3.太极UI组件](./readme_ui.md)
+
+[4.UI转代码生成工具](./readme_taichi_board.md)  持续更新中，   在线[demo](https://guchengxi1994.github.io/taichi_board/)

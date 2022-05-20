@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:taichi/src/blocks/_operation.dart';
 
 import '_drag_controller.dart';
 import '_t_block_wapper.dart';
@@ -62,9 +63,23 @@ class _RightSideWidgetState extends State<RightSideWidget> {
                         try {
                           double d = double.parse(widthTextController.text);
                           if (k.currentState!.width != d) {
-                            k.currentState!.setWidth(d);
+                            // k.currentState!.setWidth(d);
+                            context.read<BlockController>().changeState(
+                                current: WidgetState(width: d),
+                                prev: WidgetState(
+                                    isVisiable: true,
+                                    width: k.currentState!.width,
+                                    height: k.currentState!.height,
+                                    offset: Offset(k.currentState!.left,
+                                        k.currentState!.top)),
+                                index: context
+                                        .read<BlockController>()
+                                        .currentSelectedWidgetId -
+                                    1);
                           }
-                        } catch (_) {}
+                        } catch (e) {
+                          debugPrint(e.toString());
+                        }
                       },
                       icon: const Icon(
                         Icons.done,
@@ -86,7 +101,19 @@ class _RightSideWidgetState extends State<RightSideWidget> {
                         try {
                           double d = double.parse(heightTextController.text);
                           if (k.currentState!.height != d) {
-                            k.currentState!.setHeight(d);
+                            // k.currentState!.setHeight(d);
+                            context.read<BlockController>().changeState(
+                                current: WidgetState(height: d),
+                                prev: WidgetState(
+                                    isVisiable: true,
+                                    width: k.currentState!.width,
+                                    height: k.currentState!.height,
+                                    offset: Offset(k.currentState!.left,
+                                        k.currentState!.top)),
+                                index: context
+                                        .read<BlockController>()
+                                        .currentSelectedWidgetId -
+                                    1);
                           }
                         } catch (_) {}
                       },
@@ -114,7 +141,21 @@ class _RightSideWidgetState extends State<RightSideWidget> {
             child: TextButton(
                 onPressed: () {
                   context.read<BlockController>().changeCurrentId(-1);
-                  context.read<BlockController>().removeWidgetById(w.index - 1);
+                  // context.read<BlockController>().removeWidgetById(w.index - 1);
+                  context.read<BlockController>().changeState(
+                      prev: WidgetState(
+                          isVisiable: true,
+                          width: k.currentState!.width,
+                          height: k.currentState!.height,
+                          offset: Offset(
+                              k.currentState!.left, k.currentState!.top)),
+                      current: WidgetState(
+                          isVisiable: false,
+                          width: k.currentState!.width,
+                          height: k.currentState!.height,
+                          offset: Offset(
+                              k.currentState!.left, k.currentState!.top)),
+                      index: w.index - 1);
                 },
                 child: const Text("删除")),
           ),

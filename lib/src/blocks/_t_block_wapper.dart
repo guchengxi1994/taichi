@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 
 import '_drag_controller.dart';
 import '_constants.dart';
+import '_operation.dart';
 
 // ignore: must_be_immutable
 class BlocksWrapperWidget extends StatefulWidget {
@@ -74,6 +75,28 @@ class BlocksWrapperWidgetState extends State<BlocksWrapperWidget> {
     });
   }
 
+  /// alpha+2 版本添加的方法
+  changeState({required WidgetState current}) {
+    setState(() {
+      if (current.height != null) {
+        height = current.height!;
+      }
+
+      if (current.width != null) {
+        width = current.width!;
+      }
+
+      if (current.isVisiable != null) {
+        isVisiable = current.isVisiable!;
+      }
+
+      if (current.offset != null) {
+        left = current.offset!.dx;
+        top = current.offset!.dy;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.widgetType == "AppBar") {
@@ -89,15 +112,21 @@ class BlocksWrapperWidgetState extends State<BlocksWrapperWidget> {
               onDragEnd: (details) {
                 double widgetWidth =
                     context.read<BlockController>().screenWidth;
-                setState(() {
-                  if (widget.widgetType != "AppBar") {
-                    top = details.offset.dy - BlockConstants.appbarHeight;
-                    left = details.offset.dx - widgetWidth / 6;
-                  } else {
-                    top = 0;
-                    left = 0;
-                  }
-                });
+
+                WidgetState prev = WidgetState(offset: Offset(left, top));
+                if (widget.widgetType != "AppBar") {
+                  top = details.offset.dy - BlockConstants.appbarHeight;
+                  left = details.offset.dx - widgetWidth / 6;
+                } else {
+                  top = 0;
+                  left = 0;
+                }
+
+                context.read<BlockController>().changeState(
+                    current: WidgetState(offset: Offset(left, top)),
+                    index: widget.index - 1, // widget id 从1开始的
+                    prev: prev);
+
                 context
                     .read<BlockController>()
                     .globalRightSideKey

@@ -12,12 +12,16 @@
 import 'package:flutter/material.dart';
 
 import '_enums.dart';
+import '_operation.dart';
 import '_t_block_wapper.dart';
 import '_constants.dart';
 
 class BlockController extends ChangeNotifier {
   /// board type
   BoardType boardType = BoardType.stack;
+
+  /// 操作记录
+  Operation _operation = Operation();
 
   /// board direction
   BoardDirection boardDirection = BoardDirection.ttb;
@@ -98,16 +102,50 @@ class BlockController extends ChangeNotifier {
   }
 
   /// 移除一个widget
+  @Deprecated("use ```changeState``` instead")
   removeWidget(Widget w) {
     _currentWidgets.remove(w);
     notifyListeners();
   }
 
   /// 根据id移除(控制可见性) widget
+  @Deprecated("use ```changeState``` instead")
   removeWidgetById(int id) {
     // _currentWidgets.removeAt(id);
     // _globalKeys.removeAt(id);
     _globalKeys[id].currentState!.changeVisiable();
     notifyListeners();
+  }
+
+  /// alpha+2 版本添加的方法
+  ///
+  /// 由于需要完成操作回退的功能，
+  ///
+  /// 所以定义了 ```Operation``` 类以及
+  ///
+  /// ```WidgetState``` 类
+  ///
+  /// 通过 changeState 直接修改 Widget的状态，
+  ///
+  /// 不再需要先前各个属性值逐一修改了
+  changeState(
+      {WidgetState? prev,
+      required WidgetState current,
+      required int index,
+      bool addOperate = true}) {
+    _globalKeys[index].currentState!.changeState(current: current);
+    if (addOperate) {
+      _operation.addOperate(
+          Operate(index: index, preState: prev, nextState: current));
+    }
+    notifyListeners();
+  }
+
+  undo() {
+    if (_operation.operates.isNotEmpty) {
+      Operate op = _operation.operates.removeLast();
+      changeState(current: op.preState!, index: op.index, addOperate: false);
+      notifyListeners();
+    }
   }
 }

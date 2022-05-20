@@ -11,6 +11,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../UI/toast_mixin/t_toast_mixin.dart';
 import '_code_gen.dart';
 import '_drag_controller.dart';
 import '_draggable_widget.dart';
@@ -31,7 +32,8 @@ class _TaichiBlocksBoard extends StatefulWidget {
   State<_TaichiBlocksBoard> createState() => _TaichiBlocksBoardState();
 }
 
-class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard> {
+class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard>
+    with TaichiToastMixin {
   late Color sideColor = Colors.grey[200]!;
   final TextEditingController widthTextController = TextEditingController();
   final TextEditingController heightTextController = TextEditingController();
@@ -60,6 +62,24 @@ class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard> {
           ),
           centerTitle: true,
           actions: [
+            IconButton(
+                tooltip: "操作回退",
+                onPressed: () {
+                  context.read<BlockController>().undo();
+                },
+                icon: const Icon(
+                  Icons.undo,
+                  color: Colors.black,
+                )),
+            IconButton(
+                tooltip: "下载json",
+                onPressed: () {
+                  showUnfinishedFeatureToast();
+                },
+                icon: const Icon(
+                  Icons.download,
+                  color: Colors.black,
+                )),
             IconButton(
                 tooltip: "刷新",
                 onPressed: () {
