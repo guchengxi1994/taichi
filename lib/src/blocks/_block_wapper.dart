@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-18 19:18:00
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-20 22:52:55
+ * @LastEditTime: 2022-05-21 10:50:39
  */
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -51,6 +51,7 @@ class BlocksWrapperWidgetState extends State<BlocksWrapperWidget> {
 
   late double left;
   late double top;
+  late int ancestorIndex;
 
   bool isVisiable = true;
 
@@ -59,6 +60,12 @@ class BlocksWrapperWidgetState extends State<BlocksWrapperWidget> {
     super.initState();
     left = widget.initialLeft;
     top = widget.initialTop;
+    ancestorIndex = widget.ancestorIndex;
+  }
+
+  void changeAncestorIndex(int index) {
+    ancestorIndex = index;
+    setState(() {});
   }
 
   void setWidth(double w) {

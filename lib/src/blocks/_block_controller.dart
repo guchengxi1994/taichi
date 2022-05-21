@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-18 19:18:00
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-20 22:51:14
+ * @LastEditTime: 2022-05-21 11:13:51
  */
 // ignore_for_file: prefer_final_fields
 
@@ -56,6 +56,11 @@ class BlockController extends ChangeNotifier {
   BlocksWrapperWidget get currentWidget =>
       _currentWidgets[_currentSelectedWidgetId - 1] as BlocksWrapperWidget;
 
+  /// 根据id返回widget
+  GlobalKey<BlocksWrapperWidgetState> getKeyById(int index) {
+    return _globalKeys[index - 1];
+  }
+
   /// 获取当前操作组件的 globalkey
   GlobalKey<BlocksWrapperWidgetState> get currentKey =>
       _globalKeys[_currentSelectedWidgetId - 1];
@@ -104,7 +109,9 @@ class BlockController extends ChangeNotifier {
   }
 
   /// 修改父节点
-  changeAncestor({required int ancestorIndex}) {}
+  changeAncestor({required int ancestorIndex}) {
+    currentKey.currentState!.changeAncestorIndex(ancestorIndex);
+  }
 
   /// 移除一个widget
   @Deprecated("use ```changeState``` instead")

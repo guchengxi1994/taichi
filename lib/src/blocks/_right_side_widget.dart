@@ -18,6 +18,7 @@ class RightSideWidget extends StatefulWidget {
 class _RightSideWidgetState extends State<RightSideWidget> {
   final TextEditingController widthTextController = TextEditingController();
   final TextEditingController heightTextController = TextEditingController();
+  int groupValue = 1;
 
   @override
   void dispose() {
@@ -250,28 +251,63 @@ class _RightSideWidgetState extends State<RightSideWidget> {
         ///文本输入框
         child: InkWell(
           onTap: () async {
-            showCupertinoDialog(
+            List<Widget> ws = context.read<BlockController>().widgets;
+            int? result;
+            await showCupertinoDialog(
                 context: context,
                 builder: (context) {
-                  return CupertinoAlertDialog(
-                    title: const Text("设置父节点"),
-                    content: Material(
-                        color: Colors.transparent,
-                        child: SingleChildScrollView()),
-                    actions: [
-                      CupertinoActionSheetAction(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text("取消")),
-                      CupertinoActionSheetAction(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text("确定"))
-                    ],
-                  );
+                  return StatefulBuilder(builder: ((context, setState) {
+                    return CupertinoAlertDialog(
+                      title: const Text("设置父节点"),
+                      content: Material(
+                          color: Colors.transparent,
+                          child: SingleChildScrollView(
+                            child: Column(
+                                children: ws.map((e) {
+                              return Row(
+                                children: [
+                                  Radio(
+                                      value: (e as BlocksWrapperWidget).index,
+                                      groupValue: groupValue,
+                                      onChanged: (v) {
+                                        setState(() {
+                                          groupValue = (v as int);
+                                          result = groupValue;
+                                        });
+                                      }),
+                                  Text("${e.index}. ${e.widgetType}")
+                                ],
+                              );
+                            }).toList()),
+                          )),
+                      actions: [
+                        CupertinoActionSheetAction(
+                            onPressed: () {
+                              Navigator.of(context).pop(null);
+                            },
+                            child: const Text("取消")),
+                        CupertinoActionSheetAction(
+                            onPressed: () {
+                              Navigator.of(context).pop(result);
+                            },
+                            child: const Text("确定"))
+                      ],
+                    );
+                  }));
                 });
+            debugPrint("[ancestor index]:$result");
+            if (result != null &&
+                // ignore: use_build_context_synchronously
+                result != context.read<BlockController>().currentWidget.index) {
+              // 这里要去判断 widget type,
+              // 有些widget是单 child
+              if (result! != 0) {}
+
+              // ignore: use_build_context_synchronously
+              context
+                  .read<BlockController>()
+                  .changeAncestor(ancestorIndex: result!);
+            }
           },
           child: TextField(
             ///是否可编辑
@@ -279,12 +315,13 @@ class _RightSideWidgetState extends State<RightSideWidget> {
             controller: _ancestorController,
 
             ///用来配置 TextField 的样式风格
-            decoration: const InputDecoration(
-              labelText: "父节点:  0.Taichi board(root)",
+            decoration: InputDecoration(
+              labelText:
+                  "父节点:  ${context.read<BlockController>().currentKey.currentState!.ancestorIndex}",
               hintMaxLines: 2,
-              labelStyle: TextStyle(color: Colors.black),
-              hintText: "选择结束时间",
-              disabledBorder: OutlineInputBorder(
+              labelStyle: const TextStyle(color: Colors.black),
+              hintText: "选择父节点",
+              disabledBorder: const OutlineInputBorder(
                 ///设置边框四个角的弧度
                 borderRadius: BorderRadius.all(Radius.circular(10)),
 
