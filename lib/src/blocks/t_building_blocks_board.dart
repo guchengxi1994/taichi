@@ -5,10 +5,9 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-18 19:18:00
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-21 14:47:10
+ * @LastEditTime: 2022-05-21 20:47:49
  */
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taichi/src/UI/taichi/taichi.dart'
@@ -79,7 +78,7 @@ class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard>
               centerTitle: true,
               actions: [
                 IconButton(
-                    tooltip: "功能测试按钮",
+                    tooltip: "展示树形结构图",
                     onPressed: () {
                       debugPrint(sortWidgetList(context.read<BlockController>())
                           .toString());
@@ -89,18 +88,9 @@ class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard>
                           .push(MaterialPageRoute(builder: ((context) {
                         return TreeView(controller: controller);
                       })));
-
-                      // setState(() {
-                      //   isLoading = true;
-                      // });
-                      // debugPrint(sortWidgetList(context.read<BlockController>())
-                      //     .toString());
-                      // setState(() {
-                      //   isLoading = false;
-                      // });
                     },
                     icon: const Icon(
-                      Icons.functions,
+                      Icons.auto_graph,
                       color: Colors.black,
                     )),
                 IconButton(

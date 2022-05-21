@@ -5,12 +5,13 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-20 22:26:05
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-21 14:59:22
+ * @LastEditTime: 2022-05-21 20:42:28
  */
 import 'package:flutter/material.dart';
 
 import '../_block_controller.dart';
 import '../_block_wapper.dart';
+import '../_constants.dart';
 
 /// 组件间的结构树
 ///
@@ -29,14 +30,12 @@ class TreeView extends StatefulWidget {
 class _TreeViewState extends State<TreeView> {
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      size: const Size(1000, 800),
-      painter: TreeViewPainter(controller: widget.controller),
-      // child: Container(
-      //   width: 1000,
-      //   height: 800,
-      //   color: Colors.transparent,
-      // ),
+    return Scaffold(
+      appBar: AppBar(),
+      body: CustomPaint(
+        size: const Size(1000, 800),
+        painter: TreeViewPainter(controller: widget.controller),
+      ),
     );
   }
 }
@@ -80,22 +79,41 @@ class TreeViewPainter extends CustomPainter {
     ..style = PaintingStyle.stroke //绘画风格，默认为填充
     ..strokeWidth = 5.0; //画笔的宽度
 
+  TextPainter textPainter = TextPainter(
+    textDirection: TextDirection.rtl,
+    textWidthBasis: TextWidthBasis.longestLine,
+    maxLines: 2,
+  );
+
   @override
   void paint(Canvas canvas, Size size) {
     var result = sortWidgetList(controller);
     var keys = result.keys.toList();
-    int max = keys.last + 2;
+    // int max = keys.last + 2;
+    var path = Path();
+    double dx_ = BlockConstants.maxLineLength;
+    double dy_ = BlockConstants.maxLineLength;
     for (var i in keys) {
       // 根节点
       if (i == 0) {
+        textPainter.text = const TextSpan(
+          text: "root",
+        );
+        textPainter.layout();
+
+        canvas.drawRect(const Rect.fromLTRB(50, 75, 100, 125), _paint);
+        textPainter.paint(canvas, const Offset(50, 75));
+
         continue;
       }
 
       var v = result[i];
 
-      double dx_ = inSize.width / max;
+      // if (dx_ > 100) dx_ = BlockConstants.maxLineLength;
       if (v != null && v.isNotEmpty) {
-        double dy_ = inSize.height / (v.length + 1);
+        // double dy_ = inSize.height / (v.length + 1);
+
+        // if (dy_ > 100) dy_ = BlockConstants.maxLineLength;
 
         for (int j = 0; j < v.length; j++) {
           var toDy = (j + 1) * dy_;
@@ -105,13 +123,25 @@ class TreeViewPainter extends CustomPainter {
           var ancestorIndex = key.currentState!.ancestorIndex;
           var ancestorIndexInResult = result[i - 1]!.indexOf(ancestorIndex);
           debugPrint("[ancestorIndexInResult]:$ancestorIndexInResult");
+
           var fromDx = i * dx_;
           var fromDy = dy_ * (ancestorIndexInResult + 1);
-          var path = Path();
+
+          // 添加 text
+          textPainter.text = TextSpan(
+            text: key.currentState!.widget.widgetType,
+          );
+          textPainter.layout();
+
           path.moveTo(fromDx, fromDy);
           debugPrint("[$fromDx][$fromDy][$toDx][$toDy]");
-          // path.quadraticBezierTo(fromDx, fromDy, toDx, toDy);
-          path.lineTo(toDx, toDy);
+          path.quadraticBezierTo(
+              (fromDx + toDx) * 0.5, (fromDy + toDy) * 0.5, toDx, toDy);
+          // path.lineTo(toDx, toDy);
+          canvas.drawRect(
+              Rect.fromLTRB(toDx - 25, toDy - 25, toDx + 25, toDy + 25),
+              _paint);
+          textPainter.paint(canvas, Offset(toDx - 25, toDy - 25));
           canvas.drawPath(path, _paint);
           // print("should paint");
         }
@@ -121,6 +151,6 @@ class TreeViewPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
+    return false;
   }
 }

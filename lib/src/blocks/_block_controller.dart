@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-18 19:18:00
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-21 11:13:51
+ * @LastEditTime: 2022-05-21 19:00:22
  */
 // ignore_for_file: prefer_final_fields
 
@@ -69,6 +69,16 @@ class BlockController extends ChangeNotifier {
   changeCurrentId(int id) {
     _currentSelectedWidgetId = id;
     notifyListeners();
+  }
+
+  List<Widget> getVisibleWidgets() {
+    List<Widget> res = [];
+    for (int k = 0; k < globalKeys.length; k++) {
+      if (globalKeys[k].currentState!.isVisiable) {
+        res.add(_currentWidgets[k]);
+      }
+    }
+    return res;
   }
 
   /// 动态设置widget的宽度

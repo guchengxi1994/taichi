@@ -251,9 +251,10 @@ class _RightSideWidgetState extends State<RightSideWidget> {
         ///文本输入框
         child: InkWell(
           onTap: () async {
-            List<Widget> ws = context.read<BlockController>().widgets;
-            int? result;
-            await showCupertinoDialog(
+            List<Widget> ws =
+                context.read<BlockController>().getVisibleWidgets();
+            int? result = groupValue;
+            result = await showCupertinoDialog(
                 context: context,
                 builder: (context) {
                   return StatefulBuilder(builder: ((context, setState) {
@@ -307,6 +308,11 @@ class _RightSideWidgetState extends State<RightSideWidget> {
               context
                   .read<BlockController>()
                   .changeAncestor(ancestorIndex: result!);
+              context
+                  .read<BlockController>()
+                  .globalRightSideKey
+                  .currentState!
+                  .setState(() {});
             }
           },
           child: TextField(
