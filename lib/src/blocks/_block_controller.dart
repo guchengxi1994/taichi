@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-18 19:18:00
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-21 19:00:22
+ * @LastEditTime: 2022-05-22 20:48:52
  */
 // ignore_for_file: prefer_final_fields
 
@@ -91,25 +91,64 @@ class BlockController extends ChangeNotifier {
   addWidget(Widget w, Offset offset, String widgetType) {
     if (offset.dx >= screenWidth / 6 && offset.dx <= screenWidth / 6 * 5) {
       GlobalKey<BlocksWrapperWidgetState> key = GlobalKey();
-
-      if (widgetType == "AppBar") {
-        _currentWidgets.add(BlocksWrapperWidget(
-          key: key,
-          index: currentIndex,
-          initialTop: 0,
-          initialLeft: 0,
-          widgetType: widgetType,
-          child: w,
-        ));
-      } else {
-        _currentWidgets.add(BlocksWrapperWidget(
-          key: key,
-          index: currentIndex,
-          initialTop: offset.dy - BlockConstants.appbarHeight,
-          initialLeft: offset.dx - screenWidth / 6,
-          widgetType: widgetType,
-          child: w,
-        ));
+      switch (widgetType) {
+        case "AppBar":
+          _currentWidgets.add(BlocksWrapperWidget(
+            key: key,
+            index: currentIndex,
+            initialTop: 0,
+            initialLeft: 0,
+            widgetType: widgetType,
+            childType: ChildType.custom,
+            child: w,
+          ));
+          break;
+        case "Container":
+          _currentWidgets.add(BlocksWrapperWidget(
+            key: key,
+            index: currentIndex,
+            initialTop: offset.dy - BlockConstants.appbarHeight,
+            initialLeft: offset.dx - screenWidth / 6,
+            widgetType: widgetType,
+            childType: ChildType.single,
+            child: w,
+          ));
+          break;
+        case "SizedBox":
+          _currentWidgets.add(BlocksWrapperWidget(
+            key: key,
+            index: currentIndex,
+            initialTop: offset.dy - BlockConstants.appbarHeight,
+            initialLeft: offset.dx - screenWidth / 6,
+            widgetType: widgetType,
+            childType: ChildType.single,
+            child: w,
+          ));
+          break;
+        case "Text":
+          _currentWidgets.add(BlocksWrapperWidget(
+            key: key,
+            index: currentIndex,
+            initialTop: offset.dy - BlockConstants.appbarHeight,
+            initialLeft: offset.dx - screenWidth / 6,
+            widgetType: widgetType,
+            childType: ChildType.none,
+            child: w,
+          ));
+          break;
+        case "TextField":
+          _currentWidgets.add(BlocksWrapperWidget(
+            key: key,
+            index: currentIndex,
+            initialTop: offset.dy - BlockConstants.appbarHeight,
+            initialLeft: offset.dx - screenWidth / 6,
+            widgetType: widgetType,
+            childType: ChildType.none,
+            child: w,
+          ));
+          break;
+        default:
+          break;
       }
 
       _globalKeys.add(key);
@@ -119,8 +158,21 @@ class BlockController extends ChangeNotifier {
   }
 
   /// 修改父节点
+  ///
+  /// custom类型的暂时还没有想好怎么处理
   changeAncestor({required int ancestorIndex}) {
-    currentKey.currentState!.changeAncestorIndex(ancestorIndex);
+    var key = getKeyById(ancestorIndex);
+    if (key.currentState!.widget.childType != ChildType.none &&
+        key.currentState!.widget.childType != ChildType.custom &&
+        (key.currentState!.hasChild == false ||
+            key.currentState!.widget.childType == ChildType.multi)) {
+      currentKey.currentState!.changeAncestorIndex(ancestorIndex);
+      if (key.currentState!.widget.childType == ChildType.single) {
+        key.currentState!.changeHasChildStatus(true);
+      }
+
+      notifyListeners();
+    }
   }
 
   /// 移除一个widget
@@ -133,8 +185,6 @@ class BlockController extends ChangeNotifier {
   /// 根据id移除(控制可见性) widget
   @Deprecated("use ```changeState``` instead")
   removeWidgetById(int id) {
-    // _currentWidgets.removeAt(id);
-    // _globalKeys.removeAt(id);
     _globalKeys[id].currentState!.changeVisiable();
     notifyListeners();
   }
@@ -164,6 +214,13 @@ class BlockController extends ChangeNotifier {
           nextState: current,
           operationType: operationType));
     }
+    if (operationType == OperationType.remove) {
+      var ancestorKey =
+          getKeyById(_globalKeys[index].currentState!.ancestorIndex);
+      if (ancestorKey.currentState!.widget.childType == ChildType.single) {
+        ancestorKey.currentState!.changeHasChildStatus(false);
+      }
+    }
     notifyListeners();
   }
 
@@ -175,6 +232,13 @@ class BlockController extends ChangeNotifier {
           index: op.index,
           addOperate: false,
           operationType: OperationType.undo);
+      if (op.preState!.isVisiable == true) {
+        var ancestorKey =
+            getKeyById(_globalKeys[op.index].currentState!.ancestorIndex);
+        if (ancestorKey.currentState!.widget.childType == ChildType.single) {
+          ancestorKey.currentState!.changeHasChildStatus(true);
+        }
+      }
       notifyListeners();
     }
   }

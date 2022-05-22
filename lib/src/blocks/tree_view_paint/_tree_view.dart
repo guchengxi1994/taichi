@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-20 22:26:05
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-21 20:42:28
+ * @LastEditTime: 2022-05-22 20:53:39
  */
 import 'package:flutter/material.dart';
 
@@ -40,6 +40,7 @@ class _TreeViewState extends State<TreeView> {
   }
 }
 
+/// 暂时还有多个appbar 问题（alpha + 4）
 Map<int, List<int>> sortWidgetList(BlockController controller) {
   Map<int, List<int>> result = {
     0: [0], // root
@@ -117,14 +118,14 @@ class TreeViewPainter extends CustomPainter {
 
         for (int j = 0; j < v.length; j++) {
           var toDy = (j + 1) * dy_;
-          var toDx = (i + 1) * dx_;
+          var toDx = (i + 1) * dx_ + (i - 1) * 50;
           var key = controller.getKeyById(v[j]);
 
           var ancestorIndex = key.currentState!.ancestorIndex;
           var ancestorIndexInResult = result[i - 1]!.indexOf(ancestorIndex);
           debugPrint("[ancestorIndexInResult]:$ancestorIndexInResult");
 
-          var fromDx = i * dx_;
+          var fromDx = i * dx_ + (i - 1) * 50;
           var fromDy = dy_ * (ancestorIndexInResult + 1);
 
           // 添加 text
@@ -139,9 +140,8 @@ class TreeViewPainter extends CustomPainter {
               (fromDx + toDx) * 0.5, (fromDy + toDy) * 0.5, toDx, toDy);
           // path.lineTo(toDx, toDy);
           canvas.drawRect(
-              Rect.fromLTRB(toDx - 25, toDy - 25, toDx + 25, toDy + 25),
-              _paint);
-          textPainter.paint(canvas, Offset(toDx - 25, toDy - 25));
+              Rect.fromLTRB(toDx, toDy - 25, toDx + 50, toDy + 20), _paint);
+          textPainter.paint(canvas, Offset(toDx, toDy - 25));
           canvas.drawPath(path, _paint);
           // print("should paint");
         }

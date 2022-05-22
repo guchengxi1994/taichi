@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-18 19:18:00
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-21 10:50:39
+ * @LastEditTime: 2022-05-22 20:37:37
  */
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +23,7 @@ class BlocksWrapperWidget extends StatefulWidget {
       required this.initialLeft,
       required this.initialTop,
       this.widgetType = "Container",
+      required this.childType,
       this.ancestorIndex = 0})
       : super(key: key);
   Widget child;
@@ -40,6 +41,11 @@ class BlocksWrapperWidget extends StatefulWidget {
   /// 用于绘制树形图
   int ancestorIndex;
 
+  /// alpha+4 版本加入 Childtype
+  ///
+  /// 用来判定是不是能绑定ancestor 节点
+  ChildType childType;
+
   @override
   State<BlocksWrapperWidget> createState() => BlocksWrapperWidgetState();
 }
@@ -55,6 +61,13 @@ class BlocksWrapperWidgetState extends State<BlocksWrapperWidget> {
 
   bool isVisiable = true;
 
+  /// alpha + 4 版本加入的新的属性
+  ///
+  /// 用来判断是不是已经有一个child了
+  ///
+  /// 主要是防止 childType为single的时候重复添加child
+  bool hasChild = false;
+
   @override
   void initState() {
     super.initState();
@@ -65,6 +78,11 @@ class BlocksWrapperWidgetState extends State<BlocksWrapperWidget> {
 
   void changeAncestorIndex(int index) {
     ancestorIndex = index;
+    setState(() {});
+  }
+
+  void changeHasChildStatus(bool b) {
+    hasChild = b;
     setState(() {});
   }
 
