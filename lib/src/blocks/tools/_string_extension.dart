@@ -16,6 +16,9 @@ extension StringExtension on String {
     return "${this[0].toUpperCase()}${substring(1)}";
   }
 
+  /// 创建代码文件时，批量替换 {%v} 到 List<String> 中的元素
+  ///
+  /// 参考 golang  ```fmt.Sprintf```,性能不在考虑范畴 :)
   String format(List l) {
     var res = this;
     for (var i in l) {
