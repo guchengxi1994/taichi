@@ -5,12 +5,12 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-18 19:18:00
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-22 20:30:26
+ * @LastEditTime: 2022-05-23 19:56:19
  */
 import 'package:flutter/material.dart';
 
 class BlockConstants {
-  static const String version = "alpha+4-pre";
+  static const String version = "dev+5";
   BlockConstants._();
   static const double appbarHeight = 50;
   static const double maxLineLength = 100;
