@@ -3,7 +3,6 @@
 // that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../components/_internal_components.dart';
 import '../event_arrangers/event_arrangers.dart';
@@ -132,8 +131,7 @@ class InternalDayViewPage<T> extends StatelessWidget {
               date: date,
               onTileTap: onTileTap,
               eventArranger: eventArranger,
-              // events: controller.getEventsOnDay(date),
-              events: context.read<EventController<T>>().getEventsOnDay(date),
+              events: controller.getEventsOnDay(date),
               heightPerMinute: heightPerMinute,
               eventTileBuilder: eventTileBuilder,
               width: width -

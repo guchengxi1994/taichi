@@ -1,6 +1,5 @@
 import 'package:dart_date/dart_date.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../utils/t_dateutils.dart';
 import '../event_controller.dart';
@@ -10,10 +9,10 @@ import 'event_days.dart';
 // ignore: must_be_immutable
 class YearView<T> extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables
-  YearView({Key? key, this.locale = "zh_CN", this.controller})
+  YearView({Key? key, this.locale = "zh_CN", required this.controller})
       : super(key: key);
   String locale;
-  final EventController<T>? controller;
+  final EventController<T> controller;
 
   @override
   State<YearView> createState() => _YearViewState();
@@ -29,8 +28,7 @@ class _YearViewState<T> extends State<YearView> {
 
   @override
   Widget build(BuildContext context) {
-    List<EventDays> scheduleDates =
-        context.watch<EventController<T>>().getDates();
+    List<EventDays> scheduleDates = widget.controller.getDates();
     debugPrint("[dates list length]:${scheduleDates.length}");
     var currentWidth = MediaQuery.of(context).size.width;
     return SizedBox(
@@ -77,10 +75,12 @@ class _YearViewState<T> extends State<YearView> {
               var utc = DateTime(_dateUtils.year, rowId, columnId).isSaturday ||
                   DateTime(_dateUtils.year, rowId, columnId).isSunday;
               var thisDay = DateTime(_dateUtils.year, rowId, columnId);
-
+              // debugPrint("[thisDay]:$thisDay");
               BoxStatus status = BoxStatus.nothing;
               for (var sd in scheduleDates) {
-                if (sd.date == thisDay) {
+                // debugPrint("[sd.date]:${sd.date}");
+                if (sd.date.simpleEquals(thisDay)) {
+                  // debugPrint("[should be here]");
                   status = sd.status;
                 }
               }

@@ -3,7 +3,6 @@
 // that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../calendar_constants.dart';
 import '../calendar_event_data.dart';
@@ -310,7 +309,7 @@ class DayViewState<T> extends State<DayView<T>> {
                         // debugPrint("[calendar view index] :$index");
 
                         return InternalDayViewPage<T>(
-                          controller: context.read<EventController<T>>(),
+                          controller: widget.controller!,
                           key: ValueKey(
                               _hourHeight.toString() + date.toString()),
                           width: _width,
