@@ -175,8 +175,8 @@ packages:
     description:
       path: taichi_core
       ref: modify-project-structure
-      resolved-ref: "994926be590a4ee5807b375ab6f1b2e47a344d82"
-      url: "git@gitee.com:guchengxi1994/taichi.git"
+      resolved-ref: "375f64da08ed23cabe3fb72303528722bc37264a"
+      url: "https://github.com/guchengxi1994/taichi"
     source: git
     version: "0.0.5-dev"
   term_glyph:

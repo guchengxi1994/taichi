@@ -39,7 +39,7 @@ dependencies:
 
   taichi:
     git:
-        url: git@gitee.com:guchengxi1994/taichi.git
+        url: https://github.com/guchengxi1994/taichi
         ref: modify-project-structure
         path: taichi_core
 
