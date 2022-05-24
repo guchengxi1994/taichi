@@ -42,6 +42,11 @@ dependencies:
         url: https://github.com/guchengxi1994/taichi
         ref: modify-project-structure
         path: taichi_core
+  
+  ## local taichi for develop
+  
+  # taichi:
+  #   path: D:/github_repo/taichi/taichi_core
 
 dev_dependencies:
   flutter_test:
