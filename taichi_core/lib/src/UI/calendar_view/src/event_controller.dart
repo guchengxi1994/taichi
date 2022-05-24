@@ -3,11 +3,11 @@
 // that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:taichi/src/UI/calendar_view/src/year_view/day_box.dart';
-import 'package:taichi/src/UI/calendar_view/src/year_view/event_days.dart';
 
 import 'calendar_event_data.dart';
 import 'typedefs.dart';
+import 'year_view/day_box.dart';
+import 'year_view/event_days.dart';
 
 class EventController<T> extends ChangeNotifier {
   /// This method will provide list of events on particular date.

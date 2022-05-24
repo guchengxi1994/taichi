@@ -11,19 +11,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:taichi/src/UI/taichi/taichi.dart'
-    show TaichiOverlay, TaichiGraph;
-import 'package:taichi/src/blocks/_enums.dart';
+import 'package:taichi/taichi.dart' show TaichiOverlay, TaichiGraph;
 
-import '../UI/toast_mixin/t_toast_mixin.dart';
 import '_code_gen.dart';
 import '_block_controller.dart';
 import '_draggable_widget.dart';
 import '_constants.dart';
+import '_enums.dart';
 import '_right_side_widget.dart';
 import 'tools/_save_file_on_desktop.dart'
     if (dart.library.html) 'tools/_save_file_on_web.dart';
 import 'tree_view_paint/_tree_view.dart';
+// ignore: implementation_imports
+import 'package:taichi/src/UI/toast_mixin/t_toast_mixin.dart';
 
 /// 绘图板
 ///

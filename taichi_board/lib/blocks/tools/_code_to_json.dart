@@ -1,4 +1,4 @@
-import 'package:taichi/src/blocks/_enums.dart';
+import '../_enums.dart';
 
 import '../_block_controller.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:taichi/src/blocks/_operation.dart';
+import '_operation.dart';
 
 import '_block_controller.dart';
 import '_block_wapper.dart';

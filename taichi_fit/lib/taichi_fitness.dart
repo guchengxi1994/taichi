@@ -8,10 +8,13 @@
  * @LastEditTime: 2022-05-06 21:11:24
  */
 
+library taichi_fit;
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:taichi/src/fit/_fitness_provider.dart';
-import 'package:taichi/src/utils/taichi_utils.dart';
+import 'package:taichi/taichi.dart';
+
+import '_fitness_provider.dart';
 
 const _fitnessVersion = "0.0.2-alpha+3";
 

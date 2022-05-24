@@ -1,8 +1,8 @@
 import 'package:dart_date/dart_date.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:taichi/src/utils/t_dateutils.dart';
 
+import '../../../../utils/t_dateutils.dart';
 import '../event_controller.dart';
 import 'day_box.dart';
 import 'event_days.dart';
