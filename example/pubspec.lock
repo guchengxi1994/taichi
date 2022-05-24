@@ -177,10 +177,10 @@ packages:
       relative: true
     source: path
     version: "0.0.5-dev"
-  taichi_board:
+  taichi_board_designer:
     dependency: "direct main"
     description:
-      path: "../taichi_board"
+      path: "../taichi_board_designer"
       relative: true
     source: path
     version: "1.0.0+1"

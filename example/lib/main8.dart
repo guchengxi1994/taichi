@@ -8,7 +8,7 @@
  * @LastEditTime: 2022-05-18 22:08:59
  */
 import 'package:flutter/material.dart';
-import 'package:taichi_board/taichi_board.dart';
+import 'package:taichi_board_designer/taichi_board.dart';
 
 void main() => runApp(
       const MyApp(),
