@@ -8,10 +8,12 @@
  * @LastEditTime: 2022-05-21 20:47:49
  */
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taichi/src/UI/taichi/taichi.dart'
     show TaichiOverlay, TaichiGraph;
+import 'package:taichi/src/blocks/_enums.dart';
 
 import '../UI/toast_mixin/t_toast_mixin.dart';
 import '_code_gen.dart';
@@ -65,14 +67,67 @@ class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard>
                   const SizedBox(
                     width: 10,
                   ),
-                  const Text(
-                    "Taichi board",
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                  InkWell(
+                    onTap: () async {
+                      var result = context.read<BlockController>().boardType;
+                      var res = await showCupertinoDialog(
+                          context: context,
+                          builder: (context) {
+                            return StatefulBuilder(
+                                builder: ((context, setState) {
+                              return CupertinoAlertDialog(
+                                title: const Text("选择类型"),
+                                content: Material(
+                                  color: Colors.transparent,
+                                  child: Column(
+                                    children: BoardType.values
+                                        .map(
+                                          (e) => InkWell(
+                                              onTap: () {
+                                                result = e;
+                                                setState(() {});
+                                              },
+                                              child: Text(
+                                                e.toStr(),
+                                                style: TextStyle(
+                                                    color: result == e
+                                                        ? Colors.red
+                                                        : Colors.black),
+                                              )),
+                                        )
+                                        .toList(),
+                                  ),
+                                ),
+                                actions: [
+                                  CupertinoActionSheetAction(
+                                      onPressed: () {
+                                        Navigator.of(context).pop(0);
+                                      },
+                                      child: const Text("取消")),
+                                  CupertinoActionSheetAction(
+                                      onPressed: () {
+                                        Navigator.of(context).pop(1);
+                                      },
+                                      child: const Text("确定")),
+                                ],
+                              );
+                            }));
+                          });
+
+                      if (res == 1) {
+                        // ignore: use_build_context_synchronously
+                        context.read<BlockController>().changeBoardType(result);
+                      }
+                    },
+                    child: Text(
+                      "Taichi board(${context.watch<BlockController>().boardType.toStr()})",
+                      style: const TextStyle(
+                        fontSize: 25,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
               centerTitle: true,
@@ -163,9 +218,21 @@ class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard>
                   flex: 4,
                   child: SizedBox(
                     height: widgetHeight,
-                    child: Stack(
-                      children: context.watch<BlockController>().widgets,
-                    ),
+                    child: context.watch<BlockController>().boardType !=
+                            BoardType.custom
+                        ? Stack(
+                            children: context.watch<BlockController>().widgets,
+                          )
+                        : Card(
+                            margin: const EdgeInsets.all(5),
+                            shadowColor:
+                                const Color.fromARGB(255, 204, 148, 148),
+                            elevation: 20,
+                            child: Stack(
+                              children:
+                                  context.watch<BlockController>().widgets,
+                            ),
+                          ),
                   )),
               const Divider(
                 thickness: 2,

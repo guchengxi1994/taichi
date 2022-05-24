@@ -52,6 +52,13 @@ class BlockController extends ChangeNotifier {
   /// 用于刷新右侧组件
   GlobalKey globalRightSideKey = GlobalKey();
 
+  changeBoardType(BoardType b) {
+    if (boardType != b) {
+      boardType = b;
+      notifyListeners();
+    }
+  }
+
   /// 获取当前操作的组件
   BlocksWrapperWidget get currentWidget =>
       _currentWidgets[_currentSelectedWidgetId - 1] as BlocksWrapperWidget;

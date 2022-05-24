@@ -19,6 +19,23 @@
 /// 通过单个组件样式定义，后续可以添加到左侧列表中作为自定义组件样式
 enum BoardType { stack, scrollView, common, custom }
 
+extension Print on BoardType {
+  String toStr() {
+    switch (this) {
+      case BoardType.stack:
+        return "stack";
+      case BoardType.scrollView:
+        return "scrollView";
+      case BoardType.common:
+        return "common";
+      case BoardType.custom:
+        return "custom";
+      default:
+        return "";
+    }
+  }
+}
+
 /// ```ltr``` 从左往右
 ///
 /// ```ttb``` 从上到下
