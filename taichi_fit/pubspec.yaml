@@ -32,7 +32,10 @@ dependencies:
 
   provider: ^6.0.2
   taichi:
-    path: ../taichi_core/
+    git:
+        url: git@gitee.com:guchengxi1994/taichi.git
+        ref: modify-project-structure
+        path: taichi_core
 
 dev_dependencies:
   flutter_test:
