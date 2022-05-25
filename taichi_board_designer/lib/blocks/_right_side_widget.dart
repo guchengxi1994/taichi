@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '_operation.dart';
+import 'package:taichi_board_designer/blocks/entity/_enums.dart';
+import 'package:taichi_board_designer/blocks/providers/_right_side_widget_controller.dart';
+import 'entity/_operation.dart';
 
-import '_block_controller.dart';
+import 'providers/_main_block_controller.dart';
 import '_block_wapper.dart';
-import '_constants.dart';
+import 'entity/_constants.dart';
+import 'widgets/_right_side_detail_widget.dart';
 
 class RightSideWidget extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables
@@ -30,6 +33,12 @@ class _RightSideWidgetState extends State<RightSideWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (context.watch<RightSideWidgetController>().isChange) {
+      return RightSideDetaiWidget(
+        controller: context.read<RightSideWidgetController>(),
+      );
+    }
+
     return Column(
       children: [
         Expanded(
@@ -168,22 +177,24 @@ class _RightSideWidgetState extends State<RightSideWidget> {
             color: Colors.black,
           ),
 
-          Text("距离左侧距离\n${k.currentState!.left.ceil()}"),
-          Text("距离顶部距离\n${k.currentState!.top.ceil()}"),
+          if (context.watch<BlockController>().boardType != BoardType.custom)
+            Text("距离左侧距离\n${k.currentState!.left.ceil()}"),
+          if (context.watch<BlockController>().boardType != BoardType.custom)
+            Text("距离顶部距离\n${k.currentState!.top.ceil()}"),
           Container(
             height: 5,
             color: Colors.black,
           ),
+
           const SizedBox(
             height: 10,
           ),
 
           _changeRelationRegion(),
-
-          const SizedBox(
-            height: 20,
-          ),
-
+          if (context.watch<BlockController>().boardType != BoardType.custom)
+            const SizedBox(
+              height: 20,
+            ),
           Align(
             alignment: Alignment.centerRight,
             child: TextButton(

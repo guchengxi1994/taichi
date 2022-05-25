@@ -10,7 +10,7 @@
 import 'package:flutter/material.dart';
 
 class BlockConstants {
-  static const String version = "dev+5";
+  static const String version = "dev6";
   BlockConstants._();
   static const double appbarHeight = 50;
   static const double maxLineLength = 100;

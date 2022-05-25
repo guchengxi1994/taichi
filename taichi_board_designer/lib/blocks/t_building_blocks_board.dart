@@ -13,11 +13,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taichi/taichi.dart' show TaichiOverlay, TaichiGraph;
 
-import '_code_gen.dart';
-import '_block_controller.dart';
+import '_custom_floating_action_button_loation.dart';
+import 'providers/_right_side_widget_controller.dart';
+import 'tools/_code_gen.dart';
+import 'providers/_main_block_controller.dart';
 import '_draggable_widget.dart';
-import '_constants.dart';
-import '_enums.dart';
+import 'entity/_constants.dart';
+import 'entity/_enums.dart';
 import '_right_side_widget.dart';
 import 'tools/_save_file_on_desktop.dart'
     if (dart.library.html) 'tools/_save_file_on_web.dart';
@@ -55,6 +57,22 @@ class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard>
     return TaichiOverlay.simple(
         isLoading: isLoading,
         child: Scaffold(
+          floatingActionButton:
+              context.watch<BlockController>().boardType == BoardType.custom
+                  ? FloatingActionButton.extended(
+                      onPressed: () {
+                        context
+                            .read<RightSideWidgetController>()
+                            .changeWidgetStatus();
+                      },
+                      label: context.watch<RightSideWidgetController>().isChange
+                          ? const Text("普通样式修改")
+                          : const Text("详细样式修改"),
+                      icon: const Icon(Icons.change_circle),
+                    )
+                  : null,
+          floatingActionButtonLocation: CustomFloatingActionButtonLocation(
+              FloatingActionButtonLocation.endFloat, -widgetWidth / 6, -50),
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(BlockConstants.appbarHeight),
             child: AppBar(
@@ -258,8 +276,13 @@ class TaichiBlocksBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => BlockController(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => BlockController(),
+        ),
+        ChangeNotifierProvider(create: (_) => RightSideWidgetController()),
+      ],
       builder: (context, _) {
         return _TaichiBlocksBoard();
       },

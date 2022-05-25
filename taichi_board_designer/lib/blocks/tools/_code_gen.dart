@@ -9,13 +9,13 @@
  */
 import 'package:flutter/material.dart';
 
-import '_enums.dart';
-import '_block_controller.dart';
-import '_block_wapper.dart';
-import 'templete_codes/_file_title.dart';
-import 'templete_codes/_positioned_code.dart';
-import 'templete_codes/_stack_templete_code.dart';
-import 'tools/_string_extension.dart';
+import '../entity/_enums.dart';
+import '../providers/_main_block_controller.dart';
+import '../_block_wapper.dart';
+import '../templete_codes/_file_title.dart';
+import '../templete_codes/_positioned_code.dart';
+import '../templete_codes/_stack_templete_code.dart';
+import '_string_extension.dart';
 
 class NullWidget extends StatelessWidget {
   const NullWidget({Key? key}) : super(key: key);

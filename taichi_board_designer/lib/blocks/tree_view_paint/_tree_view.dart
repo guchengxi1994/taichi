@@ -9,9 +9,9 @@
  */
 import 'package:flutter/material.dart';
 
-import '../_block_controller.dart';
+import '../providers/_main_block_controller.dart';
 import '../_block_wapper.dart';
-import '../_constants.dart';
+import '../entity/_constants.dart';
 
 /// 组件间的结构树
 ///
@@ -123,19 +123,26 @@ class TreeViewPainter extends CustomPainter {
 
           var ancestorIndex = key.currentState!.ancestorIndex;
           var ancestorIndexInResult = result[i - 1]!.indexOf(ancestorIndex);
-          debugPrint("[ancestorIndexInResult]:$ancestorIndexInResult");
+          // debugPrint("[ancestorIndexInResult]:$ancestorIndexInResult");
 
           var fromDx = i * dx_ + (i - 1) * 50;
           var fromDy = dy_ * (ancestorIndexInResult + 1);
 
           // 添加 text
-          textPainter.text = TextSpan(
-            text: key.currentState!.widget.widgetType,
-          );
+          if (key.currentState!.isVisiable) {
+            textPainter.text = TextSpan(
+              text: key.currentState!.widget.widgetType,
+            );
+          } else {
+            textPainter.text = TextSpan(
+                text: key.currentState!.widget.widgetType,
+                style: const TextStyle(color: Color.fromARGB(255, 54, 45, 45)));
+          }
+
           textPainter.layout();
 
           path.moveTo(fromDx, fromDy);
-          debugPrint("[$fromDx][$fromDy][$toDx][$toDy]");
+          // debugPrint("[$fromDx][$fromDy][$toDx][$toDy]");
           path.quadraticBezierTo(
               (fromDx + toDx) * 0.5, (fromDy + toDy) * 0.5, toDx, toDy);
           // path.lineTo(toDx, toDy);

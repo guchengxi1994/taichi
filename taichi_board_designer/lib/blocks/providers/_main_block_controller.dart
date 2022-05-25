@@ -11,10 +11,10 @@
 
 import 'package:flutter/material.dart';
 
-import '_enums.dart';
-import '_operation.dart';
-import '_block_wapper.dart';
-import '_constants.dart';
+import '../entity/_enums.dart';
+import '../entity/_operation.dart';
+import '../_block_wapper.dart';
+import '../entity/_constants.dart';
 
 class BlockController extends ChangeNotifier {
   /// board type
@@ -222,10 +222,12 @@ class BlockController extends ChangeNotifier {
           operationType: operationType));
     }
     if (operationType == OperationType.remove) {
-      var ancestorKey =
-          getKeyById(_globalKeys[index].currentState!.ancestorIndex);
-      if (ancestorKey.currentState!.widget.childType == ChildType.single) {
-        ancestorKey.currentState!.changeHasChildStatus(false);
+      var ancestorIndex = _globalKeys[index].currentState!.ancestorIndex;
+      if (ancestorIndex >= 1) {
+        var ancestorKey = getKeyById(ancestorIndex);
+        if (ancestorKey.currentState!.widget.childType == ChildType.single) {
+          ancestorKey.currentState!.changeHasChildStatus(false);
+        }
       }
     }
     notifyListeners();
@@ -240,10 +242,14 @@ class BlockController extends ChangeNotifier {
           addOperate: false,
           operationType: OperationType.undo);
       if (op.preState!.isVisiable == true) {
-        var ancestorKey =
-            getKeyById(_globalKeys[op.index].currentState!.ancestorIndex);
-        if (ancestorKey.currentState!.widget.childType == ChildType.single) {
-          ancestorKey.currentState!.changeHasChildStatus(true);
+        var ancestorIndex = _globalKeys[op.index].currentState!.ancestorIndex;
+
+        if (ancestorIndex >= 1) {
+          var ancestorKey =
+              getKeyById(_globalKeys[op.index].currentState!.ancestorIndex);
+          if (ancestorKey.currentState!.widget.childType == ChildType.single) {
+            ancestorKey.currentState!.changeHasChildStatus(true);
+          }
         }
       }
       notifyListeners();

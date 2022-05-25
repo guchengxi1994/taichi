@@ -1,6 +1,6 @@
-import '../_enums.dart';
+import '../entity/_enums.dart';
 
-import '../_block_controller.dart';
+import '../providers/_main_block_controller.dart';
 
 /// 生成 ```json``` 格式的组件样式，
 ///

@@ -9,10 +9,12 @@
  */
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:taichi_board_designer/blocks/entity/_enums.dart';
+import 'package:taichi_board_designer/blocks/providers/_right_side_widget_controller.dart';
 
-import '_block_controller.dart';
-import '_constants.dart';
-import '_operation.dart';
+import 'providers/_main_block_controller.dart';
+import 'entity/_constants.dart';
+import 'entity/_operation.dart';
 
 // ignore: must_be_immutable
 class BlocksWrapperWidget extends StatefulWidget {
@@ -171,6 +173,12 @@ class BlocksWrapperWidgetState extends State<BlocksWrapperWidget> {
               },
               onDragStarted: () {
                 context.read<BlockController>().changeCurrentId(widget.index);
+                if (context.read<BlockController>().boardType ==
+                    BoardType.custom) {
+                  context
+                      .read<RightSideWidgetController>()
+                      .changeWidgetType(widget.widgetType);
+                }
               },
               feedback: Container(
                 width: width,
@@ -185,6 +193,12 @@ class BlocksWrapperWidgetState extends State<BlocksWrapperWidget> {
               child: InkWell(
                 onTap: () {
                   context.read<BlockController>().changeCurrentId(widget.index);
+                  if (context.read<BlockController>().boardType ==
+                      BoardType.custom) {
+                    context
+                        .read<RightSideWidgetController>()
+                        .changeWidgetType(widget.widgetType);
+                  }
                 },
                 child: Container(
                   decoration: BoxDecoration(

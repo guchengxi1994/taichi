@@ -7,21 +7,12 @@
  * @LastEditors: xiaoshuyui
  * @LastEditTime: 2022-05-20 22:03:45
  */
-/*
- * @Descripttion: 
- * @version: 
- * @Author: xiaoshuyui
- * @email: guchengxi1994@qq.com
- * @Date: 2022-05-18 19:18:00
- * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-19 20:19:33
- */
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '_block_controller.dart';
-import '_constants.dart';
+import 'providers/_main_block_controller.dart';
+import 'entity/_constants.dart';
 
 /// 左侧列表中，可拖动的小部件
 ///
