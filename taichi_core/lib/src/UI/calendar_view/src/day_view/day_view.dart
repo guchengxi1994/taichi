@@ -359,9 +359,20 @@ class DayViewState<T> extends State<DayView<T>> {
     DateTime endDuration,
   ) {
     if (events.isNotEmpty) {
+      var subStr = "";
+      if (events[0].eventStatus == 0) {
+        subStr = "(未完成)";
+      } else if (events[0].eventStatus == 1) {
+        subStr = "(已完成)";
+      } else if (events[0].eventStatus == 2) {
+        subStr = "(已延迟)";
+      } else if (events[0].eventStatus == 3) {
+        subStr = "(已放弃)";
+      }
+
       return RoundedEventTile(
         borderRadius: BorderRadius.circular(10.0),
-        title: events[0].title,
+        title: events[0].title + subStr,
         totalEvents: events.length - 1,
         description: events[0].description,
         padding: const EdgeInsets.all(10.0),

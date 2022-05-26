@@ -80,6 +80,13 @@ class EventController<T> extends ChangeNotifier {
     }
   }
 
+  /// clear all events
+  void clearAll() {
+    _events.clear();
+    _eventList.clear();
+    _rangingEventList.clear();
+  }
+
   void _addEvent(CalendarEventData<T> event) {
     assert(event.endDate.difference(event.date).inDays >= 0,
         'The end date must be greater or equal to the start date');

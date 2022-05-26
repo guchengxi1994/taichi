@@ -37,7 +37,7 @@ class CalendarEventData<T> {
 
   final DateTime? _endDate;
 
-  /// status ,0 undergoing,1 done,2 delayed
+  /// status ,0 undergoing,1 done,2 delayed,3 abandoned
   final int? eventStatus;
 
   /// Stores all the events on [date]
