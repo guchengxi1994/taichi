@@ -1,10 +1,19 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: xiaoshuyui
+ * @email: guchengxi1994@qq.com
+ * @Date: 2022-05-28 17:34:35
+ * @LastEditors: xiaoshuyui
+ * @LastEditTime: 2022-05-29 18:31:22
+ */
 // ignore_for_file: avoid_print
 
 import 'dart:io';
 
 import 'package:ini/ini.dart';
 
-File file = File("config.ini");
+File file = File("test/config.ini");
 
 void doConfigThings(Config config, String label) {
   print("$label: loaded config from ${file.path}");

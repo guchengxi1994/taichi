@@ -80,3 +80,7 @@ p, bob, data2, write
 【参考资料】
 
 [casbin-权限管理](https://www.cnblogs.com/wang_yb/p/9987397.html)
+
+[Casbin访问控制框架入门](https://www.jianshu.com/p/aa1ce4932fda)
+
+[Casbin学习心得记录](https://zhuanlan.zhihu.com/p/397391798)
