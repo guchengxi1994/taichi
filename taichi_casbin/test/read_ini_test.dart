@@ -36,13 +36,15 @@ void doConfigThings(Config config, String label) {
 }
 
 void main() {
-  file
-      .readAsLines()
-      .then((lines) => Config.fromStrings(lines))
-      .then((Config config) {
-    doConfigThings(config, "async");
-  });
+  // file
+  //     .readAsLines()
+  //     .then((lines) => Config.fromStrings(lines))
+  //     .then((Config config) {
+  //   doConfigThings(config, "async");
+  // });
 
   final Config config = Config.fromStrings(file.readAsLinesSync());
-  doConfigThings(config, "sync");
+  print(config.get("matchers", "m"));
+
+  // doConfigThings(config, "sync");
 }

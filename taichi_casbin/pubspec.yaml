@@ -4,7 +4,7 @@ introduction: an open-source access control library, inspired by casbin ,written
 
 homepage: https://github.com/guchengxi1994/taichi
 
-version: 0.0.1 # dev1
+version: 0.0.2 # dev2
 
 environment: 
   sdk: ">=2.16.2 <3.0.0"
@@ -13,7 +13,9 @@ environment:
 dependencies:
   csv: ^5.0.1
   equatable: ^2.0.3
+  glob: ^2.0.2
   ini: ^2.1.0
+  synchronized: ^3.0.0+2
   tuple: ^2.0.0
 
 dev_dependencies:

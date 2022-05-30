@@ -19,4 +19,13 @@ class Request<T extends Equatable, E extends Equatable, V extends Equatable> {
   V action;
 
   Request({required this.action, required this.object, required this.subject});
+
+  @override
+  String toString() {
+    return "subject:${subject.toString()},object:${object.toString()},action:${action.toString()}";
+  }
+
+  @override
+  // ignore: hash_and_equals
+  int get hashCode => subject.hashCode + object.hashCode + action.hashCode;
 }

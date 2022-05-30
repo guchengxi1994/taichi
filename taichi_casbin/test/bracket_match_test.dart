@@ -15,6 +15,8 @@ void main() {
 
   test("测试括号是不是左右对应", () {
     final result = s.getBracketMatches();
+    // ignore: avoid_print
+    print(result.toString());
     expect(result.matches, true);
   });
 }
