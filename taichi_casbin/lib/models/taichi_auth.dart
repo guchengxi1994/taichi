@@ -7,7 +7,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-28 19:55:23
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-29 17:30:42
+ * @LastEditTime: 2022-05-30 19:02:11
  */
 import 'dart:async';
 import 'dart:io';
@@ -141,17 +141,22 @@ mixin TaichiAuthLogMixin {
 
   void mixinInit() {
     logFile = File("${currentPath.path}/auth.log");
-    final l = logFile.readAsLinesSync();
 
-    if (l.length >= MaxLength) {
-      final logFiles = Glob("**.log");
+    if (!logFile.existsSync()) {
+      logFile.createSync();
+    } else {
+      final l = logFile.readAsLinesSync();
 
-      final tmpFile = File(
-        "${currentPath.path}/auth${logFiles.listSync().length}.log",
-      );
+      if (l.length >= MaxLength) {
+        final logFiles = Glob("**.log");
 
-      tmpFile.writeAsStringSync(l.join("\n"));
-      logFile.writeAsString("");
+        final tmpFile = File(
+          "${currentPath.path}/auth${logFiles.listSync().length}.log",
+        );
+
+        tmpFile.writeAsStringSync(l.join("\n"));
+        logFile.writeAsString("");
+      }
     }
 
     // ignore: avoid_print

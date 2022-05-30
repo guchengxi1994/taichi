@@ -5,13 +5,14 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-28 20:26:33
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-28 20:26:33
+ * @LastEditTime: 2022-05-30 19:34:39
  */
 import 'package:taichi_auth/entities/entities.dart';
 import 'package:taichi_auth/tools/bracket_match.dart';
 
 part 'ip_match.dart';
 part 'priority.dart';
+part 'effect_match.dart';
 
 const String matcherRegex1 = r"[^|&]*\.[^|&]*[==][^|&]*\.[^|&]*";
 const String matcherRegex2 = r"[\&]{2}|[\|]{2}";

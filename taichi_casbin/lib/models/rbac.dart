@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-28 19:51:39
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-29 17:30:24
+ * @LastEditTime: 2022-05-30 19:10:36
  */
 import 'dart:io';
 
@@ -62,7 +62,7 @@ class RBACModel extends PERMModel {
       csvTable =
           const CsvToListConverter().convert(await policyFile.readAsString());
       for (int i = 0; i < csvTable!.length; i++) {
-        assert(csvTable![i].length == 4);
+        assert(csvTable![i].length >= 4);
         subjects.add(csvTable![i][1].toString().toEquatable());
         names.add(csvTable![i][0].toString());
         objects.add(csvTable![i][2].toString().toEquatable());
@@ -87,7 +87,7 @@ class RBACModel extends PERMModel {
       csvTable =
           const CsvToListConverter().convert(policyFile.readAsStringSync());
       for (int i = 0; i < csvTable!.length; i++) {
-        assert(csvTable![i].length == 4);
+        assert(csvTable![i].length >= 4);
         subjects.add(csvTable![i][1].toString().toEquatable());
         names.add(csvTable![i][0].toString());
         objects.add(csvTable![i][2].toString().toEquatable());
