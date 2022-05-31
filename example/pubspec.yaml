@@ -34,8 +34,8 @@ dependencies:
   #   git:
   #       url: https://github.com/guchengxi1994/taichi
   #       ref: main
-  taichi:
-    path: ../taichi_core/
+  # taichi:
+  #   path: ../taichi_core/
 
   taichi_board_designer:
     path: ../taichi_board_designer/

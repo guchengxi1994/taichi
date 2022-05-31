@@ -69,6 +69,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_colorpicker:
+    dependency: transitive
+    description:
+      name: flutter_colorpicker
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.3"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -171,11 +178,13 @@ packages:
     source: hosted
     version: "1.1.0"
   taichi:
-    dependency: "direct main"
+    dependency: transitive
     description:
-      path: "../taichi_core"
-      relative: true
-    source: path
+      path: taichi_core
+      ref: modify-project-structure
+      resolved-ref: a6bb0f4fde7266577e38ba5244f5e5e655dce747
+      url: "https://github.com/guchengxi1994/taichi"
+    source: git
     version: "0.0.5-dev"
   taichi_board_designer:
     dependency: "direct main"
@@ -183,7 +192,7 @@ packages:
       path: "../taichi_board_designer"
       relative: true
     source: path
-    version: "1.0.0+1"
+    version: "0.0.0+dev6"
   term_glyph:
     dependency: transitive
     description:
@@ -214,4 +223,4 @@ packages:
     version: "2.1.2"
 sdks:
   dart: ">=2.17.0 <3.0.0"
-  flutter: ">=1.16.0"
+  flutter: ">=1.17.0"

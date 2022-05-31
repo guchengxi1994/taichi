@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class ShadowImageView extends StatefulWidget {
@@ -32,18 +30,18 @@ class ShadowImageViewState extends State<ShadowImageView> {
           width: imgSize * factor,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(radius),
-              // boxShadow: [BoxShadow(color: shadowColor, blurRadius: 20)],
+              boxShadow: [BoxShadow(color: shadowColor, blurRadius: 20)],
               image: DecorationImage(
                   image: AssetImage(imgPath), fit: BoxFit.fill)),
         ),
-        BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-          child: Container(
-            color: Colors.white.withOpacity(0.1),
-            width: imgSize * factor,
-            height: imgSize * factor,
-          ),
-        ),
+        // BackdropFilter(
+        //   filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+        //   child: Container(
+        //     color: Colors.white.withOpacity(0.1),
+        //     width: imgSize * factor,
+        //     height: imgSize * factor,
+        //   ),
+        // ),
         Positioned(
             left: 0.5 * (imgSize * factor - imgSize),
             top: 0.5 * (imgSize * factor - imgSize),
