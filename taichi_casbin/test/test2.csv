@@ -1,0 +1,5 @@
+p, alice, read
+p, bob, write
+p, data2_admin, read
+p, data2_admin, write
+p, jack, read

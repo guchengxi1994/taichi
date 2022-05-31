@@ -16,6 +16,7 @@ import 'package:glob/glob.dart';
 import 'package:glob/list_local_fs.dart';
 import 'package:synchronized/synchronized.dart';
 import 'package:taichi_auth/entities/entities.dart';
+import 'package:taichi_auth/models/acl.dart';
 import 'package:taichi_auth/models/rbac.dart';
 
 // ignore: constant_identifier_names
@@ -86,6 +87,27 @@ class TaichiAuth with TaichiAuthLogMixin, TaichiAuthCacheMixin {
     }
   }
 
+  late ACLModel _aclModel;
+  Future<ACLModel?> getAclModel(ACLParams params) async {
+    streamController.sink.add([
+      "taichi_auth init ...",
+      "mode :acl",
+    ]);
+
+    _aclModel = ACLModel(
+      modelFilePath: _modelFilePath,
+      policyFilePath: _policyFilePath,
+      aclParams: params,
+    );
+    await _aclModel.init();
+
+    if (_aclModel.check()) {
+      return _aclModel;
+    } else {
+      return null;
+    }
+  }
+
   Future<RBACModel?> get rbac => _getRbacModel();
 
   RBACModel? get rbacSync => _getRbacModelSync();
@@ -98,6 +120,12 @@ class TaichiAuth with TaichiAuthLogMixin, TaichiAuthCacheMixin {
       switch (mode) {
         case "rbac":
           final res = _rbacModel.canAccess(r);
+          addCache(r.hashCode, res);
+          streamController.sink
+              .add(["new request: ${r.toString()}, result:$res"]);
+          return res;
+        case "acl":
+          final res = _aclModel.canAccess(r);
           addCache(r.hashCode, res);
           streamController.sink
               .add(["new request: ${r.toString()}, result:$res"]);

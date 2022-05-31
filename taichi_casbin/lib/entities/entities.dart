@@ -32,7 +32,7 @@ class EquatableString extends Equatable {
 
 extension EqExtension on String {
   EquatableString toEquatable() {
-    return EquatableString(str: this);
+    return EquatableString(str: trim());
   }
 }
 
@@ -51,6 +51,8 @@ extension EqOnP on Policy {
       for (final i in entity.formulas) {
         fomulaResults.add(i.fomulaEquals(this, r));
       }
+
+      // print(fomulaResults);
 
       bool result = true && fomulaResults[0];
 
@@ -149,6 +151,10 @@ extension FomulaExtension on String {
     }
 
     // print("[left]: ${left} [right]:${right}");
+    if ((left as EquatableString).str == "" ||
+        (right as EquatableString).str == "") {
+      return true;
+    }
 
     switch (operator) {
       case "==":

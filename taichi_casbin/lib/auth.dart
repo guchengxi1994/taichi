@@ -7,4 +7,6 @@
  * @LastEditors: xiaoshuyui
  * @LastEditTime: 2022-05-28 20:01:47
  */
+library taichi_auth;
+
 export './models/taichi_auth.dart';
