@@ -13,7 +13,7 @@ class RightSideDetaiWidget extends StatefulWidget {
 
 class _RightSideDetaiWidgetState extends State<RightSideDetaiWidget> {
   late RightSideWidgetController controller;
-  GlobalKey<ShadowImageViewState> imgViewKey = GlobalKey();
+  GlobalKey<ShadowContainerViewState> imgViewKey = GlobalKey();
   double _slideValue = 20.0;
   @override
   void initState() {
@@ -35,12 +35,19 @@ class _RightSideDetaiWidgetState extends State<RightSideDetaiWidget> {
             "当前Widget类型:  ${controller.widgetType}",
             maxLines: 2,
           ),
-          ShadowImageView(
+          ShadowContainerView(
             key: imgViewKey,
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: imgViewKey.currentState == null
+                ? const Text("修改BorderRadius")
+                : Text(
+                    "修改BorderRadius: ${imgViewKey.currentState!.radius.ceil()}"),
           ),
           Slider(
               value: _slideValue,
-              min: 10,
+              min: 0,
               max: 100,
               activeColor: Colors.green,
               inactiveColor: Colors.grey,
