@@ -35,7 +35,7 @@ dependencies:
   taichi:
     git:
         url: https://github.com/guchengxi1994/taichi
-        ref: modify-project-structure
+        ref: builder
         path: taichi_core
   
   ## local taichi for develop

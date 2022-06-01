@@ -1,31 +1,10 @@
 import 'package:flutter/material.dart';
 
 /// ```T``` for ```taichi```
-// class TCustomContainer extends StatefulWidget {
-//   const TCustomContainer({Key? key}) : super(key: key);
-
-//   @override
-//   State<TCustomContainer> createState() => TCustomContainerState();
-// }
-
-// class TCustomContainerState extends State<TCustomContainer> {
-//   late TCustomContainerDecorationState customContainerState;
-//   @override
-//   void initState() {
-//     super.initState();
-//     customContainerState = TCustomContainerDecorationState();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       decoration: customContainerState.toBoxDecoration(),
-//     );
-//   }
-// }
-
-/// ```T``` for ```taichi```
 class TCustomContainerDecorationState {
+  static const String imgPath =
+      'packages/taichi_board_designer/assets/demo.png';
+
   Color color;
   DecorationImage? image;
   BoxBorder? border;
@@ -34,6 +13,8 @@ class TCustomContainerDecorationState {
   Gradient? gradient;
   BlendMode? backgroundBlendMode;
   BoxShape shape;
+  bool? showDemoImage;
+  bool? showBorder;
 
   TCustomContainerDecorationState(
       {this.color = Colors.grey,
@@ -43,13 +24,18 @@ class TCustomContainerDecorationState {
       this.backgroundBlendMode,
       this.boxShadow,
       this.gradient,
-      this.shape = BoxShape.rectangle});
+      this.shape = BoxShape.rectangle,
+      this.showDemoImage = false,
+      this.showBorder = false});
 
   BoxDecoration toBoxDecoration() {
     return BoxDecoration(
         color: color,
-        image: image,
-        border: border,
+        image: (showDemoImage != null && showDemoImage!)
+            ? const DecorationImage(
+                image: AssetImage(imgPath), fit: BoxFit.fill)
+            : null,
+        border: (showBorder != null && showBorder!) ? border : null,
         borderRadius: borderRadius,
         backgroundBlendMode: backgroundBlendMode,
         boxShadow: boxShadow,

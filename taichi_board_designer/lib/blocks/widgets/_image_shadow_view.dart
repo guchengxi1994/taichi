@@ -12,12 +12,11 @@ class ShadowContainerView extends StatefulWidget {
 }
 
 class ShadowContainerViewState extends State<ShadowContainerView> {
-  Color shadowColor = Colors.grey;
+  Color backgroundColor = Colors.grey;
   double radius = 20;
   TCustomContainerDecorationState decorationState =
       TCustomContainerDecorationState();
 
-  String imgPath = 'packages/taichi_board_designer/assets/demo.png';
   double factor = 1.1;
   // double containerSize = 300;
 
@@ -25,12 +24,36 @@ class ShadowContainerViewState extends State<ShadowContainerView> {
   void initState() {
     super.initState();
     decorationState.borderRadius = BorderRadius.circular(radius);
+    decorationState.color = backgroundColor;
   }
 
   changeRadius(double data) {
     setState(() {
       radius = data;
       decorationState.borderRadius = BorderRadius.circular(data);
+    });
+  }
+
+  changeBackgroundColor(Color c) {
+    setState(() {
+      backgroundColor = c;
+      decorationState.color = c;
+    });
+  }
+
+  showBackgroundImage(bool b) {
+    setState(() {
+      decorationState.showDemoImage = b;
+    });
+  }
+
+  setBorder(Border b, bool showBorder, {bool noRadius = false}) {
+    setState(() {
+      decorationState.border = b;
+      decorationState.showBorder = showBorder;
+      if (noRadius) {
+        decorationState.borderRadius = null;
+      }
     });
   }
 

@@ -61,9 +61,16 @@ class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard>
               context.watch<BlockController>().boardType == BoardType.custom
                   ? FloatingActionButton.extended(
                       onPressed: () {
-                        context
-                            .read<RightSideWidgetController>()
-                            .changeWidgetStatus();
+                        if (context
+                                .read<BlockController>()
+                                .currentSelectedWidgetId !=
+                            -1) {
+                          context
+                              .read<RightSideWidgetController>()
+                              .changeWidgetStatus();
+                        } else {
+                          showCustomToast("请先选择组件");
+                        }
                       },
                       label: context.watch<RightSideWidgetController>().isChange
                           ? const Text("普通样式修改")

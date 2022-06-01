@@ -69,6 +69,17 @@ mixin TaichiToastMixin<T extends StatefulWidget> on State<T> {
     });
   }
 
+  showCustomToast(String message) {
+    OverlayState? overlayState = Overlay.of(context);
+    _overlayEntry = OverlayEntry(builder: (context) {
+      return toastWidget(message);
+    });
+    overlayState?.insert(_overlayEntry);
+    Future.delayed(durationTime, () {
+      _overlayEntry.remove();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return toastBuild(context);

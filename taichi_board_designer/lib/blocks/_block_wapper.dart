@@ -52,7 +52,7 @@ class BlocksWrapperWidget extends StatefulWidget {
   State<BlocksWrapperWidget> createState() => BlocksWrapperWidgetState();
 }
 
-class BlocksWrapperWidgetState extends State<BlocksWrapperWidget> {
+class BlocksWrapperWidgetState<T> extends State<BlocksWrapperWidget> {
   double width = BlockConstants.taichiDraggableWidgetSize;
   double height = BlockConstants.taichiDraggableWidgetSize;
   Color color = BlockConstants.bodyWidgetInitialColor;
@@ -70,6 +70,11 @@ class BlocksWrapperWidgetState extends State<BlocksWrapperWidget> {
   /// 主要是防止 childType为single的时候重复添加child
   bool hasChild = false;
 
+  /// dev7 版本加入的属性
+  ///
+  /// 控制自定义组件具体样式
+  T? widgetStyle;
+
   @override
   void initState() {
     super.initState();
@@ -81,6 +86,11 @@ class BlocksWrapperWidgetState extends State<BlocksWrapperWidget> {
   void changeAncestorIndex(int index) {
     ancestorIndex = index;
     setState(() {});
+  }
+
+  /// dev7版本加入的方法
+  void setWidgetStyle(T? style) {
+    widgetStyle = style;
   }
 
   void changeHasChildStatus(bool b) {
