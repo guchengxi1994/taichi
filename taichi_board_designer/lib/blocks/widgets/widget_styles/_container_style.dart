@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'abstract_style.dart';
 
 /// ```T``` for ```taichi```
-class TCustomContainerDecorationState {
+class TCustomContainerDecorationStyle extends AbstractStyle {
   static const String imgPath =
       'packages/taichi_board_designer/assets/demo.png';
 
@@ -16,7 +17,7 @@ class TCustomContainerDecorationState {
   bool? showDemoImage;
   bool? showBorder;
 
-  TCustomContainerDecorationState(
+  TCustomContainerDecorationStyle(
       {this.color = Colors.grey,
       this.image,
       this.border,

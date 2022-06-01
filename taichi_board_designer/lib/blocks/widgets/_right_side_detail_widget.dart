@@ -4,7 +4,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
 import 'package:taichi_board_designer/blocks/providers/_main_block_controller.dart';
 import '../providers/_right_side_widget_controller.dart';
-import '_image_shadow_view.dart';
+import '_custom_container.dart';
 
 class RightSideDetaiWidget extends StatefulWidget {
   const RightSideDetaiWidget({Key? key, required this.controller})

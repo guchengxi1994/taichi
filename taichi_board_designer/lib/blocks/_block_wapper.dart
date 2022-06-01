@@ -15,6 +15,7 @@ import 'package:taichi_board_designer/blocks/providers/_right_side_widget_contro
 import 'providers/_main_block_controller.dart';
 import 'entity/_constants.dart';
 import 'entity/_operation.dart';
+import 'widgets/widget_styles/abstract_style.dart';
 
 // ignore: must_be_immutable
 class BlocksWrapperWidget extends StatefulWidget {
@@ -52,7 +53,8 @@ class BlocksWrapperWidget extends StatefulWidget {
   State<BlocksWrapperWidget> createState() => BlocksWrapperWidgetState();
 }
 
-class BlocksWrapperWidgetState<T> extends State<BlocksWrapperWidget> {
+class BlocksWrapperWidgetState<T extends AbstractStyle>
+    extends State<BlocksWrapperWidget> {
   double width = BlockConstants.taichiDraggableWidgetSize;
   double height = BlockConstants.taichiDraggableWidgetSize;
   Color color = BlockConstants.bodyWidgetInitialColor;
