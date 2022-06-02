@@ -21,6 +21,7 @@ class RightSideWidget extends StatefulWidget {
 class _RightSideWidgetState extends State<RightSideWidget> {
   final TextEditingController widthTextController = TextEditingController();
   final TextEditingController heightTextController = TextEditingController();
+  final TextEditingController descTextController = TextEditingController();
   int groupValue = 1;
 
   @override
@@ -28,6 +29,7 @@ class _RightSideWidgetState extends State<RightSideWidget> {
     widthTextController.dispose();
     heightTextController.dispose();
     _ancestorController.dispose();
+    descTextController.dispose();
     super.dispose();
   }
 
@@ -91,11 +93,42 @@ class _RightSideWidgetState extends State<RightSideWidget> {
           ),
 
           const Text("名称"),
-          Text("${w.index} ${w.widgetType}"),
+          Text("${w.index} ${k.currentState!.widgetName}"),
+
+          const Text("备注"),
+          SizedBox(
+            width: 0.9 * context.watch<BlockController>().screenWidth / 6,
+            child: TextField(
+              maxLength: 200,
+              maxLines: null,
+              controller: descTextController,
+              decoration: InputDecoration(
+                  hintText: "填入备注信息",
+                  suffix: Column(
+                    children: [
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.done,
+                            color: Colors.green,
+                          )),
+                      IconButton(
+                          onPressed: () {
+                            descTextController.text = "";
+                          },
+                          icon: const Icon(
+                            Icons.clear,
+                            color: Colors.red,
+                          )),
+                    ],
+                  )),
+            ),
+          ),
           Container(
             height: 5,
             color: Colors.black,
           ),
+
           const Text("宽度"),
           SizedBox(
             height: BlockConstants.inputHeight,

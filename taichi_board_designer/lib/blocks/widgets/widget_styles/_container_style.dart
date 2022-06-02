@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'abstract_style.dart';
+import '_abstract_style.dart';
 
 /// ```T``` for ```taichi```
 class TCustomContainerDecorationStyle extends AbstractStyle {

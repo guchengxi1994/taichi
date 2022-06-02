@@ -72,7 +72,7 @@ class ShadowContainerViewState extends State<ShadowContainerView> {
   }
 
   String toCode() {
-    var outter = "BoxDecoration( {inner} ),";
+    var outer = "BoxDecoration( {inner} ),";
     List<String> inner = [];
     if (decorationStyle.showDemoImage != null &&
         decorationStyle.showDemoImage!) {
@@ -84,14 +84,33 @@ class ShadowContainerViewState extends State<ShadowContainerView> {
       inner.add("border: null,");
     }
 
-    return outter.replaceAll("{inner}", inner.join(","));
+    return outer.replaceAll("{inner}", inner.join(","));
   }
 }
 
 /// 把`Border`转换为代码的`extension`
 extension ToCode on Border {
   String toCode() {
+    var outer = "Border( {inner} )";
     debugPrint("[ top ]: ${top.toString()}");
-    return "";
+    var inner = [];
+
+    if (top != BorderSide.none) {
+      var v = top.color.value;
+      inner.add("top: BorderSide(color:Color($v),width:${top.width}, )");
+    }
+    if (bottom != BorderSide.none) {
+      var v = bottom.color.value;
+      inner.add("bottom: BorderSide(color:Color($v),width:${bottom.width}, )");
+    }
+    if (left != BorderSide.none) {
+      var v = left.color.value;
+      inner.add("left: BorderSide(color:Color($v),width:${left.width}, )");
+    }
+    if (right != BorderSide.none) {
+      var v = right.color.value;
+      inner.add("right: BorderSide(color:Color($v),width:${right.width}, )");
+    }
+    return outer.replaceAll("{inner}", inner.join(","));
   }
 }

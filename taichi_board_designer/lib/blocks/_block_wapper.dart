@@ -15,7 +15,7 @@ import 'package:taichi_board_designer/blocks/providers/_right_side_widget_contro
 import 'providers/_main_block_controller.dart';
 import 'entity/_constants.dart';
 import 'entity/_operation.dart';
-import 'widgets/widget_styles/abstract_style.dart';
+import 'widgets/widget_styles/_abstract_style.dart';
 
 // ignore: must_be_immutable
 class BlocksWrapperWidget extends StatefulWidget {
@@ -77,12 +77,21 @@ class BlocksWrapperWidgetState<T extends AbstractStyle>
   /// 控制自定义组件具体样式
   T? widgetStyle;
 
+  /// dev8 版本加入的属性
+  ///
+  /// widgetName是用户修改组件名
+  ///
+  /// description给组件添加描述
+  String widgetName = "";
+  String description = "";
+
   @override
   void initState() {
     super.initState();
     left = widget.initialLeft;
     top = widget.initialTop;
     ancestorIndex = widget.ancestorIndex;
+    widgetName = widget.widgetType;
   }
 
   void changeAncestorIndex(int index) {
@@ -104,6 +113,17 @@ class BlocksWrapperWidgetState<T extends AbstractStyle>
     setState(() {
       width = w;
     });
+  }
+
+  /// dev8
+  void setWidgetName(String name) {
+    widgetName = name;
+    setState(() {});
+  }
+
+  void setWidgetDescription(String content) {
+    description = content;
+    setState(() {});
   }
 
   void setHeight(double h) {

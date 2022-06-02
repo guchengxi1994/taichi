@@ -20,7 +20,7 @@ import 'providers/_main_block_controller.dart';
 import '_draggable_widget.dart';
 import 'entity/_constants.dart';
 import 'entity/_enums.dart';
-import '_right_side_widget.dart';
+import '_right_side.dart';
 import 'tools/_save_file_on_desktop.dart'
     if (dart.library.html) 'tools/_save_file_on_web.dart';
 import 'tree_view_paint/_tree_view.dart';

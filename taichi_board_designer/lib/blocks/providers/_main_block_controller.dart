@@ -15,6 +15,7 @@ import '../entity/_enums.dart';
 import '../entity/_operation.dart';
 import '../_block_wapper.dart';
 import '../entity/_constants.dart';
+import '../widgets/widget_styles/_abstract_style.dart';
 
 class BlockController extends ChangeNotifier {
   /// board type
@@ -76,6 +77,11 @@ class BlockController extends ChangeNotifier {
   changeCurrentId(int id) {
     _currentSelectedWidgetId = id;
     notifyListeners();
+  }
+
+  /// 设置widget具体样式
+  changeCustomStyle<T extends AbstractStyle>(T? style) {
+    currentKey.currentState!.setWidgetStyle(style);
   }
 
   List<Widget> getVisibleWidgets() {
@@ -254,5 +260,17 @@ class BlockController extends ChangeNotifier {
       }
       notifyListeners();
     }
+  }
+
+  /// dev8
+  setWidgetName(String name) {
+    currentKey.currentState!.setWidgetName(name);
+    // notifyListeners();
+  }
+
+  /// dev8
+  setDescription(String content) {
+    currentKey.currentState!.setWidgetDescription(content);
+    // notifyListeners();
   }
 }
