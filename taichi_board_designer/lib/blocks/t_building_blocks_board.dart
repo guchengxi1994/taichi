@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-18 19:18:00
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-21 20:47:49
+ * @LastEditTime: 2022-06-04 21:57:52
  */
 
 import 'package:flutter/cupertino.dart';
@@ -20,7 +20,7 @@ import 'providers/_main_block_controller.dart';
 import '_draggable_widget.dart';
 import 'entity/_constants.dart';
 import 'entity/_enums.dart';
-import '_right_side.dart';
+import '_right_side.dart' deferred as right;
 import 'tools/_save_file_on_desktop.dart'
     if (dart.library.html) 'tools/_save_file_on_web.dart';
 import 'tree_view_paint/_tree_view.dart';
@@ -268,8 +268,19 @@ class _TaichiBlocksBoardState extends State<_TaichiBlocksBoard>
                     padding: const EdgeInsets.all(5),
                     color: sideColor,
                     height: widgetHeight,
-                    child: RightSideWidget(
-                      key: context.read<BlockController>().globalRightSideKey,
+                    child: FutureBuilder(
+                      future: right.loadLibrary(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return right.RightSideWidget(
+                            key: context
+                                .read<BlockController>()
+                                .globalRightSideKey,
+                          );
+                        } else {
+                          return const CircularProgressIndicator();
+                        }
+                      },
                     ),
                   )),
             ],
