@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 /*
  * @Descripttion: 
  * @version: 
@@ -5,58 +7,98 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-06-11 18:36:56
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-06-11 19:28:10
+ * @LastEditTime: 2022-06-13 22:01:29
  */
 import 'package:flutter/material.dart';
 import 'package:taichi_admin/utils/common.dart';
+import 'package:taichi_admin/widgets/search_bar.dart' deferred as searchbar;
+import 'package:taichi_admin/widgets/dropdown_button.dart' deferred as dropdown;
+import 'package:taichi_admin/widgets/future_builder.dart';
 
-class MainScreenAppbar extends StatelessWidget {
-  MainScreenAppbar({Key? key, required this.type}) : super(key: key);
+class MainScreenAppbar extends StatefulWidget {
+  const MainScreenAppbar({Key? key, required this.type}) : super(key: key);
   final ScreenType type;
 
-  late final OutlineInputBorder _outlineInputBorder = OutlineInputBorder(
-    gapPadding: 0,
-    borderSide: BorderSide(
-      color: Colors.grey[200]!,
-    ),
-  );
+  @override
+  State<MainScreenAppbar> createState() => _MainScreenAppbarState();
+}
+
+class _MainScreenAppbarState extends State<MainScreenAppbar> {
+  var loadDropdownListFuture;
+  var loadSearchbarFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    loadDropdownListFuture = dropdown.loadLibrary();
+    loadSearchbarFuture = searchbar.loadLibrary();
+  }
+
+  List<Widget> buildAppbarTitle() {
+    if (widget.type == ScreenType.desktop) {
+      return [
+        const Text("Taichi Admin"),
+        Expanded(child: Container()),
+        FutureLoaderWidget(
+          loadWidgetFuture: loadSearchbarFuture,
+          builder: (context) {
+            return searchbar.SearchBar(
+              type: widget.type,
+            );
+          },
+        ),
+        Container(
+          height: 50,
+          padding: const EdgeInsets.only(left: 20, top: 5, bottom: 5),
+          child: FutureLoaderWidget(
+            loadWidgetFuture: loadDropdownListFuture,
+            builder: (context) {
+              return dropdown.UserDropdownButton(
+                type: widget.type,
+              );
+            },
+          ),
+        ),
+      ];
+    } else {
+      return [
+        // Expanded(child: Container()),
+        FutureLoaderWidget(
+          loadWidgetFuture: loadSearchbarFuture,
+          builder: (context) {
+            return searchbar.SearchBar(
+              type: widget.type,
+            );
+          },
+        ),
+        Expanded(child: Container()),
+        Container(
+          height: 50,
+          padding: const EdgeInsets.only(top: 5, bottom: 5),
+          child: FutureLoaderWidget(
+            loadWidgetFuture: loadDropdownListFuture,
+            builder: (context) {
+              return dropdown.UserDropdownButton(
+                type: widget.type,
+              );
+            },
+          ),
+        ),
+      ];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: type != ScreenType.desktop,
-      title: ScreenType.desktop == type ? const Text("Taichi Admin") : null,
+      automaticallyImplyLeading: widget.type != ScreenType.desktop,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: buildAppbarTitle(),
+      ),
       centerTitle: false,
-      elevation: type == ScreenType.mobile ? 4 : 0,
-      actions: ScreenType.desktop == type
-          ? [
-              Align(
-                alignment: Alignment.centerRight,
-                child: SizedBox(
-                  width: 200,
-                  child: TextField(
-                    style: const TextStyle(
-                        fontSize: 16, color: Colors.black87), //文字大小、颜色
-                    maxLines: 1, //最多多少行
-                    decoration: InputDecoration(
-                      fillColor: Colors.grey[50], //背景颜色，必须结合filled: true,才有效
-                      filled: true, //重点，必须设置为true，fillColor才有效
-                      isCollapsed: true, //重点，相当于高度包裹的意思，必须设置为true，不然有默认奇妙的最小高度
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 10), //内容内边距，影响高度
-                      border: _outlineInputBorder, //边框，一般下面的几个边框一起设置
-                      focusedBorder: _outlineInputBorder,
-                      enabledBorder: _outlineInputBorder,
-                      disabledBorder: _outlineInputBorder,
-                      focusedErrorBorder: _outlineInputBorder,
-                      errorBorder: _outlineInputBorder,
-                    ),
-                  ),
-                ),
-              ),
-              IconButton(onPressed: () {}, icon: const Icon(Icons.search))
-            ]
-          : [],
+      elevation: widget.type == ScreenType.mobile ? 4 : 0,
+      // actions: buildAppbarActions(),
     );
   }
 }
