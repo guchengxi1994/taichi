@@ -42,40 +42,39 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(50),
-        child: WidgetLoaderWidget(
-            loadWidgetFuture: loadAppbarLib,
-            builder: (context) => appbar.MainScreenAppbar(
-                  type: ScreenTypeUtils.getScreenType(context),
-                )),
-      ),
-      key: context.read<MenuController>().scaffoldKey,
-      drawer: WidgetLoaderWidget(
-        loadWidgetFuture: loadSidemenuLib,
-        builder: (context) =>
-            sidemenu.SideMenu(type: ScreenTypeUtils.getScreenType(context)),
-      ),
-      body: SafeArea(
-          child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (ScreenTypeUtils.isDesktop(context))
-            WidgetLoaderWidget(
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (ScreenTypeUtils.isDesktop(context))
+          Material(
+            child: FutureLoaderWidget(
               loadWidgetFuture: loadSidemenuLib,
               builder: (context) => sidemenu.SideMenu(
                   type: ScreenTypeUtils.getScreenType(context)),
             ),
-          Expanded(
-              flex: 5,
-              child: WidgetLoaderWidget(
-                loadWidgetFuture: loadDashboardLib,
-                builder: (context) => dashboard.DashboardScreen(
-                    type: ScreenTypeUtils.getScreenType(context)),
-              ))
-        ],
-      )),
+          ),
+        Expanded(
+            child: Scaffold(
+                appBar: PreferredSize(
+                  preferredSize: const Size.fromHeight(50),
+                  child: FutureLoaderWidget(
+                      loadWidgetFuture: loadAppbarLib,
+                      builder: (context) => appbar.MainScreenAppbar(
+                            type: ScreenTypeUtils.getScreenType(context),
+                          )),
+                ),
+                key: context.read<MenuController>().scaffoldKey,
+                drawer: FutureLoaderWidget(
+                  loadWidgetFuture: loadSidemenuLib,
+                  builder: (context) => sidemenu.SideMenu(
+                      type: ScreenTypeUtils.getScreenType(context)),
+                ),
+                body: FutureLoaderWidget(
+                  loadWidgetFuture: loadDashboardLib,
+                  builder: (context) => dashboard.DashboardScreen(
+                      type: ScreenTypeUtils.getScreenType(context)),
+                ))),
+      ],
     );
   }
 }
