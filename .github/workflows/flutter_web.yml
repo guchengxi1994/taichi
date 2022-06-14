@@ -20,4 +20,3 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
           branch: taichi_admin_templete
-          folder: taichi_admin/build/web
