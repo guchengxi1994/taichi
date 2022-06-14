@@ -14,7 +14,7 @@ jobs:
         run: |
           cd taichi_admin/
           flutter pub get
-          flutter build web --release   --web-renderer html
+          flutter build web --release --base-href="/taichi/"  --web-renderer html
       - name: "Web Deploy 🚀"
         # https://github.com/JamesIves/github-pages-deploy-action
         uses: JamesIves/github-pages-deploy-action@v4.3.3
