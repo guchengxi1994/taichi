@@ -10,10 +10,14 @@
  * @LastEditTime: 2022-06-13 22:01:29
  */
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:taichi_admin/utils/common.dart';
-import 'package:taichi_admin/widgets/search_bar.dart' deferred as searchbar;
-import 'package:taichi_admin/widgets/dropdown_button.dart' deferred as dropdown;
+import 'package:taichi_admin/widgets/appbar_search.dart' deferred as searchbar;
+import 'package:taichi_admin/widgets/appbar_dropdown_button.dart'
+    deferred as dropdown;
 import 'package:taichi_admin/widgets/future_builder.dart';
+
+import '../controllers/main_page_controller.dart';
 
 class MainScreenAppbar extends StatefulWidget {
   const MainScreenAppbar({Key? key, required this.type}) : super(key: key);
@@ -37,7 +41,13 @@ class _MainScreenAppbarState extends State<MainScreenAppbar> {
   List<Widget> buildAppbarTitle() {
     if (widget.type == ScreenType.desktop) {
       return [
-        const Text("Taichi Admin"),
+        // ChangeNotifierProvider(
+        //   create: (_) => MainPageController(),
+        //   builder: (context, c) {
+        //     return Text(context.watch<MainPageController>().currentBodyName);
+        //   },
+        // ),
+        Text(context.watch<MainPageController>().currentBodyName),
         Expanded(child: Container()),
         FutureLoaderWidget(
           loadWidgetFuture: loadSearchbarFuture,

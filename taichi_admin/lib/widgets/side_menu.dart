@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 /*
  * @Descripttion: 
  * @version: 
@@ -10,40 +12,51 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taichi_admin/controllers/menu_controller.dart';
-import 'dart:math' as math;
+import 'package:taichi_admin/widgets/future_builder.dart';
+import 'side_menu_header.dart' deferred as sidemenuheader;
+import 'side_menu_body.dart' deferred as sidemenubody;
 
 import 'package:taichi_admin/utils/common.dart';
 
-class SideMenu extends StatelessWidget {
+class SideMenu extends StatefulWidget {
   const SideMenu({Key? key, required this.type}) : super(key: key);
   final ScreenType type;
+
+  @override
+  State<SideMenu> createState() => _SideMenuState();
+}
+
+class _SideMenuState extends State<SideMenu> {
+  var loadHeaderFuture;
+  var loadBodyFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    loadHeaderFuture = sidemenuheader.loadLibrary();
+    loadBodyFuture = sidemenubody.loadLibrary();
+  }
 
   @override
   Widget build(BuildContext context) {
     if (context.watch<MenuController>().isExpanded) {
       return Container(
-        padding: const EdgeInsets.all(10),
-        width: 200,
+        // padding: const EdgeInsets.all(10),
+        width: 300,
         color: Colors.grey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            if (type == ScreenType.desktop)
-              Align(
-                alignment: Alignment.centerRight,
-                child: InkWell(
-                  onTap: () {
-                    context.read<MenuController>().changeExpansion(false);
-                  },
-                  child: Transform.rotate(
-                    angle: math.pi / 4,
-                    child: const Icon(
-                      Icons.close_fullscreen,
-                      color: Colors.black,
+            FutureLoaderWidget(
+                builder: (context) => sidemenuheader.SideMenuHeader(
+                      type: widget.type,
                     ),
-                  ),
-                ),
-              ),
+                loadWidgetFuture: loadHeaderFuture),
+            FutureLoaderWidget(
+                builder: (context) => sidemenubody.SideMenuBody(
+                      type: widget.type,
+                    ),
+                loadWidgetFuture: loadBodyFuture)
           ],
         ),
       );
@@ -55,16 +68,19 @@ class SideMenu extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            // if (type == ScreenType.desktop)
-            InkWell(
-              onTap: () {
-                context.read<MenuController>().changeExpansion(true);
-              },
-              child: Transform.rotate(
-                angle: math.pi / 2,
-                child: const Icon(Icons.expand),
-              ),
-            )
+            const SizedBox(
+              height: 5,
+            ),
+            FutureLoaderWidget(
+                builder: (context) => sidemenuheader.SideMenuHeader(
+                      type: widget.type,
+                    ),
+                loadWidgetFuture: loadHeaderFuture),
+            FutureLoaderWidget(
+                builder: (context) => sidemenubody.SideMenuBody(
+                      type: widget.type,
+                    ),
+                loadWidgetFuture: loadBodyFuture)
           ],
         ),
       );

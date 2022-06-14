@@ -85,7 +85,7 @@ class UserDropdownButton extends StatelessWidget {
                     shape: BoxShape.circle,
                     image: DecorationImage(
                         image: AssetImage(
-                      "assets/images/demo.png",
+                      "assets/images/0.jpg",
                     ))),
               ),
               const SizedBox(
@@ -133,7 +133,7 @@ class UserDropdownButton extends StatelessWidget {
                   shape: BoxShape.circle,
                   image: DecorationImage(
                       image: AssetImage(
-                    "assets/images/demo.png",
+                    "assets/images/0.jpg",
                   ))),
             ),
           ));

@@ -13,6 +13,8 @@ import 'package:provider/provider.dart';
 import 'package:taichi_admin/controllers/menu_controller.dart';
 import 'package:taichi_admin/screens/main_screen.dart';
 
+import 'controllers/main_page_controller.dart';
+
 /// this is an example
 
 class MyApp extends StatelessWidget {
@@ -21,7 +23,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => MenuController())],
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => MenuController(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => MainPageController(),
+        ),
+      ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: MainScreen(),
