@@ -32,3 +32,5 @@ taichi:
 [3.太极UI组件](./readme_ui.md)
 
 [4.UI转代码生成工具](./readme_taichi_board.md)  持续更新中，   在线[demo](https://guchengxi1994.github.io/taichi_board/)
+
+[5.taichi admin templete](./taichi_admin/README.md) taichi 多端自适应管理平台，在线[demo](https://guchengxi1994.github.io/taichi/#/)
