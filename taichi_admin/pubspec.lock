@@ -173,9 +173,11 @@ packages:
   taichi:
     dependency: "direct main"
     description:
-      path: "D:/github_repo/taichi/taichi_core"
-      relative: false
-    source: path
+      path: taichi_core
+      ref: builder
+      resolved-ref: "36b9d1f22d2872b88133382a4678bfe85599f5bc"
+      url: "https://github.com/guchengxi1994/taichi"
+    source: git
     version: "0.0.5-dev"
   term_glyph:
     dependency: transitive
