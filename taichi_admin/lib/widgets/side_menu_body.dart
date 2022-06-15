@@ -24,6 +24,7 @@ class SideMenuBody extends StatelessWidget {
               color: AppStyle.spacer,
             ),
             message: "Dashboard",
+            route: "/",
           ),
           ExpandedBodyWidget(
             icon: Icon(
@@ -64,6 +65,7 @@ class SideMenuBody extends StatelessWidget {
               color: AppStyle.spacer,
             ),
             message: "Dashboard",
+            route: "/",
           ),
           UnExpandedBodyWidget(
             icon: Icon(
@@ -102,11 +104,16 @@ class SideMenuBody extends StatelessWidget {
 // 这是没有展开时的样式
 class UnExpandedBodyWidget extends StatelessWidget {
   const UnExpandedBodyWidget(
-      {Key? key, required this.icon, this.onTap, required this.message})
+      {Key? key,
+      required this.icon,
+      this.onTap,
+      required this.message,
+      this.route})
       : super(key: key);
   final Widget icon;
   final VoidCallback? onTap;
   final String message;
+  final String? route;
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +133,9 @@ class UnExpandedBodyWidget extends StatelessWidget {
                     message) {
                   return;
                 }
-                context.read<MainPageController>().changeBodyName(message);
+                context
+                    .read<MainPageController>()
+                    .changeBodyName(message, route: route ?? "test");
               },
           child: icon,
         ),
@@ -138,12 +147,17 @@ class UnExpandedBodyWidget extends StatelessWidget {
 // 这部分是展开时的样式
 class ExpandedBodyWidget extends StatelessWidget {
   const ExpandedBodyWidget(
-      {Key? key, required this.icon, this.onTap, required this.message})
+      {Key? key,
+      required this.icon,
+      this.onTap,
+      required this.message,
+      this.route})
       : super(key: key);
 
   final Widget icon;
   final VoidCallback? onTap;
   final String message;
+  final String? route;
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +177,9 @@ class ExpandedBodyWidget extends StatelessWidget {
                   message) {
                 return;
               }
-              context.read<MainPageController>().changeBodyName(message);
+              context
+                  .read<MainPageController>()
+                  .changeBodyName(message, route: route ?? "test");
             },
       ),
     );

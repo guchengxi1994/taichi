@@ -32,6 +32,7 @@ deferred-components:
   - name: taichi_admin_widgets
     libraries:
       - package:taichi_admin/screens/dashboard.dart
+      - package:taichi_admin/screens/templete_screen.dart
       - package:taichi_admin/widgets/dashboard_custom_card.dart
       - package:taichi_admin/widgets/dashboard_custom_pie_chart.dart
       - package:taichi_admin/widgets/dashboard_left_part.dart

@@ -7,12 +7,14 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-06-11 11:37:21
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-06-11 19:26:14
+ * @LastEditTime: 2022-06-15 21:18:58
  */
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:taichi_admin/controllers/main_page_controller.dart';
 import 'package:taichi_admin/controllers/menu_controller.dart';
+import 'package:taichi_admin/screens/templete_screen.dart' deferred as templete;
 import 'package:taichi_admin/utils/common.dart';
 
 import 'dashboard.dart' deferred as dashboard;
@@ -31,6 +33,7 @@ class _MainScreenState extends State<MainScreen> {
   var loadDashboardLib;
   var loadSidemenuLib;
   var loadAppbarLib;
+  var loadTempletePageLib;
 
   @override
   void initState() {
@@ -38,10 +41,13 @@ class _MainScreenState extends State<MainScreen> {
     loadDashboardLib = dashboard.loadLibrary();
     loadSidemenuLib = sidemenu.loadLibrary();
     loadAppbarLib = appbar.loadLibrary();
+    loadTempletePageLib = templete.loadLibrary();
   }
 
   @override
   Widget build(BuildContext context) {
+    var route = context.watch<MainPageController>().currentRoute;
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -55,25 +61,38 @@ class _MainScreenState extends State<MainScreen> {
           ),
         Expanded(
             child: Scaffold(
-                appBar: PreferredSize(
-                  preferredSize: const Size.fromHeight(50),
-                  child: FutureLoaderWidget(
-                      loadWidgetFuture: loadAppbarLib,
-                      builder: (context) => appbar.MainScreenAppbar(
-                            type: ScreenTypeUtils.getScreenType(context),
-                          )),
-                ),
-                key: context.read<MenuController>().scaffoldKey,
-                drawer: FutureLoaderWidget(
-                  loadWidgetFuture: loadSidemenuLib,
-                  builder: (context) => sidemenu.SideMenu(
-                      type: ScreenTypeUtils.getScreenType(context)),
-                ),
-                body: FutureLoaderWidget(
-                  loadWidgetFuture: loadDashboardLib,
-                  builder: (context) => dashboard.DashboardScreen(
-                      type: ScreenTypeUtils.getScreenType(context)),
-                ))),
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(50),
+            child: FutureLoaderWidget(
+                loadWidgetFuture: loadAppbarLib,
+                builder: (context) => appbar.MainScreenAppbar(
+                      type: ScreenTypeUtils.getScreenType(context),
+                    )),
+          ),
+          key: context.read<MenuController>().scaffoldKey,
+          drawer: FutureLoaderWidget(
+            loadWidgetFuture: loadSidemenuLib,
+            builder: (context) =>
+                sidemenu.SideMenu(type: ScreenTypeUtils.getScreenType(context)),
+          ),
+          body: Builder(
+            builder: (context) {
+              switch (route) {
+                case "/":
+                  return FutureLoaderWidget(
+                    loadWidgetFuture: loadDashboardLib,
+                    builder: (context) => dashboard.DashboardScreen(
+                        type: ScreenTypeUtils.getScreenType(context)),
+                  );
+
+                default:
+                  return FutureLoaderWidget(
+                      builder: (context) => templete.TempleteScreen(),
+                      loadWidgetFuture: loadTempletePageLib);
+              }
+            },
+          ),
+        ))
       ],
     );
   }
