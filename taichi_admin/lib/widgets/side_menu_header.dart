@@ -39,7 +39,7 @@ class SideMenuHeader extends StatelessWidget {
         height: AppStyle.headerHeight,
         child: DrawerHeader(
           decoration: const BoxDecoration(
-            color: Colors.lightBlueAccent,
+            color: AppStyle.lightBlue,
           ),
           child: Stack(children: [
             if (type == ScreenType.desktop)
@@ -75,7 +75,10 @@ class SideMenuHeader extends StatelessWidget {
           },
           child: Transform.rotate(
             angle: math.pi / 2,
-            child: const Icon(Icons.expand),
+            child: const Icon(
+              Icons.expand,
+              color: AppStyle.spacer,
+            ),
           ),
         ),
       );

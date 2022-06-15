@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:taichi_admin/controllers/main_page_controller.dart';
 import 'package:taichi_admin/controllers/menu_controller.dart';
 
+import '../app_style.dart';
 import '../utils/common.dart';
 
 class SideMenuBody extends StatelessWidget {
@@ -16,57 +17,41 @@ class SideMenuBody extends StatelessWidget {
     if (context.watch<MenuController>().isExpanded ||
         type != ScreenType.desktop) {
       return Column(
-        children: [
-          ListTile(
-            leading: const Icon(Icons.dashboard),
-            title: const Text("Dashboard"),
-            onTap: () {
-              if (context.read<MainPageController>().currentBodyName ==
-                  "Dashboard") {
-                return;
-              }
-              context.read<MainPageController>().changeBodyName("Dashboard");
-            },
+        children: const [
+          ExpandedBodyWidget(
+            icon: Icon(
+              Icons.dashboard,
+              color: AppStyle.spacer,
+            ),
+            message: "Dashboard",
           ),
-          ListTile(
-            leading: const Icon(Icons.functions),
-            title: const Text("模块1"),
-            onTap: () {
-              if (context.read<MainPageController>().currentBodyName == "模块1") {
-                return;
-              }
-              context.read<MainPageController>().changeBodyName("模块1");
-            },
+          ExpandedBodyWidget(
+            icon: Icon(
+              Icons.functions,
+              color: AppStyle.spacer,
+            ),
+            message: "模块1",
           ),
-          ListTile(
-            leading: const Icon(Icons.abc),
-            title: const Text("模块2"),
-            onTap: () {
-              if (context.read<MainPageController>().currentBodyName == "模块2") {
-                return;
-              }
-              context.read<MainPageController>().changeBodyName("模块2");
-            },
+          ExpandedBodyWidget(
+            icon: Icon(
+              Icons.abc,
+              color: AppStyle.spacer,
+            ),
+            message: "模块2",
           ),
-          ListTile(
-            leading: const Icon(Icons.access_alarm),
-            title: const Text("模块3"),
-            onTap: () {
-              if (context.read<MainPageController>().currentBodyName == "模块3") {
-                return;
-              }
-              context.read<MainPageController>().changeBodyName("模块3");
-            },
+          ExpandedBodyWidget(
+            icon: Icon(
+              Icons.access_alarm,
+              color: AppStyle.spacer,
+            ),
+            message: "模块3",
           ),
-          ListTile(
-            leading: const Icon(Icons.adb),
-            title: const Text("模块4"),
-            onTap: () {
-              if (context.read<MainPageController>().currentBodyName == "模块4") {
-                return;
-              }
-              context.read<MainPageController>().changeBodyName("模块4");
-            },
+          ExpandedBodyWidget(
+            icon: Icon(
+              Icons.adb,
+              color: AppStyle.spacer,
+            ),
+            message: "模块4",
           ),
         ],
       );
@@ -74,23 +59,38 @@ class SideMenuBody extends StatelessWidget {
       return Column(
         children: const [
           UnExpandedBodyWidget(
-            icon: Icon(Icons.dashboard),
+            icon: Icon(
+              Icons.dashboard,
+              color: AppStyle.spacer,
+            ),
             message: "Dashboard",
           ),
           UnExpandedBodyWidget(
-            icon: Icon(Icons.functions),
+            icon: Icon(
+              Icons.functions,
+              color: AppStyle.spacer,
+            ),
             message: "模块1",
           ),
           UnExpandedBodyWidget(
-            icon: Icon(Icons.abc),
+            icon: Icon(
+              Icons.abc,
+              color: AppStyle.spacer,
+            ),
             message: "模块2",
           ),
           UnExpandedBodyWidget(
-            icon: Icon(Icons.access_alarm),
+            icon: Icon(
+              Icons.access_alarm,
+              color: AppStyle.spacer,
+            ),
             message: "模块3",
           ),
           UnExpandedBodyWidget(
-            icon: Icon(Icons.adb),
+            icon: Icon(
+              Icons.adb,
+              color: AppStyle.spacer,
+            ),
             message: "模块4",
           ),
         ],
@@ -99,6 +99,7 @@ class SideMenuBody extends StatelessWidget {
   }
 }
 
+// 这是没有展开时的样式
 class UnExpandedBodyWidget extends StatelessWidget {
   const UnExpandedBodyWidget(
       {Key? key, required this.icon, this.onTap, required this.message})
@@ -110,6 +111,9 @@ class UnExpandedBodyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: context.watch<MainPageController>().currentBodyName == message
+          ? AppStyle.darkBlue
+          : AppStyle.lightBlue,
       margin: const EdgeInsets.only(top: 10, bottom: 10),
       child: Tooltip(
         // padding: EdgeInsets.all(5),
@@ -126,6 +130,41 @@ class UnExpandedBodyWidget extends StatelessWidget {
               },
           child: icon,
         ),
+      ),
+    );
+  }
+}
+
+// 这部分是展开时的样式
+class ExpandedBodyWidget extends StatelessWidget {
+  const ExpandedBodyWidget(
+      {Key? key, required this.icon, this.onTap, required this.message})
+      : super(key: key);
+
+  final Widget icon;
+  final VoidCallback? onTap;
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: context.watch<MainPageController>().currentBodyName == message
+          ? AppStyle.darkBlue
+          : AppStyle.lightBlue,
+      child: ListTile(
+        leading: icon,
+        title: Text(
+          message,
+          style: AppStyle.menuBar,
+        ),
+        onTap: onTap ??
+            () {
+              if (context.read<MainPageController>().currentBodyName ==
+                  message) {
+                return;
+              }
+              context.read<MainPageController>().changeBodyName(message);
+            },
       ),
     );
   }

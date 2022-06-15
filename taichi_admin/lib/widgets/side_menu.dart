@@ -11,6 +11,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:taichi_admin/app_style.dart';
 import 'package:taichi_admin/controllers/menu_controller.dart';
 import 'package:taichi_admin/widgets/future_builder.dart';
 import 'side_menu_header.dart' deferred as sidemenuheader;
@@ -43,7 +44,7 @@ class _SideMenuState extends State<SideMenu> {
       return Container(
         // padding: const EdgeInsets.all(10),
         width: 300,
-        color: Colors.grey,
+        color: AppStyle.lightBlue,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -64,7 +65,7 @@ class _SideMenuState extends State<SideMenu> {
       return Container(
         padding: const EdgeInsets.all(10),
         width: 50,
-        color: Colors.grey,
+        color: AppStyle.lightBlue,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

@@ -13,6 +13,9 @@ class AppStyle {
   // ignore: constant_identifier_names
   static const Color dark_grey = Color(0xFF313A44);
 
+  static const Color lightBlue = Colors.lightBlueAccent;
+  static const Color darkBlue = Color.fromARGB(255, 6, 93, 136);
+
   static const Color darkText = Color(0xFF253840);
   static const Color darkerText = Color(0xFF17262A);
   static const Color lightText = Color(0xFF4A6572);
@@ -94,5 +97,12 @@ class AppStyle {
     fontSize: 12,
     letterSpacing: 0.2,
     color: lightText, // was lightText
+  );
+
+  static const TextStyle menuBar = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 16,
+    letterSpacing: 0.2,
+    color: Colors.white, // was lightText
   );
 }
