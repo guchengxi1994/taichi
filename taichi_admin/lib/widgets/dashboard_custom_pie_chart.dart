@@ -1,4 +1,4 @@
-import 'package:fl_chart/fl_chart.dart';
+import 'package:pie_chart/pie_chart.dart';
 import 'package:flutter/material.dart';
 
 class CustomPieChart extends StatefulWidget {
@@ -21,26 +21,31 @@ class _CustomPieChartState extends State<CustomPieChart> {
       height: MediaQuery.of(context).size.height * 0.25,
       color: Colors.transparent,
       child: PieChart(
-        PieChartData(
-            pieTouchData: PieTouchData(
-                touchCallback: (FlTouchEvent event, pieTouchResponse) {
-              setState(() {
-                if (!event.isInterestedForInteractions ||
-                    pieTouchResponse == null ||
-                    pieTouchResponse.touchedSection == null) {
-                  touchedIndex = -1;
-                  return;
-                }
-                touchedIndex =
-                    pieTouchResponse.touchedSection!.touchedSectionIndex;
-              });
-            }),
-            borderData: FlBorderData(
-              show: false,
-            ),
-            sectionsSpace: 0,
-            centerSpaceRadius: 40,
-            sections: showingSections()),
+        dataMap: widget.datas.toMap(),
+        animationDuration: const Duration(milliseconds: 800),
+        chartLegendSpacing: 32,
+        chartRadius: MediaQuery.of(context).size.width / 3.2,
+        colorList: pieColors,
+        initialAngleInDegree: 0,
+        chartType: ChartType.ring,
+        ringStrokeWidth: 32,
+        legendOptions: const LegendOptions(
+          showLegendsInRow: false,
+          legendPosition: LegendPosition.right,
+          showLegends: true,
+          legendTextStyle: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        chartValuesOptions: const ChartValuesOptions(
+          showChartValueBackground: true,
+          showChartValues: true,
+          showChartValuesInPercentage: false,
+          showChartValuesOutside: false,
+          decimalPlaces: 1,
+        ),
+        // gradientList: ---To add gradient colors---
+        // emptyColorGradient: ---Empty Color gradient---
       ),
     );
   }
@@ -51,38 +56,27 @@ class _CustomPieChartState extends State<CustomPieChart> {
     Color(0xff845bef),
     Color(0xff13d38e)
   ];
-
-  List<PieChartSectionData> showingSections() {
-    List<PieChartSectionData> d = [];
-
-    for (int i = 0; i < widget.datas.length; i++) {
-      final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 25.0 : 16.0;
-      final radius = isTouched ? 60.0 : 50.0;
-
-      d.add(PieChartSectionData(
-        color: pieColors[i],
-        value: widget.datas[i].value,
-        title: widget.datas[i].toString(),
-        radius: radius,
-        titleStyle: TextStyle(
-            fontSize: fontSize,
-            fontWeight: FontWeight.bold,
-            color: const Color(0xffffffff)),
-      ));
-    }
-
-    return d;
-  }
 }
 
 class PieData {
   double value;
+  String name;
 
-  PieData({required this.value});
+  PieData({required this.value, required this.name});
 
   @override
   String toString() {
     return "$value%";
+  }
+}
+
+extension PieListExtension on List<PieData> {
+  Map<String, double> toMap() {
+    Map<String, double> result = {};
+    for (final i in this) {
+      result[i.name] = i.value;
+    }
+
+    return result;
   }
 }

@@ -30,6 +30,7 @@ class SideMenu extends StatefulWidget {
 class _SideMenuState extends State<SideMenu> {
   var loadHeaderFuture;
   var loadBodyFuture;
+  final ScrollController controller = ScrollController();
 
   @override
   void initState() {
@@ -39,12 +40,28 @@ class _SideMenuState extends State<SideMenu> {
   }
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      color: AppStyle.lightBlue,
+      child: SingleChildScrollView(
+        controller: controller,
+        child: buildMenu(),
+      ),
+    );
+  }
+
+  Widget buildMenu() {
     if (context.watch<MenuController>().isExpanded) {
-      return Container(
+      return SizedBox(
         // padding: const EdgeInsets.all(10),
         width: 300,
-        color: AppStyle.lightBlue,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -65,7 +82,6 @@ class _SideMenuState extends State<SideMenu> {
       return Container(
         padding: const EdgeInsets.all(10),
         width: 50,
-        color: AppStyle.lightBlue,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

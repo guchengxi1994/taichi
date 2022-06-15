@@ -26,6 +26,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   var loadLeftFuture;
   var loadRightFuture;
+  final ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
@@ -35,25 +36,34 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 3,
-          child: FutureLoaderWidget(
-            builder: (context) => left.DashboardLeftPart(type: widget.type),
-            loadWidgetFuture: loadLeftFuture,
-          ),
-        ),
-        if (widget.type == ScreenType.desktop)
+    return SingleChildScrollView(
+      controller: scrollController,
+      child: Row(
+        children: [
           Expanded(
-              flex: 1,
-              child: FutureLoaderWidget(
-                builder: (context) =>
-                    right.DashboardRightPart(type: widget.type),
-                loadWidgetFuture: loadRightFuture,
-              )),
-      ],
+            flex: 3,
+            child: FutureLoaderWidget(
+              builder: (context) => left.DashboardLeftPart(type: widget.type),
+              loadWidgetFuture: loadLeftFuture,
+            ),
+          ),
+          if (widget.type == ScreenType.desktop)
+            Expanded(
+                flex: 1,
+                child: FutureLoaderWidget(
+                  builder: (context) =>
+                      right.DashboardRightPart(type: widget.type),
+                  loadWidgetFuture: loadRightFuture,
+                )),
+        ],
+      ),
     );
   }
 }

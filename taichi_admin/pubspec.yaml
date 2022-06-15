@@ -19,8 +19,14 @@ dependencies:
         url: https://github.com/guchengxi1994/taichi
         ref: builder
         path: taichi_core
+  taichi_china_map:
+    git:
+        url: https://github.com/guchengxi1994/taichi
+        ref: builder
+        path: taichi_china_map
   provider: ^6.0.3
-  fl_chart: ^0.51.0
+  pie_chart: ^5.3.1
+
 
 deferred-components:
   - name: taichi_admin_widgets
@@ -35,6 +41,7 @@ deferred-components:
       - package:taichi_admin/widgets/appbar.dart
       - package:taichi_admin/widgets/appbar_dropdown_button.dart
       - package:taichi_admin/widgets/appbar_search.dart
+      - package:taichi_china_map/lib.dart
 
 dev_dependencies:
   flutter_test:
