@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:taichi/taichi.dart' show TaichiDevUtils;
 
-typedef ProvinceCallBack = void Function(String? s);
+import 'area_overlay.dart';
+import 'models.dart';
+import 'painter.dart';
+
+typedef AreaCallBack = void Function(String? s);
 
 /// modified from https://blog.csdn.net/LZ511321/article/details/117521633
 
-//封装地图实体类
-class MapEntity {
-  String? name;
-  Path? path;
-  bool? isSelected;
-
-  MapEntity({this.isSelected, this.name, this.path});
-}
-
 //中国地图控件
 class ChinaMap extends StatefulWidget {
-  const ChinaMap({Key? key, this.showNames = true, this.onClick})
+  const ChinaMap({Key? key, this.showNames = true, this.onClick, this.overlay})
       : super(key: key);
   final bool showNames;
-  final ProvinceCallBack? onClick;
+  final AreaCallBack? onClick;
+  // only works on desktops
+  final Widget? overlay;
 
   @override
   State<StatefulWidget> createState() {
@@ -28,6 +26,9 @@ class ChinaMap extends StatefulWidget {
 
 class _ChinaMapState extends State<ChinaMap>
     with AutomaticKeepAliveClientMixin {
+  // ignore: avoid_init_to_null
+  late OverlayEntry? _overlayEntry = null;
+
   //城市名称，顺序与下方svg坐标点对应
   final String _cityName =
       "北京,天津,上海,重庆,河北,山西,辽宁,黑龙江,吉林,江苏,浙江,安徽,福建,江西,山东,河南,湖北,湖南,广东,海南,四川,贵州,云南,陕西,甘肃,青海,内蒙,广西,西藏,宁夏,新疆,澳门,香港,台湾";
@@ -358,41 +359,130 @@ class _ChinaMapState extends State<ChinaMap>
     setState(() {});
   }
 
+  late String onMouseChangeAreaName = "";
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return GestureDetector(
-        onTapUp: (value) {
-          _dealClickEvent(value);
-        },
-        onScaleStart: (value) {
-          _lastOffset = value.localFocalPoint;
-        },
-        onScaleUpdate: (value) {
-          _dealScaleEvent(value);
-        },
-        onScaleEnd: (value) {
-          _dealScaleEndEvent();
-        },
-        child: Container(
-          color: Colors.transparent,
-          width: _mapWidth,
-          height: _mapHeight,
-          child: ClipRect(
-            child: CustomPaint(
-              painter: MapPainter(
-                  offsetX: _mapOffsetX,
-                  offsetY: _mapOffsetY,
-                  scale: _mapScale,
-                  mapEntityList: _mapEntityList),
-              child: widget.showNames
-                  ? Stack(
-                      children: _cityNameListWidget(),
-                    )
-                  : null,
+
+    if (TaichiDevUtils.isMobile) {
+      return GestureDetector(
+          onTapUp: (value) {
+            _dealClickEvent(value);
+          },
+          onScaleStart: (value) {
+            _lastOffset = value.localFocalPoint;
+          },
+          onScaleUpdate: (value) {
+            _dealScaleEvent(value);
+          },
+          onScaleEnd: (value) {
+            _dealScaleEndEvent();
+          },
+          child: Container(
+            color: Colors.transparent,
+            width: _mapWidth,
+            height: _mapHeight,
+            child: ClipRect(
+              child: CustomPaint(
+                painter: MapPainter(
+                    offsetX: _mapOffsetX,
+                    offsetY: _mapOffsetY,
+                    scale: _mapScale,
+                    mapEntityList: _mapEntityList),
+                child: widget.showNames
+                    ? Stack(
+                        children: _cityNameListWidget(),
+                      )
+                    : null,
+              ),
             ),
-          ),
-        ));
+          ));
+    }
+
+    return MouseRegion(
+      onHover: (event) {
+        // debugPrint("[mouse region event]:$event");
+
+        var initAreaName = "";
+        for (var mapEntity in _mapEntityList) {
+          if (mapEntity.path!.contains(Offset(
+              (event.position.dx - _mapOffsetX) / _mapScale,
+              (event.position.dy - _mapOffsetY) / _mapScale))) {
+            initAreaName = mapEntity.name!;
+            break;
+          }
+        }
+
+        if (onMouseChangeAreaName != initAreaName) {
+          onMouseChangeAreaName = initAreaName;
+
+          try {
+            _overlayEntry?.remove();
+          } catch (_) {}
+
+          // debugPrint("[mouse region currentAreaName]:$onMouseChangeAreaName");
+          var svgIndex = _cityNameList.indexOf(onMouseChangeAreaName);
+          if (svgIndex != -1) {
+            _overlayEntry = OverlayEntry(builder: (context) {
+              if (widget.overlay != null) {
+                return widget.overlay!;
+              }
+
+              return Positioned(
+                  left: (event.position.dx - _mapOffsetX) / _mapScale,
+                  top: (event.position.dy - _mapOffsetY) / _mapScale,
+                  child: AreaOverlayWidget(
+                    svgPath: svgPathList[svgIndex],
+                    areaName: onMouseChangeAreaName,
+                  ));
+            });
+
+            Overlay.of(context)?.insert(_overlayEntry!);
+          }
+
+          return;
+        }
+        if (initAreaName == "" && _overlayEntry != null) {
+          try {
+            _overlayEntry?.remove();
+          } catch (_) {}
+          return;
+        }
+      },
+      child: GestureDetector(
+          onTapUp: (value) {
+            _dealClickEvent(value);
+          },
+          onScaleStart: (value) {
+            _lastOffset = value.localFocalPoint;
+          },
+          onScaleUpdate: (value) {
+            _dealScaleEvent(value);
+          },
+          onScaleEnd: (value) {
+            _dealScaleEndEvent();
+          },
+          child: Container(
+            color: Colors.transparent,
+            width: _mapWidth,
+            height: _mapHeight,
+            child: ClipRect(
+              child: CustomPaint(
+                painter: MapPainter(
+                    offsetX: _mapOffsetX,
+                    offsetY: _mapOffsetY,
+                    scale: _mapScale,
+                    mapEntityList: _mapEntityList),
+                child: widget.showNames
+                    ? Stack(
+                        children: _cityNameListWidget(),
+                      )
+                    : null,
+              ),
+            ),
+          )),
+    );
   }
 
   List<Widget> _cityNameListWidget() {
@@ -477,43 +567,4 @@ class _ChinaMapState extends State<ChinaMap>
 
   @override
   bool get wantKeepAlive => false;
-}
-
-class MapPainter extends CustomPainter {
-  Paint mapPaint = Paint()
-    ..color = Colors.blue
-    ..isAntiAlias = true
-    ..strokeWidth = 1;
-  double offsetX;
-  double offsetY;
-  double scale;
-  List<MapEntity> mapEntityList;
-
-  MapPainter({
-    required this.offsetX,
-    required this.offsetY,
-    required this.mapEntityList,
-    required this.scale,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    canvas.translate(offsetX, offsetY);
-    canvas.scale(scale);
-    for (var mapEntity in mapEntityList) {
-      if (mapEntity.isSelected!) {
-        mapPaint.color = Colors.green;
-        mapPaint.style = PaintingStyle.fill;
-      } else {
-        mapPaint.color = Colors.blue;
-        mapPaint.style = PaintingStyle.stroke;
-      }
-      canvas.drawPath(mapEntity.path!, mapPaint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
-  }
 }
