@@ -324,7 +324,6 @@ class _ChinaMapState extends State<ChinaMap>
   }
 
   //处理地图移动、缩放事件
-  @Deprecated("unused")
   void _dealScaleEvent(ScaleUpdateDetails details) {
     _nowMapScale = details.scale;
 
@@ -360,7 +359,6 @@ class _ChinaMapState extends State<ChinaMap>
     setState(() {});
   }
 
-  @Deprecated("unused")
   void _dealScaleEndEvent() {
     _lastEndMapScale = (_nowMapScale * _lastEndMapScale).clamp(1.0, 2.0);
     if (_mapScale == 1.0) {
@@ -470,15 +468,15 @@ class _ChinaMapState extends State<ChinaMap>
           onTapUp: (value) {
             _dealClickEvent(value);
           },
-          // onScaleStart: (value) {
-          //   _lastOffset = value.localFocalPoint;
-          // },
-          // onScaleUpdate: (value) {
-          //   _dealScaleEvent(value);
-          // },
-          // onScaleEnd: (value) {
-          //   _dealScaleEndEvent();
-          // },
+          onScaleStart: (value) {
+            _lastOffset = value.localFocalPoint;
+          },
+          onScaleUpdate: (value) {
+            _dealScaleEvent(value);
+          },
+          onScaleEnd: (value) {
+            _dealScaleEndEvent();
+          },
           child: Container(
             color: Colors.transparent,
             width: _mapWidth,
