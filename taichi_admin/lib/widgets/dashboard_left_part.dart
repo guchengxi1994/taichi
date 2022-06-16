@@ -58,12 +58,15 @@ class _DashboardLeftPartState extends State<DashboardLeftPart> {
             builder: (context) {
               if (widget.type == ScreenType.desktop) {
                 if (context.watch<MenuController>().isExpanded) {
-                  return chinamap.ChinaMap(
-                    onClick: (s) {
-                      debugPrint("[current area]:$s");
-                    },
-                    toLeft: AppStyle.sidemenuWidth,
-                    toTop: AppStyle.appbarHeight,
+                  return Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: chinamap.ChinaMap(
+                      onClick: (s) {
+                        debugPrint("[current area]:$s");
+                      },
+                      toLeft: 20 + AppStyle.sidemenuWidth,
+                      toTop: 20 + AppStyle.appbarHeight,
+                    ),
                   );
                 }
 
