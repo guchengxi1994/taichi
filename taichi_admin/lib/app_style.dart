@@ -4,6 +4,9 @@ class AppStyle {
   AppStyle._();
 
   static const double headerHeight = 200;
+  static const double sidemenuWidth = 300;
+  static const double collapseSidemenuWidth = 50;
+  static const double appbarHeight = 50;
 
   static const Color notWhite = Color(0xFFEDF0F2);
   static const Color nearlyWhite = Color(0xFFFEFEFE);

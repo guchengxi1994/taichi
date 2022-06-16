@@ -12,6 +12,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:taichi_admin/app_style.dart';
 import 'package:taichi_admin/controllers/main_page_controller.dart';
 import 'package:taichi_admin/controllers/menu_controller.dart';
 import 'package:taichi_admin/screens/templete_screen.dart' deferred as templete;
@@ -62,7 +63,7 @@ class _MainScreenState extends State<MainScreen> {
         Expanded(
             child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(50),
+            preferredSize: const Size.fromHeight(AppStyle.appbarHeight),
             child: FutureLoaderWidget(
                 loadWidgetFuture: loadAppbarLib,
                 builder: (context) => appbar.MainScreenAppbar(

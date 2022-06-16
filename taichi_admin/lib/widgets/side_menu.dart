@@ -61,7 +61,7 @@ class _SideMenuState extends State<SideMenu> {
     if (context.watch<MenuController>().isExpanded) {
       return SizedBox(
         // padding: const EdgeInsets.all(10),
-        width: 300,
+        width: AppStyle.sidemenuWidth,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -81,7 +81,7 @@ class _SideMenuState extends State<SideMenu> {
     } else {
       return Container(
         padding: const EdgeInsets.all(10),
-        width: 50,
+        width: AppStyle.collapseSidemenuWidth,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

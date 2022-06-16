@@ -34,12 +34,16 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ChinaMap(
-        showNames: false,
-        onClick: (s) {
-          debugPrint("[s]:$s");
-          Fluttertoast.showToast(msg: s ?? "");
-        },
+      body: Column(
+        children: [
+          ChinaMap(
+            showNames: false,
+            onClick: (s) {
+              debugPrint("[s]:$s");
+              Fluttertoast.showToast(msg: s ?? "");
+            },
+          )
+        ],
       ),
     );
     // return Scaffold(

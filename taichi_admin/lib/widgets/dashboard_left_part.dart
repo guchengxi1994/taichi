@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:taichi_admin/app_style.dart';
+import 'package:taichi_admin/controllers/menu_controller.dart';
 import 'package:taichi_admin/utils/common.dart';
 import 'package:taichi_admin/widgets/future_builder.dart';
 import 'package:taichi_china_map/lib.dart' deferred as chinamap;
@@ -49,12 +52,29 @@ class _DashboardLeftPartState extends State<DashboardLeftPart> {
     }).toList();
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Center(
-          child: FutureLoaderWidget(
-              builder: (context) => chinamap.ChinaMap(),
-              loadWidgetFuture: loadChinaMapFuture),
-        ),
+        FutureLoaderWidget(
+            builder: (context) {
+              if (widget.type == ScreenType.desktop) {
+                if (context.watch<MenuController>().isExpanded) {
+                  return chinamap.ChinaMap(
+                    toLeft: AppStyle.sidemenuWidth,
+                    toTop: AppStyle.appbarHeight,
+                  );
+                }
+
+                return chinamap.ChinaMap(
+                  toLeft: AppStyle.collapseSidemenuWidth,
+                  toTop: AppStyle.appbarHeight,
+                );
+              } else {
+                return chinamap.ChinaMap(
+                  toTop: AppStyle.appbarHeight,
+                );
+              }
+            },
+            loadWidgetFuture: loadChinaMapFuture),
         const SizedBox(
           height: 20,
         ),

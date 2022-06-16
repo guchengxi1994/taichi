@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:flutter/material.dart';
 import 'package:taichi/taichi.dart' show TaichiDevUtils;
 
@@ -11,12 +13,20 @@ typedef AreaCallBack = void Function(String? s);
 
 //中国地图控件
 class ChinaMap extends StatefulWidget {
-  const ChinaMap({Key? key, this.showNames = true, this.onClick, this.overlay})
+  const ChinaMap(
+      {Key? key,
+      this.showNames = true,
+      this.onClick,
+      this.overlay,
+      this.toLeft = 0,
+      this.toTop = 0})
       : super(key: key);
   final bool showNames;
   final AreaCallBack? onClick;
   // only works on desktops
   final Widget? overlay;
+  final double toTop;
+  final double toLeft;
 
   @override
   State<StatefulWidget> createState() {
@@ -314,6 +324,7 @@ class _ChinaMapState extends State<ChinaMap>
   }
 
   //处理地图移动、缩放事件
+  @Deprecated("unused")
   void _dealScaleEvent(ScaleUpdateDetails details) {
     _nowMapScale = details.scale;
 
@@ -349,6 +360,7 @@ class _ChinaMapState extends State<ChinaMap>
     setState(() {});
   }
 
+  @Deprecated("unused")
   void _dealScaleEndEvent() {
     _lastEndMapScale = (_nowMapScale * _lastEndMapScale).clamp(1.0, 2.0);
     if (_mapScale == 1.0) {
@@ -370,15 +382,15 @@ class _ChinaMapState extends State<ChinaMap>
           onTapUp: (value) {
             _dealClickEvent(value);
           },
-          onScaleStart: (value) {
-            _lastOffset = value.localFocalPoint;
-          },
-          onScaleUpdate: (value) {
-            _dealScaleEvent(value);
-          },
-          onScaleEnd: (value) {
-            _dealScaleEndEvent();
-          },
+          // onScaleStart: (value) {
+          //   _lastOffset = value.localFocalPoint;
+          // },
+          // onScaleUpdate: (value) {
+          //   _dealScaleEvent(value);
+          // },
+          // onScaleEnd: (value) {
+          //   _dealScaleEndEvent();
+          // },
           child: Container(
             color: Colors.transparent,
             width: _mapWidth,
@@ -407,8 +419,8 @@ class _ChinaMapState extends State<ChinaMap>
         var initAreaName = "";
         for (var mapEntity in _mapEntityList) {
           if (mapEntity.path!.contains(Offset(
-              (event.position.dx - _mapOffsetX) / _mapScale,
-              (event.position.dy - _mapOffsetY) / _mapScale))) {
+              (event.position.dx - _mapOffsetX - widget.toLeft) / _mapScale,
+              (event.position.dy - _mapOffsetY - widget.toTop) / _mapScale))) {
             initAreaName = mapEntity.name!;
             break;
           }
@@ -423,12 +435,15 @@ class _ChinaMapState extends State<ChinaMap>
 
           // debugPrint("[mouse region currentAreaName]:$onMouseChangeAreaName");
           var svgIndex = _cityNameList.indexOf(onMouseChangeAreaName);
+          // print(onMouseChangeAreaName);
+          // print(svgIndex);
+
           if (svgIndex != -1) {
             _overlayEntry = OverlayEntry(builder: (context) {
               if (widget.overlay != null) {
                 return widget.overlay!;
               }
-
+              // print("aaaaaaaaaaaaaaa");
               return Positioned(
                   left: (event.position.dx - _mapOffsetX) / _mapScale,
                   top: (event.position.dy - _mapOffsetY) / _mapScale,
@@ -439,6 +454,7 @@ class _ChinaMapState extends State<ChinaMap>
             });
 
             Overlay.of(context)?.insert(_overlayEntry!);
+            // print("bbbbbbbbbbbbbbbbbb");
           }
 
           return;
@@ -454,15 +470,15 @@ class _ChinaMapState extends State<ChinaMap>
           onTapUp: (value) {
             _dealClickEvent(value);
           },
-          onScaleStart: (value) {
-            _lastOffset = value.localFocalPoint;
-          },
-          onScaleUpdate: (value) {
-            _dealScaleEvent(value);
-          },
-          onScaleEnd: (value) {
-            _dealScaleEndEvent();
-          },
+          // onScaleStart: (value) {
+          //   _lastOffset = value.localFocalPoint;
+          // },
+          // onScaleUpdate: (value) {
+          //   _dealScaleEvent(value);
+          // },
+          // onScaleEnd: (value) {
+          //   _dealScaleEndEvent();
+          // },
           child: Container(
             color: Colors.transparent,
             width: _mapWidth,
