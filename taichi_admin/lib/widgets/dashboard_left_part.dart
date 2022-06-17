@@ -66,17 +66,22 @@ class _DashboardLeftPartState extends State<DashboardLeftPart> {
                       },
                       toLeft: 20 + AppStyle.sidemenuWidth,
                       toTop: 20 + AppStyle.appbarHeight,
+                      mapColor: const {"北京": Colors.red, "江苏": Colors.blue},
                     ),
                   );
                 }
 
                 return chinamap.ChinaMap(
+                  mapScale: 0.8,
                   toLeft: AppStyle.collapseSidemenuWidth,
                   toTop: AppStyle.appbarHeight,
+                  mapColor: const {"北京": Colors.red, "江苏": Colors.blue},
                 );
               } else {
                 return chinamap.ChinaMap(
+                  mapScale: 0.6,
                   toTop: AppStyle.appbarHeight,
+                  mapColor: const {"北京": Colors.red, "江苏": Colors.blue},
                 );
               }
             },

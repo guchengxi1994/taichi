@@ -37,12 +37,19 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         children: [
           ChinaMap(
+            mapScale: 0.8,
             showNames: false,
             onClick: (s) {
               debugPrint("[s]:$s");
               Fluttertoast.showToast(msg: s ?? "");
             },
-            mapColor: const {"北京": Colors.red, "江苏": Colors.blue},
+            mapColor: const {
+              "北京": Colors.red,
+              "江苏": Colors.blue,
+              "上海": Colors.green,
+              "四川": Colors.orange,
+              "安徽": Colors.cyanAccent
+            },
           )
         ],
       ),

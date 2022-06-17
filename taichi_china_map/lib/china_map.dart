@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:taichi/taichi.dart' show TaichiDevUtils;
+import 'package:taichi_china_map/default_indicator.dart';
 
 import 'area_overlay.dart';
 import 'constrants.dart';
@@ -14,21 +15,30 @@ typedef AreaCallBack = void Function(String? s);
 
 //中国地图控件
 class ChinaMap extends StatefulWidget {
-  const ChinaMap({
-    Key? key,
-    this.showNames = true,
-    this.onClick,
-    this.overlay,
-    this.toLeft = 0,
-    this.toTop = 0,
-    this.mapColor = const {},
-    this.indicator,
-    this.mapScale = 1.0,
-  }) : super(key: key);
+  const ChinaMap(
+      {Key? key,
+      this.showNames = true,
+      this.onClick,
+      this.overlay,
+      this.toLeft = 0,
+      this.toTop = 0,
+      this.mapColor = const {},
+      this.indicator,
+      this.mapScale = 1.0,
+      this.isDisplayOverlay = true})
+      : super(key: key);
+
+  /// 是否展示地区名
   final bool showNames;
+
+  /// 点击地区的回调
   final AreaCallBack? onClick;
 
   /// only works on desktops
+  ///
+  /// 展示自定义overlay
+  ///
+  /// 需 `isDisplayOverlay` 参数为true
   final Widget? overlay;
   final double toTop;
   final double toLeft;
@@ -43,6 +53,9 @@ class ChinaMap extends StatefulWidget {
 
   /// 地图尺寸
   final double mapScale;
+
+  /// 是否显示Overlay
+  final bool isDisplayOverlay;
 
   @override
   State<StatefulWidget> createState() {
@@ -76,7 +89,7 @@ class _ChinaMapState extends State<ChinaMap>
   final double _initScaleX = 1;
   final double _initScaleY = 1;
 
-  double _mapScale = 1.0;
+  late double _mapScale = widget.mapScale;
   double _mapOffsetX = 0;
   double _mapOffsetY = 0;
   late Offset _lastOffset;
@@ -333,15 +346,6 @@ class _ChinaMapState extends State<ChinaMap>
           onTapUp: (value) {
             _dealClickEvent(value);
           },
-          // onScaleStart: (value) {
-          //   _lastOffset = value.localFocalPoint;
-          // },
-          // onScaleUpdate: (value) {
-          //   _dealScaleEvent(value);
-          // },
-          // onScaleEnd: (value) {
-          //   _dealScaleEndEvent();
-          // },
           child: Container(
             color: Colors.transparent,
             width: _mapWidth,
@@ -365,6 +369,10 @@ class _ChinaMapState extends State<ChinaMap>
 
     return MouseRegion(
       onHover: (event) {
+        if (!widget.isDisplayOverlay) {
+          return;
+        }
+
         // debugPrint("[mouse region event]:$event");
 
         var initAreaName = "";
@@ -445,11 +453,35 @@ class _ChinaMapState extends State<ChinaMap>
                     ? Stack(
                         children: _cityNameListWidget(),
                       )
-                    : null,
+                    : Stack(
+                        children: [_indicator()],
+                      ),
               ),
             ),
           )),
     );
+  }
+
+  Widget _indicator() {
+    double top = _mapScale *
+            _mapEntityList
+                .firstWhere((element) => element.name == "西藏")
+                .path!
+                .getBounds()
+                .bottom +
+        10;
+
+    if (widget.indicator == null) {
+      return Positioned(
+          left: 0,
+          top: top,
+          child: DefaultIndicator(
+            models: widget.mapColor.toIndicator(),
+            mapScale: _mapScale,
+          ));
+    } else {
+      return Positioned(left: 0, top: top, child: widget.indicator!);
+    }
   }
 
   List<Widget> _cityNameListWidget() {
@@ -507,10 +539,13 @@ class _ChinaMapState extends State<ChinaMap>
         top: offsetY,
         child: Text(
           element.name!,
-          style: const TextStyle(fontSize: 9, color: Colors.blue),
+          style: const TextStyle(fontSize: 9, color: Colors.black),
         ),
       ));
     }
+
+    cityNameListWidget.add(_indicator());
+
     return cityNameListWidget;
   }
 
