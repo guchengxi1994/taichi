@@ -25,10 +25,10 @@ class MapPainter extends CustomPainter {
     canvas.scale(scale);
     for (var mapEntity in mapEntityList) {
       if (mapEntity.isSelected!) {
-        mapPaint.color = Colors.green;
+        mapPaint.color = mapEntity.areaColor;
         mapPaint.style = PaintingStyle.fill;
       } else {
-        mapPaint.color = Colors.blue;
+        mapPaint.color = mapEntity.areaColor;
         mapPaint.style = PaintingStyle.stroke;
       }
       canvas.drawPath(mapEntity.path!, mapPaint);

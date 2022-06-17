@@ -42,6 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
               debugPrint("[s]:$s");
               Fluttertoast.showToast(msg: s ?? "");
             },
+            mapColor: const {"北京": Colors.red, "江苏": Colors.blue},
           )
         ],
       ),

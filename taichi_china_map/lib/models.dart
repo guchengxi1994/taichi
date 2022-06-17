@@ -5,6 +5,8 @@ class MapEntity {
   String? name;
   Path? path;
   bool? isSelected;
+  Color areaColor;
 
-  MapEntity({this.isSelected, this.name, this.path});
+  MapEntity(
+      {this.isSelected, this.name, this.path, this.areaColor = Colors.blue});
 }
