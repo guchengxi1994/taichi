@@ -368,6 +368,11 @@ class _ChinaMapState extends State<ChinaMap>
     }
 
     return MouseRegion(
+      onExit: (event) {
+        try {
+          _overlayEntry?.remove();
+        } catch (_) {}
+      },
       onHover: (event) {
         if (!widget.isDisplayOverlay) {
           return;

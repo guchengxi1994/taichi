@@ -72,15 +72,32 @@ class _DashboardLeftPartState extends State<DashboardLeftPart> {
                 }
 
                 return chinamap.ChinaMap(
-                  mapScale: 0.8,
                   toLeft: AppStyle.collapseSidemenuWidth,
                   toTop: AppStyle.appbarHeight,
+                  onClick: (s) {
+                    debugPrint("[current area]:$s");
+                  },
+                  mapColor: const {"北京": Colors.red, "江苏": Colors.blue},
+                );
+              } else if (widget.type == ScreenType.tablet) {
+                return chinamap.ChinaMap(
+                  mapScale: 0.8,
+                  toTop: AppStyle.appbarHeight,
+                  isDisplayOverlay: false,
+                  onClick: (s) {
+                    debugPrint("[current area]:$s");
+                  },
                   mapColor: const {"北京": Colors.red, "江苏": Colors.blue},
                 );
               } else {
                 return chinamap.ChinaMap(
-                  mapScale: 0.6,
+                  mapScale: 0.8,
+                  showNames: false,
                   toTop: AppStyle.appbarHeight,
+                  isDisplayOverlay: false,
+                  onClick: (s) {
+                    debugPrint("[current area]:$s");
+                  },
                   mapColor: const {"北京": Colors.red, "江苏": Colors.blue},
                 );
               }

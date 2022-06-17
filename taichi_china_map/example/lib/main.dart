@@ -37,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         children: [
           ChinaMap(
-            mapScale: 0.8,
+            mapScale: 1,
             showNames: false,
             onClick: (s) {
               debugPrint("[s]:$s");
