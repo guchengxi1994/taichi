@@ -71,13 +71,16 @@ class _DashboardLeftPartState extends State<DashboardLeftPart> {
                   );
                 }
 
-                return chinamap.ChinaMap(
-                  toLeft: AppStyle.collapseSidemenuWidth,
-                  toTop: AppStyle.appbarHeight,
-                  onClick: (s) {
-                    debugPrint("[current area]:$s");
-                  },
-                  mapColor: const {"北京": Colors.red, "江苏": Colors.blue},
+                return Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: chinamap.ChinaMap(
+                    toLeft: AppStyle.collapseSidemenuWidth + 20,
+                    toTop: AppStyle.appbarHeight + 20,
+                    onClick: (s) {
+                      debugPrint("[current area]:$s");
+                    },
+                    mapColor: const {"北京": Colors.red, "江苏": Colors.blue},
+                  ),
                 );
               } else if (widget.type == ScreenType.tablet) {
                 return chinamap.ChinaMap(

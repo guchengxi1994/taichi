@@ -369,6 +369,14 @@ class _ChinaMapState extends State<ChinaMap>
 
     return MouseRegion(
       onExit: (event) {
+        var left = event.position.dx;
+        var top = event.position.dy;
+
+        if (left < (widget.toLeft + _mapWidth) &&
+            top < (_mapHeight + widget.toTop)) {
+          return;
+        }
+
         try {
           _overlayEntry?.remove();
         } catch (_) {}

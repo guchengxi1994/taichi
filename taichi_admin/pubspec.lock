@@ -191,7 +191,7 @@ packages:
     description:
       path: taichi_china_map
       ref: builder
-      resolved-ref: "2dcd306445547602b2e4daa30c57993a29dae4d1"
+      resolved-ref: bf7b86abd0b78c875e7e4410500c4774228cca8d
       url: "https://github.com/guchengxi1994/taichi"
     source: git
     version: "0.0.3"
