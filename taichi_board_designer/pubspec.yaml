@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.0.8-pre  #dev8 pre
+version: 0.0.9-pre  #dev9 pre
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -38,16 +38,21 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_colorpicker: ^1.0.3
 
-  # taichi:
-    # git:
-    #     url: https://github.com/guchengxi1994/taichi
-    #     ref: builder
-    #     path: taichi_core
+  taichi:
+    git:
+        url: https://github.com/guchengxi1994/taichi
+        ref: builder
+        path: taichi_core
   
   ## local taichi for develop
   
-  taichi:
-    path: D:/github_repo/taichi/taichi_core
+  # taichi:
+  #   path: D:/github_repo/taichi/taichi_core
+  
+deferred-components:
+- name: deffered_widgets
+  libraries:
+    - package:taichi_board_designer/_right_side.dart
 
 dev_dependencies:
   flutter_test:

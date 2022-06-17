@@ -211,9 +211,9 @@ class _RightSideWidgetState extends State<RightSideWidget> {
           ),
 
           if (context.watch<BlockController>().boardType != BoardType.custom)
-            Text("距离左侧距离\n${k.currentState!.left.ceil()}"),
+            Text("距离左侧像素值\n${k.currentState!.left.ceil()}"),
           if (context.watch<BlockController>().boardType != BoardType.custom)
-            Text("距离顶部距离\n${k.currentState!.top.ceil()}"),
+            Text("距离顶部像素值\n${k.currentState!.top.ceil()}"),
           Container(
             height: 5,
             color: Colors.black,
