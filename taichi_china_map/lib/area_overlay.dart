@@ -7,10 +7,12 @@ import 'painter.dart';
 
 // ignore: must_be_immutable
 class AreaOverlayWidget extends StatelessWidget {
-  AreaOverlayWidget({Key? key, required this.svgPath, required this.areaName})
+  AreaOverlayWidget(
+      {Key? key, required this.svgPath, required this.areaName, this.onTap})
       : super(key: key);
   final String svgPath;
   final String areaName;
+  final VoidCallback? onTap;
 
   late final double _mapWidth = 300;
   late final double _mapHeight = 300;
@@ -173,32 +175,41 @@ class AreaOverlayWidget extends StatelessWidget {
 
     // debugPrint("[_mapScale]:$_mapScale");
 
-    return Container(
-      padding: const EdgeInsets.all(20),
-      // color: Colors.red,
-      decoration: const BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 2, //阴影范围
-              spreadRadius: 1, //阴影浓度
-              color: Colors.grey, //阴影颜色
+    return Material(
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        // color: Colors.red,
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 2, //阴影范围
+                spreadRadius: 1, //阴影浓度
+                color: Colors.grey, //阴影颜色
+              ),
+            ],
+            borderRadius: BorderRadius.all(Radius.circular(20))),
+        width: _mapWidth,
+        height: _mapHeight,
+        child: Stack(
+          children: [
+            CustomPaint(
+              painter: AreaPainter(
+                  offsetX: _mapOffsetX - left,
+                  offsetY: _mapOffsetY - top,
+                  scale: _mapScale,
+                  mapEntityList: [_mapEntity]),
             ),
+            Positioned(
+                child: InkWell(
+              onTap: onTap,
+              child: const Icon(
+                Icons.close,
+                color: Colors.red,
+              ),
+            )),
           ],
-          borderRadius: BorderRadius.all(Radius.circular(20))),
-      width: _mapWidth,
-      height: _mapHeight,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomPaint(
-            painter: AreaPainter(
-                offsetX: _mapOffsetX - left,
-                offsetY: _mapOffsetY - top,
-                scale: _mapScale,
-                mapEntityList: [_mapEntity]),
-          )
-        ],
+        ),
       ),
     );
   }

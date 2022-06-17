@@ -422,6 +422,11 @@ class _ChinaMapState extends State<ChinaMap>
                   child: AreaOverlayWidget(
                     svgPath: svgPathList[svgIndex],
                     areaName: onMouseChangeAreaName,
+                    onTap: () {
+                      try {
+                        _overlayEntry?.remove();
+                      } catch (_) {}
+                    },
                   ));
             });
 
