@@ -7,10 +7,10 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-18 19:18:00
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-06-18 10:37:51
+ * @LastEditTime: 2022-06-18 11:19:58
  */
 import 'package:flutter/material.dart';
-import 'package:taichi/src/UI/simple_date_picker/taichi_simple_date_picker.dart';
+import 'package:taichi/taichi.dart';
 
 void main() => runApp(
       const MyApp(),
@@ -27,9 +27,9 @@ class MyApp extends StatelessWidget {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(100),
-              child: DatePicker(),
+            Padding(
+              padding: const EdgeInsets.all(100),
+              child: DatePickerBuilder.simple(),
             ),
             Container(
               width: 100,

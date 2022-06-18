@@ -5,7 +5,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-06-17 21:55:11
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-06-18 10:45:44
+ * @LastEditTime: 2022-06-18 11:13:22
  */
 
 /// modified from https://blog.csdn.net/qq_22492233/article/details/121678380
@@ -41,31 +41,54 @@ class _DatePickerOverlayState extends State<DatePickerBody> {
   void initState() {
     //设置默认当前月日期
     super.initState();
-    _setDatas(year: _year, month: _month);
+    // _setDatas(year: _year, month: _month);
   }
 
   @override
   Widget build(BuildContext context) {
+    _year = context.watch<DatePickerController>().year;
+    _month = context.watch<DatePickerController>().month;
+    _day = context.watch<DatePickerController>().day;
+    _setDatas(year: _year, month: _month);
     return Scaffold(
-        body: Column(
-      children: [
-        Container(
-          // margin: const EdgeInsets.all(20),
-          decoration: const BoxDecoration(
-            //设置颜色
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-            //设置四周边框
+        body: Container(
+      // margin: const EdgeInsets.all(20),
+      decoration: const BoxDecoration(
+        //设置颜色
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(12)),
+        //设置四周边框
+      ),
+      child: Column(
+        children: [
+          _yearHeader(),
+          _weekHeader(),
+          _everyDay(),
+          const SizedBox(
+            height: 10,
           ),
-          child: Column(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              _yearHeader(),
-              _weekHeader(),
-              _everyDay(),
+              TextButton(
+                  onPressed: () {
+                    context.read<DatePickerController>().init();
+                    context
+                        .read<DatePickerController>()
+                        .changeVisibilityWithParam(false);
+                  },
+                  child: const Text("取消")),
+              TextButton(
+                  onPressed: () {
+                    context
+                        .read<DatePickerController>()
+                        .changeVisibilityWithParam(false);
+                  },
+                  child: const Text("确定"))
             ],
-          ),
-        ),
-      ],
+          )
+        ],
+      ),
     ));
   }
 
@@ -162,8 +185,8 @@ class _DatePickerOverlayState extends State<DatePickerBody> {
         return GestureDetector(
           onTap: () {
             if (_datas[index].month == _month && _datas[index].year == _year) {
-              debugPrint(
-                  "[year month index]:$_year  $_month  ${_datas[index].day}");
+              // debugPrint(
+              //     "[year month index]:$_year  $_month  ${_datas[index].day}");
 
               if (widget.onTap != null) {
                 widget.onTap!(_year, _month, _datas[index].day!);
@@ -303,7 +326,13 @@ class _DatePickerOverlayState extends State<DatePickerBody> {
       } else {
         _month = _month - 1;
       }
-      _day = 1; //查看上一个月时，默认选中的为第一天
+      if (_month == DateTime.now().month) {
+        _day = DateTime.now().day;
+      } else {
+        _day = 1; //查看上一个月时，默认选中的为第一天
+      }
+
+      context.read<DatePickerController>().changeDate(_year, _month, _day);
       _datas.clear();
       _setDatas(year: _year, month: _month);
     });
@@ -311,19 +340,7 @@ class _DatePickerOverlayState extends State<DatePickerBody> {
 
   // 下月
   _nextMonth() {
-    if (_month == 12) {
-      //当前月是12月，下一个月就是下一年
-      if (DateTime.now().year >= _year + 1) {
-        //判断下一年是否大于当前年
-        _setNextMonthData();
-      }
-    } else {
-      //当前月不是12月，还处于当前年
-      if (DateTime.now().month >= _month + 1) {
-        //判断下一个月是否超过当前月，超过当前月不做操作
-        _setNextMonthData();
-      }
-    }
+    _setNextMonthData();
   }
 
   //设置下个月的数据
@@ -342,6 +359,7 @@ class _DatePickerOverlayState extends State<DatePickerBody> {
         //如果不是当前月，默认选中第一天
         _day = 1;
       }
+      context.read<DatePickerController>().changeDate(_year, _month, _day);
       _datas.clear();
       _setDatas(year: _year, month: _month);
     });
