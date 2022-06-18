@@ -36,7 +36,7 @@ class TDateUtils {
     "Dec"
   ];
 
-  static int getCurrentMonthDays(int year, int month) {
+  int getCurrentMonthDays(int year, int month) {
     Map<String, int> data = {
       "title": 31,
       "1": 31,

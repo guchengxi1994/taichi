@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables
+
 /*
  * @Descripttion: 
  * @version: 
@@ -5,10 +7,10 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-05-18 19:18:00
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-05-18 22:08:59
+ * @LastEditTime: 2022-06-18 10:37:51
  */
 import 'package:flutter/material.dart';
-import 'package:taichi_board_designer/taichi_board.dart';
+import 'package:taichi/src/UI/simple_date_picker/taichi_simple_date_picker.dart';
 
 void main() => runApp(
       const MyApp(),
@@ -19,9 +21,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: TaichiBlocksBoard(),
+      home: Scaffold(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(100),
+              child: DatePicker(),
+            ),
+            Container(
+              width: 100,
+              height: 50,
+              color: Colors.blue,
+            )
+          ],
+        ),
+      ),
     );
   }
 }
