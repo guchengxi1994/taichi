@@ -15,7 +15,9 @@ import 'package:provider/provider.dart';
 import 'package:taichi_admin/app_style.dart';
 import 'package:taichi_admin/controllers/main_page_controller.dart';
 import 'package:taichi_admin/controllers/menu_controller.dart';
-import 'package:taichi_admin/screens/templete_screen.dart' deferred as templete;
+import 'package:taichi_admin/screens/form_screens/first_screen.dart'
+    deferred as templete;
+import 'package:taichi_admin/screens/reserved_screen.dart' deferred as reserved;
 import 'package:taichi_admin/utils/common.dart';
 
 import 'dashboard.dart' deferred as dashboard;
@@ -35,6 +37,7 @@ class _MainScreenState extends State<MainScreen> {
   var loadSidemenuLib;
   var loadAppbarLib;
   var loadTempletePageLib;
+  var loadReservedPageLib;
 
   @override
   void initState() {
@@ -43,6 +46,7 @@ class _MainScreenState extends State<MainScreen> {
     loadSidemenuLib = sidemenu.loadLibrary();
     loadAppbarLib = appbar.loadLibrary();
     loadTempletePageLib = templete.loadLibrary();
+    loadReservedPageLib = reserved.loadLibrary();
   }
 
   @override
@@ -85,11 +89,15 @@ class _MainScreenState extends State<MainScreen> {
                     builder: (context) => dashboard.DashboardScreen(
                         type: ScreenTypeUtils.getScreenType(context)),
                   );
-
-                default:
+                case "/newuser":
                   return FutureLoaderWidget(
                       builder: (context) => templete.TempleteScreen(),
                       loadWidgetFuture: loadTempletePageLib);
+
+                default:
+                  return FutureLoaderWidget(
+                      builder: (context) => reserved.ReservedScreen(),
+                      loadWidgetFuture: loadReservedPageLib);
               }
             },
           ),

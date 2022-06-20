@@ -1,5 +1,5 @@
 name: taichi_admin
-description: A new Flutter project.
+description: 一个flutter做的管理平台模板。 A flutter admin templete.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
@@ -11,10 +11,13 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
+  provider: ^6.0.3
+  file_picker: ^4.6.1
+  pie_chart: ^5.3.1
 
-  # taichi:
-  #   path: D:/github_repo/taichi/taichi_core
+
   taichi:
+    # path: D:/github_repo/taichi/taichi_core
     git:
         url: https://github.com/guchengxi1994/taichi
         ref: builder
@@ -25,15 +28,16 @@ dependencies:
         url: https://github.com/guchengxi1994/taichi
         ref: builder
         path: taichi_china_map
-  provider: ^6.0.3
-  pie_chart: ^5.3.1
+
 
 
 deferred-components:
   - name: taichi_admin_widgets
     libraries:
       - package:taichi_admin/screens/dashboard.dart
-      - package:taichi_admin/screens/templete_screen.dart
+      - package:taichi_admin/screens/from_screens/first_screen.dart
+      - package:taichi_admin/screens/from_screens/second_screen.dart
+      - package:taichi_admin/screens/reserved_screen.dart
       - package:taichi_admin/widgets/dashboard_custom_card.dart
       - package:taichi_admin/widgets/dashboard_custom_pie_chart.dart
       - package:taichi_admin/widgets/dashboard_left_part.dart
@@ -43,6 +47,7 @@ deferred-components:
       - package:taichi_admin/widgets/appbar.dart
       - package:taichi_admin/widgets/appbar_dropdown_button.dart
       - package:taichi_admin/widgets/appbar_search.dart
+      - package:taichi_admin/widgets/form_1.dart
       - package:taichi_china_map/lib.dart
 
 dev_dependencies:

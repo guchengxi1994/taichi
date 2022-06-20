@@ -42,4 +42,11 @@ class AppStyle {
     letterSpacing: 0.2,
     color: Colors.white, // was lightText
   );
+
+  static const TextStyle form2CommonTitle = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 16,
+    letterSpacing: 0.2,
+    color: Colors.black, // was lightText
+  );
 }

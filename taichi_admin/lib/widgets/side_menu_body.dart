@@ -27,12 +27,12 @@ class SideMenuBody extends StatelessWidget {
             route: "/",
           ),
           ExpandedBodyWidget(
-            icon: Icon(
-              Icons.functions,
-              color: AppStyle.spacer,
-            ),
-            message: "模块1",
-          ),
+              icon: Icon(
+                Icons.functions,
+                color: AppStyle.spacer,
+              ),
+              message: "创建新用户",
+              route: "/newuser"),
           ExpandedBodyWidget(
             icon: Icon(
               Icons.abc,
@@ -68,12 +68,12 @@ class SideMenuBody extends StatelessWidget {
             route: "/",
           ),
           UnExpandedBodyWidget(
-            icon: Icon(
-              Icons.functions,
-              color: AppStyle.spacer,
-            ),
-            message: "模块1",
-          ),
+              icon: Icon(
+                Icons.functions,
+                color: AppStyle.spacer,
+              ),
+              message: "创建新用户",
+              route: "/newuser"),
           UnExpandedBodyWidget(
             icon: Icon(
               Icons.abc,
