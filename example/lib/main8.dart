@@ -16,6 +16,7 @@ void main() => runApp(
       const MyApp(),
     );
 
+// ignore: must_be_immutable
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -24,19 +25,25 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(100),
-              child: DatePickerBuilder.simple(),
-            ),
-            Container(
-              width: 100,
-              height: 50,
-              color: Colors.blue,
-            )
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(100),
+                child: SimpleDatePicker(),
+              ),
+              Container(
+                width: 100,
+                height: 50,
+                color: Colors.blue,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(100),
+                child: DatePickerWithOverlay(),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -38,6 +38,7 @@ class DatePickerController extends ChangeNotifier {
   }
 
   changeDate(int y, int m, int d) {
+    // debugPrint("[year month index controller]:$y  $m  $d");
     if (d <= 31 && m >= 1 && m <= 12) {
       _currentYear = y;
       _currentMonth = m;

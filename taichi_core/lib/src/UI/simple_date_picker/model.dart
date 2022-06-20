@@ -16,3 +16,5 @@ class CalendarModel {
 
   CalendarModel({this.year, this.month, this.day, this.dayType = ""});
 }
+
+enum CalendarType { visibility, overlay }
