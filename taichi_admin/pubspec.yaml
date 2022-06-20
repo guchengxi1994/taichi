@@ -48,6 +48,8 @@ deferred-components:
       - package:taichi_admin/widgets/appbar_dropdown_button.dart
       - package:taichi_admin/widgets/appbar_search.dart
       - package:taichi_admin/widgets/form_1.dart
+      - package:taichi_admin/widgets/form_2.dart
+      - package:taichi_admin/widgets/table_widget.dart
       - package:taichi_china_map/lib.dart
 
 dev_dependencies:

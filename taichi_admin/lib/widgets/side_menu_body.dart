@@ -38,7 +38,8 @@ class SideMenuBody extends StatelessWidget {
               Icons.abc,
               color: AppStyle.spacer,
             ),
-            message: "模块2",
+            route: "/table",
+            message: "数据表展示",
           ),
           ExpandedBodyWidget(
             icon: Icon(
@@ -79,7 +80,8 @@ class SideMenuBody extends StatelessWidget {
               Icons.abc,
               color: AppStyle.spacer,
             ),
-            message: "模块2",
+            route: "/table",
+            message: "数据表展示",
           ),
           UnExpandedBodyWidget(
             icon: Icon(

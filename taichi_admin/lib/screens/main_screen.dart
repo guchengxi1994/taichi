@@ -7,7 +7,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-06-11 11:37:21
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-06-15 21:18:58
+ * @LastEditTime: 2022-06-20 22:00:10
  */
 
 import 'package:flutter/material.dart';
@@ -24,6 +24,7 @@ import 'dashboard.dart' deferred as dashboard;
 import '../widgets/future_builder.dart';
 import '../widgets/side_menu.dart' deferred as sidemenu;
 import '../widgets/appbar.dart' deferred as appbar;
+import '../screens/table_screen.dart' deferred as tablescreen;
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -38,6 +39,7 @@ class _MainScreenState extends State<MainScreen> {
   var loadAppbarLib;
   var loadTempletePageLib;
   var loadReservedPageLib;
+  var loadTableScreenLib;
 
   @override
   void initState() {
@@ -47,6 +49,7 @@ class _MainScreenState extends State<MainScreen> {
     loadAppbarLib = appbar.loadLibrary();
     loadTempletePageLib = templete.loadLibrary();
     loadReservedPageLib = reserved.loadLibrary();
+    loadTableScreenLib = tablescreen.loadLibrary();
   }
 
   @override
@@ -93,7 +96,10 @@ class _MainScreenState extends State<MainScreen> {
                   return FutureLoaderWidget(
                       builder: (context) => templete.TempleteScreen(),
                       loadWidgetFuture: loadTempletePageLib);
-
+                case "/table":
+                  return FutureLoaderWidget(
+                      builder: (context) => tablescreen.TableScreen(),
+                      loadWidgetFuture: loadTableScreenLib);
                 default:
                   return FutureLoaderWidget(
                       builder: (context) => reserved.ReservedScreen(),
