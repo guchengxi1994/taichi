@@ -1,53 +1,79 @@
 self.$__dart_deferred_initializers__=self.$__dart_deferred_initializers__||Object.create(null)
-$__dart_deferred_initializers__.current=function(a,b,c,$){var A={pU:function pU(d){this.a=d},YQ:function YQ(d){this.a=d},
-aol(){return new A.nm(null)},
-nm:function nm(d){this.a=d},
-a0P:function a0P(){},
-a0N:function a0N(){},
-a0M:function a0M(d){this.a=d},
-a0L:function a0L(){},
-a0O:function a0O(){}},B,E,C,F,D
-A=a.updateHolder(c[6],A)
+$__dart_deferred_initializers__.current=function(a,b,c,$){var A={oY:function oY(){},
+apa(d){return new A.mz(d,null)},
+mz:function mz(d,e){this.c=d
+this.a=e},
+JQ:function JQ(d,e){var _=this
+_.e=_.d=null
+_.f=d
+_.a=null
+_.b=e
+_.c=null},
+a5W:function a5W(d,e){this.a=d
+this.b=e},
+a5X:function a5X(d){this.a=d},
+a5S:function a5S(){},
+a5T:function a5T(){},
+a5U:function a5U(){},
+a5V:function a5V(){}},B,C,J,G,H,I,K,L,F,E,D
+A=a.updateHolder(c[12],A)
 B=c[0]
-E=c[28]
-C=c[29]
-F=c[16]
-D=c[2]
-A.pU.prototype={
-F(d,e){return B.ts(E.fl(B.b([C.Lu,F.afD(C.Lv,new A.YQ(e),null)],y.e),D.O,D.t_,D.I),null,null)}}
-A.nm.prototype={
-F(d,e){var x=null
-return B.ts(B.aex("/",x,D.n7,B.ahX(),new A.a0P(),x,!1,x),x,x)}}
-var z=a.updateTypes(["oq(L)","pU(L)"])
-A.YQ.prototype={
-$0(){B.pp(this.a).df(0)},
-$S:0}
-A.a0P.prototype={
-$1(d){var x
-switch(d.a){case"/":x=new A.a0N()
-break
-default:x=new A.a0O()}return B.ab2(x,null,y.b)},
-$S:356}
-A.a0N.prototype={
-$1(d){return E.fl(B.b([C.Lt,F.afD(C.Lw,new A.a0M(d),null)],y.e),D.O,D.t_,D.I)},
+C=c[2]
+J=c[1]
+G=c[36]
+H=c[55]
+I=c[22]
+K=c[54]
+L=c[10]
+F=c[38]
+E=c[18]
+D=c[56]
+A.oY.prototype={}
+A.mz.prototype={
+a6(){return new A.JQ(B.b([],y.e),C.l)}}
+A.JQ.prototype={
+al(){this.aI()
+this.d=B.eO("card")
+this.e=B.eO("chinamap")},
+E(d,e){var x,w,v,u,t=this,s=t.a.c
+if(s===C.b2){x=(e.J(y.h).f.a.a-300)*0.75-800
+w=x>0?x/5:8}else w=s===C.eG?(e.J(y.h).f.a.a-500)/5:8
+v=J.ahi(4,y.l)
+for(s=t.d,u=0;u<4;++u)v[u]=new B.bZ(s,new A.a5W(t,u),null)
+s=B.b(v.slice(0),B.af(v))
+t.f=s
+return G.dL(B.b([new B.bZ(t.e,new A.a5X(t),null),H.eM,I.ajh(s,K.vS,C.aq,0,w)],y.e),C.aZ,C.F,C.x)}}
+var z=a.updateTypes(["mw<oY>(H)"])
+A.a5W.prototype={
+$1(d){B.c5("card")
+return L.ap8(new A.oY(),this.a.a.c,y.m)},
 $S:z+0}
-A.a0M.prototype={
-$0(){B.pp(this.a).kt(B.ab2(new A.a0L(),null,y.b))},
-$S:0}
-A.a0L.prototype={
-$1(d){return C.G_},
-$S:z+1}
-A.a0O.prototype={
-$1(d){return C.Lp},
-$S:357};(function inheritance(){var x=a.inheritMany
-x(B.a1,[A.pU,A.nm])
-x(B.ee,[A.YQ,A.a0M])
-x(B.b4,[A.a0P,A.a0N,A.a0L,A.a0O])})()
-B.cj(b.typeUniverse,JSON.parse('{"pU":{"a1":[],"h":[]},"nm":{"a1":[],"h":[]}}'))
-var y={e:B.M("l<h>"),b:B.M("@")};(function constants(){C.G_=new A.pU(null)
-C.Lp=new B.dH("this is a error page",null,null,null,null,null,null,null,null,null)
-C.Lt=new B.dH("this is a templete page",null,null,null,null,null,null,null,null,null)
-C.Lu=new B.dH("this is a second page",null,null,null,null,null,null,null,null,null)
-C.Lv=new B.dH("\u8fd4\u56de",null,null,null,null,null,null,null,null,null)
-C.Lw=new B.dH("\u8df3\u8f6c",null,null,null,null,null,null,null,null,null)})()}
-$__dart_deferred_initializers__["Gj46JEBPiUtrUbZicRhh0kG2F/Y="] = $__dart_deferred_initializers__.current
+A.a5X.prototype={
+$1(d){var x="chinamap",w=this.a.a.c
+if(w===C.b2){if(B.bV(d,!0,y.d).b){B.c5(x)
+return new B.cx(F.bR,E.R7(!0,D.eu,1,new A.a5S(),!0,320,70),null)}B.c5(x)
+return new B.cx(F.bR,E.R7(!0,D.eu,1,new A.a5T(),!0,70,70),null)}else if(w===C.eG){B.c5(x)
+return E.R7(!1,D.eu,0.8,new A.a5U(),!0,0,50)}else{B.c5(x)
+return E.R7(!1,D.eu,0.8,new A.a5V(),!1,0,50)}},
+$S:12}
+A.a5S.prototype={
+$1(d){B.ma().$1("[current area]:"+d)},
+$S:32}
+A.a5T.prototype={
+$1(d){B.ma().$1("[current area]:"+d)},
+$S:32}
+A.a5U.prototype={
+$1(d){B.ma().$1("[current area]:"+d)},
+$S:32}
+A.a5V.prototype={
+$1(d){B.ma().$1("[current area]:"+d)},
+$S:32};(function inheritance(){var x=a.inherit,w=a.inheritMany
+x(A.oY,B.B)
+x(A.mz,B.M)
+x(A.JQ,B.Q)
+w(B.b0,[A.a5W,A.a5X,A.a5S,A.a5T,A.a5U,A.a5V])})()
+B.bE(b.typeUniverse,JSON.parse('{"mz":{"M":[],"h":[]},"JQ":{"Q":["mz"]}}'))
+var y={m:B.E("oY"),l:B.E("bZ"),e:B.E("l<h>"),h:B.E("ei"),d:B.E("hx")};(function constants(){var x=a.makeConstList
+D.CK=B.b(x(["\u5317\u4eac","\u6c5f\u82cf"]),B.E("l<m>"))
+D.eu=new B.b1(2,{"\u5317\u4eac":C.hw,"\u6c5f\u82cf":C.aD},D.CK,B.E("b1<m,x>"))})()}
+$__dart_deferred_initializers__["kmmGQd5rjbr3/1V3iqpuHGyKE+g="] = $__dart_deferred_initializers__.current
