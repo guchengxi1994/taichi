@@ -64,6 +64,8 @@ class DatePickerWithOverlay extends StatelessWidget {
   // ignore: avoid_init_to_null, prefer_final_fields
   late OverlayEntry? _overlayEntry = null;
 
+  final LayerLink layerLink = LayerLink();
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -80,35 +82,40 @@ class DatePickerWithOverlay extends StatelessWidget {
             debugPrint("[position]:$offset");
 
             _overlayEntry = OverlayEntry(builder: (_) {
-              return Positioned(
-                left: offset.dx,
-                top: offset.dy + DefaultStyle.defaultHeight,
-                child: Container(
-                  constraints: const BoxConstraints(
-                      maxHeight: DefaultStyle.defaultWidth + 50),
-                  width: DefaultStyle.defaultWidth,
-                  child: DatePickerBody2(
-                    onTap: onDayTap,
-                    onCancel: () {
-                      if (onCancel != null) {
-                        onCancel!();
-                      }
-                      debugPrint("cancel");
-                      c.read<DatePickerController>().init();
-                      try {
-                        _overlayEntry?.remove();
-                      } catch (_) {}
-                    },
-                    onOK: () {
-                      if (onOK != null) {
-                        onOK!();
-                      }
-                      debugPrint("ok");
-                      try {
-                        _overlayEntry?.remove();
-                      } catch (_) {}
-                    },
-                    ancestorContext: c,
+              return UnconstrainedBox(
+                child: CompositedTransformFollower(
+                  link: layerLink,
+                  targetAnchor: Alignment.topLeft,
+                  offset: const Offset(0, DefaultStyle.defaultHeight),
+                  // left: offset.dx,
+                  // top: offset.dy + DefaultStyle.defaultHeight,
+                  child: Container(
+                    constraints: const BoxConstraints(
+                        maxHeight: DefaultStyle.defaultWidth + 50),
+                    width: DefaultStyle.defaultWidth,
+                    child: DatePickerBody2(
+                      onTap: onDayTap,
+                      onCancel: () {
+                        if (onCancel != null) {
+                          onCancel!();
+                        }
+                        debugPrint("cancel");
+                        c.read<DatePickerController>().init();
+                        try {
+                          _overlayEntry?.remove();
+                        } catch (_) {}
+                      },
+                      onOK: () {
+                        if (onOK != null) {
+                          onOK!();
+                        }
+                        debugPrint("ok");
+                        try {
+                          _overlayEntry?.remove();
+                        } catch (_) {}
+                      },
+                      ancestorContext: c,
+                    ),
                   ),
                 ),
               );
@@ -116,8 +123,11 @@ class DatePickerWithOverlay extends StatelessWidget {
 
             Overlay.of(c)?.insert(_overlayEntry!);
           },
-          child: const DatePickerTextEdit(
-            calendarType: CalendarType.overlay,
+          child: CompositedTransformTarget(
+            link: layerLink,
+            child: const DatePickerTextEdit(
+              calendarType: CalendarType.overlay,
+            ),
           ),
         );
       },
