@@ -17,3 +17,4 @@ export './src/utils/taichi_utils.dart' show TaichiDevUtils;
 export './src/UI/calendar_view/calendar_view.dart';
 export './src/UI/simple_date_picker/taichi_simple_date_picker.dart'
     show DatePickerWithOverlay, SimpleDatePicker;
+export './src/UI/dropdown_search/dropdown_search.dart' show DropDownSearch;

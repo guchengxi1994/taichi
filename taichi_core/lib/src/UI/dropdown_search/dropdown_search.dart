@@ -5,6 +5,8 @@ import 'package:taichi/src/UI/dropdown_search/dropdown_search_provider.dart';
 import 'search_box.dart';
 import 'text_field.dart';
 
+typedef FutureFunc = Future<List<String>> Function();
+
 // ignore: must_be_immutable
 class DropDownSearch extends StatelessWidget {
   DropDownSearch(
@@ -92,5 +94,15 @@ class DropDownSearch extends StatelessWidget {
     try {
       _overlayEntry?.remove();
     } catch (_) {}
+  }
+}
+
+class FutureDropdownSearch extends StatelessWidget {
+  const FutureDropdownSearch({Key? key, required this.func}) : super(key: key);
+  final FutureFunc func;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
