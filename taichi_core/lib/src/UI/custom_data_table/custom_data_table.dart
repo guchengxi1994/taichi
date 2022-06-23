@@ -27,7 +27,8 @@ class CustomDataTable<T extends BaseData> extends StatefulWidget {
       this.actions = const [],
       this.headWidth = 150,
       this.tailWidth = 150,
-      this.seprateIndexes = const []})
+      this.seprateIndexes = const [],
+      this.tableScrollIndicatorAlwaysAtTheEnd = false})
       : assert((seprateIndexes.length == 0 ||
                 seprateIndexes.length == 2 ||
                 seprateIndexes.length == 1) &&
@@ -50,6 +51,8 @@ class CustomDataTable<T extends BaseData> extends StatefulWidget {
   final double columnSpacing;
   final double dividerThickness;
 
+  final bool tableScrollIndicatorAlwaysAtTheEnd;
+
   @override
   State<CustomDataTable> createState() => _CustomDataTableState();
 }
@@ -58,7 +61,8 @@ class _CustomDataTableState extends State<CustomDataTable> {
   late List<int> seprateIndexes;
   final ScrollController tableController = ScrollController();
   final ScrollController scrollbarController = ScrollController();
-  final ScrollController controller3 = ScrollController();
+  final ScrollController headController = ScrollController();
+  final ScrollController tailController = ScrollController();
 
   @override
   void initState() {
@@ -73,7 +77,8 @@ class _CustomDataTableState extends State<CustomDataTable> {
   void dispose() {
     tableController.dispose();
     scrollbarController.dispose();
-    controller3.dispose();
+    headController.dispose();
+    tailController.dispose();
     super.dispose();
   }
 
@@ -89,7 +94,8 @@ class _CustomDataTableState extends State<CustomDataTable> {
       """);
     }
 
-    if (widget.fixHead || widget.fixTail) {
+    if ((widget.fixHead && widget.fixTail) == false &&
+        (widget.fixHead || widget.fixTail)) {
       assert(seprateIndexes.length == 1, """
       如果 `fixHead==true` 或者 `fixTail==true`,那么需要1个下标控制
       表格样式
@@ -113,25 +119,67 @@ class _CustomDataTableState extends State<CustomDataTable> {
     List<String> columnNames = widget.datas.first.toMap().keys.toList();
 
     if (widget.fixHead == false && widget.fixTail == false) {
-      return Container(
-        padding: EdgeInsets.all(widget.padding),
-        width: widget.tableWidth,
-        height: widget.tableHeight,
-        child: Scrollbar(
+      return _wrapper(
+          child: Scrollbar(
+        controller: scrollbarController,
+        thumbVisibility: true,
+        child: SingleChildScrollView(
           controller: scrollbarController,
-          thumbVisibility: true,
+          scrollDirection: Axis.horizontal,
           child: SingleChildScrollView(
-            controller: scrollbarController,
-            scrollDirection: Axis.horizontal,
-            child: SingleChildScrollView(
-              controller: tableController,
-              child: DataTable(
+            controller: tableController,
+            child: DataTable(
+                dataRowHeight: widget.dataRowHeight,
+                headingRowHeight: widget.headingRowHeight,
+                horizontalMargin: widget.horizontalMargin,
+                columnSpacing: widget.columnSpacing,
+                dividerThickness: widget.dividerThickness,
+                columns: columnNames.map((e) {
+                  return DataColumn(
+                      tooltip: e,
+                      numeric: false,
+                      label: Text(
+                        e,
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ));
+                }).toList(),
+                rows: widget.datas.map((e) => _getRowWithoutFixed(e)).toList()),
+          ),
+        ),
+      ));
+    }
+
+    if (widget.fixHead && !widget.fixTail) {
+      List<List<DataRow>> seprateRows = widget.datas
+          .map((e) => _getRowIfFixed(e, widget.seprateIndexes[0]))
+          .toList();
+
+      List<DataRow> first = [];
+      List<DataRow> second = [];
+      for (final i in seprateRows) {
+        first.add(i[0]);
+        second.add(i[1]);
+      }
+
+      return _wrapper(
+          child: Row(
+        children: [
+          ScrollConfiguration(
+              behavior:
+                  ScrollConfiguration.of(context).copyWith(scrollbars: false),
+              child: SingleChildScrollView(
+                controller: headController,
+                physics: const NeverScrollableScrollPhysics(),
+                child: SizedBox(
+                    child: DataTable(
                   dataRowHeight: widget.dataRowHeight,
                   headingRowHeight: widget.headingRowHeight,
                   horizontalMargin: widget.horizontalMargin,
                   columnSpacing: widget.columnSpacing,
                   dividerThickness: widget.dividerThickness,
-                  columns: columnNames.map((e) {
+                  columns:
+                      columnNames.sublist(0, widget.seprateIndexes[0]).map((e) {
                     return DataColumn(
                         tooltip: e,
                         numeric: false,
@@ -141,12 +189,268 @@ class _CustomDataTableState extends State<CustomDataTable> {
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ));
                   }).toList(),
-                  rows:
-                      widget.datas.map((e) => _getRowWithoutFixed(e)).toList()),
-            ),
+                  rows: first,
+                )),
+              )),
+          const VerticalDivider(
+            color: Colors.black,
+            thickness: 1,
           ),
-        ),
-      );
+          Expanded(
+              child: Scrollbar(
+                  controller: scrollbarController,
+                  thumbVisibility: true,
+                  child: SingleChildScrollView(
+                      controller: scrollbarController,
+                      scrollDirection: Axis.horizontal,
+                      child: NotificationListener<ScrollNotification>(
+                        onNotification: (notification) {
+                          return _handleScrollNotification(
+                              notification, [headController]);
+                        },
+                        child: SingleChildScrollView(
+                          controller: tableController,
+                          child: DataTable(
+                            dataRowHeight: 40,
+                            headingRowHeight: 55,
+                            horizontalMargin: 20,
+                            columnSpacing: 50,
+                            dividerThickness: 2,
+                            columns: columnNames
+                                .sublist(widget.seprateIndexes[0])
+                                .map((e) {
+                              return DataColumn(
+                                  tooltip: e,
+                                  numeric: false,
+                                  label: Text(
+                                    e,
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ));
+                            }).toList(),
+                            rows: second,
+                          ),
+                        ),
+                      ))))
+        ],
+      ));
+    }
+
+    if (widget.fixTail && !widget.fixHead) {
+      List<List<DataRow>> seprateRows = widget.datas
+          .map((e) => _getRowIfFixed(e, widget.seprateIndexes[0]))
+          .toList();
+
+      List<DataRow> first = [];
+      List<DataRow> second = [];
+      for (final i in seprateRows) {
+        first.add(i[0]);
+        second.add(i[1]);
+      }
+
+      return _wrapper(
+          child: Row(
+        children: [
+          Expanded(
+              child: Scrollbar(
+                  controller: scrollbarController,
+                  thumbVisibility: true,
+                  child: SingleChildScrollView(
+                      controller: scrollbarController,
+                      scrollDirection: Axis.horizontal,
+                      child: NotificationListener<ScrollNotification>(
+                        onNotification: (notification) {
+                          return _handleScrollNotification(
+                              notification, [tailController]);
+                        },
+                        child: SingleChildScrollView(
+                          controller: tableController,
+                          child: DataTable(
+                            dataRowHeight: 40,
+                            headingRowHeight: 55,
+                            horizontalMargin: 20,
+                            columnSpacing: 50,
+                            dividerThickness: 2,
+                            columns: columnNames
+                                .sublist(0, widget.seprateIndexes[0])
+                                .map((e) {
+                              return DataColumn(
+                                  tooltip: e,
+                                  numeric: false,
+                                  label: Text(
+                                    e,
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ));
+                            }).toList(),
+                            rows: first,
+                          ),
+                        ),
+                      )))),
+          const VerticalDivider(
+            color: Colors.black,
+            thickness: 1,
+          ),
+          ScrollConfiguration(
+              behavior:
+                  ScrollConfiguration.of(context).copyWith(scrollbars: false),
+              child: SingleChildScrollView(
+                controller: tailController,
+                physics: const NeverScrollableScrollPhysics(),
+                child: SizedBox(
+                    child: DataTable(
+                  dataRowHeight: widget.dataRowHeight,
+                  headingRowHeight: widget.headingRowHeight,
+                  horizontalMargin: widget.horizontalMargin,
+                  columnSpacing: widget.columnSpacing,
+                  dividerThickness: widget.dividerThickness,
+                  columns:
+                      columnNames.sublist(widget.seprateIndexes[0]).map((e) {
+                    return DataColumn(
+                        tooltip: e,
+                        numeric: false,
+                        label: Text(
+                          e,
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ));
+                  }).toList(),
+                  rows: second,
+                )),
+              )),
+        ],
+      ));
+    }
+
+    if (widget.fixHead && widget.fixTail) {
+      List<List<DataRow>> seprateRows = widget.datas
+          .map((e) => _getRowBothFixed(
+              e, widget.seprateIndexes[0], widget.seprateIndexes[1]))
+          .toList();
+      List<DataRow> first = [];
+      List<DataRow> second = [];
+      List<DataRow> third = [];
+
+      for (final i in seprateRows) {
+        first.add(i[0]);
+        second.add(i[1]);
+        third.add(i[2]);
+      }
+
+      // print(columnNames.sublist(0, widget.seprateIndexes[0]));
+      // print(columnNames.sublist(
+      //     widget.seprateIndexes[0], widget.seprateIndexes[1]));
+      // print(columnNames.sublist(widget.seprateIndexes[1]));
+
+      // print(second[0].cells.length);
+
+      return _wrapper(
+          child: Row(
+        children: [
+          ScrollConfiguration(
+              behavior:
+                  ScrollConfiguration.of(context).copyWith(scrollbars: false),
+              child: SingleChildScrollView(
+                controller: headController,
+                physics: const NeverScrollableScrollPhysics(),
+                child: SizedBox(
+                    child: DataTable(
+                  dataRowHeight: widget.dataRowHeight,
+                  headingRowHeight: widget.headingRowHeight,
+                  horizontalMargin: widget.horizontalMargin,
+                  columnSpacing: widget.columnSpacing,
+                  dividerThickness: widget.dividerThickness,
+                  columns:
+                      columnNames.sublist(0, widget.seprateIndexes[0]).map((e) {
+                    return DataColumn(
+                        tooltip: e,
+                        numeric: false,
+                        label: Text(
+                          e,
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ));
+                  }).toList(),
+                  rows: first,
+                )),
+              )),
+          const VerticalDivider(
+            color: Colors.black,
+            thickness: 1,
+          ),
+          Expanded(
+              child: Scrollbar(
+                  controller: scrollbarController,
+                  thumbVisibility: true,
+                  child: SingleChildScrollView(
+                      controller: scrollbarController,
+                      scrollDirection: Axis.horizontal,
+                      child: NotificationListener<ScrollNotification>(
+                        onNotification: (notification) {
+                          return _handleScrollNotification(
+                              notification, [headController, tailController]);
+                        },
+                        child: SingleChildScrollView(
+                          controller: tableController,
+                          child: DataTable(
+                            dataRowHeight: 40,
+                            headingRowHeight: 55,
+                            horizontalMargin: 20,
+                            columnSpacing: 50,
+                            dividerThickness: 2,
+                            columns: columnNames
+                                .sublist(widget.seprateIndexes[0],
+                                    widget.seprateIndexes[1])
+                                .map((e) {
+                              return DataColumn(
+                                  tooltip: e,
+                                  numeric: false,
+                                  label: Text(
+                                    e,
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ));
+                            }).toList(),
+                            rows: second,
+                          ),
+                        ),
+                      )))),
+          const VerticalDivider(
+            color: Colors.black,
+            thickness: 1,
+          ),
+          ScrollConfiguration(
+              behavior:
+                  ScrollConfiguration.of(context).copyWith(scrollbars: false),
+              child: SingleChildScrollView(
+                controller: tailController,
+                physics: const NeverScrollableScrollPhysics(),
+                child: SizedBox(
+                    child: DataTable(
+                  dataRowHeight: widget.dataRowHeight,
+                  headingRowHeight: widget.headingRowHeight,
+                  horizontalMargin: widget.horizontalMargin,
+                  columnSpacing: widget.columnSpacing,
+                  dividerThickness: widget.dividerThickness,
+                  columns:
+                      columnNames.sublist(widget.seprateIndexes[1]).map((e) {
+                    return DataColumn(
+                        tooltip: e,
+                        numeric: false,
+                        label: Text(
+                          e,
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ));
+                  }).toList(),
+                  rows: third,
+                )),
+              )),
+        ],
+      ));
     }
 
     return Container();
@@ -159,5 +463,66 @@ class _CustomDataTableState extends State<CustomDataTable> {
     }
 
     return DataRow(cells: cells);
+  }
+
+  List<DataRow> _getRowIfFixed<T extends BaseData>(T data, int index) {
+    List<DataCell> cells1 = [];
+    List<DataCell> cells2 = [];
+    final values = data.toMap().values.toList();
+
+    for (int i = 0; i < index; i++) {
+      cells1.add(DataCell(Text(values[i].toString())));
+    }
+
+    for (int i = index; i < values.length; i++) {
+      cells2.add(DataCell(Text(values[i].toString())));
+    }
+
+    return [DataRow(cells: cells1), DataRow(cells: cells2)];
+  }
+
+  List<DataRow> _getRowBothFixed<T extends BaseData>(
+      T data, int index1, int index2) {
+    List<DataCell> cells1 = [];
+    List<DataCell> cells2 = [];
+    List<DataCell> cells3 = [];
+    final values = data.toMap().values.toList();
+
+    for (int i = 0; i < index1; i++) {
+      cells1.add(DataCell(Text(values[i].toString())));
+    }
+
+    for (int i = index1; i < index2; i++) {
+      cells2.add(DataCell(Text(values[i].toString())));
+    }
+
+    for (int i = index2; i < values.length; i++) {
+      cells3.add(DataCell(Text(values[i].toString())));
+    }
+
+    return [
+      DataRow(cells: cells1),
+      DataRow(cells: cells2),
+      DataRow(cells: cells3)
+    ];
+  }
+
+  Widget _wrapper({required Widget child}) {
+    return Container(
+      padding: EdgeInsets.all(widget.padding),
+      width: widget.tableWidth,
+      height: widget.tableHeight,
+      child: child,
+    );
+  }
+
+  bool _handleScrollNotification(
+      ScrollNotification notification, List<ScrollController> controllers) {
+    final ScrollMetrics metrics = notification.metrics;
+    for (final i in controllers) {
+      i.jumpTo(metrics.pixels);
+    }
+
+    return true;
   }
 }

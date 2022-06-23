@@ -37,9 +37,26 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        /// fixHead
+        // body: CustomDataTable(
+        //   datas: gradesList,
+        //   fixHead: true,
+        //   seprateIndexes: const [2],
+        // ),
+
+        /// fixTail
+        // body: CustomDataTable(
+        //   datas: gradesList,
+        //   fixTail: true,
+        //   seprateIndexes: [gradesList.length - 2],
+        // ),
+
+        /// fixBoth
         body: CustomDataTable(
           datas: gradesList,
-          // seprateIndexes: [6, 2],
+          fixTail: true,
+          fixHead: true,
+          seprateIndexes: [1, gradesList.length - 2],
         ),
       ),
     );
