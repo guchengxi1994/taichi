@@ -37,26 +37,38 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        /// fixHead
-        // body: CustomDataTable(
-        //   datas: gradesList,
-        //   fixHead: true,
-        //   seprateIndexes: const [2],
-        // ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              /// fixHead
+              CustomDataTable(
+                datas: gradesList,
+                fixHead: true,
+                seprateIndexes: const [2],
+              ),
+              const SizedBox(
+                height: 50,
+              ),
 
-        /// fixTail
-        // body: CustomDataTable(
-        //   datas: gradesList,
-        //   fixTail: true,
-        //   seprateIndexes: [gradesList.length - 2],
-        // ),
+              /// fixTail
+              CustomDataTable(
+                datas: gradesList,
+                fixTail: true,
+                seprateIndexes: [gradesList.length - 2],
+              ),
+              const SizedBox(
+                height: 50,
+              ),
 
-        /// fixBoth
-        body: CustomDataTable(
-          datas: gradesList,
-          fixTail: true,
-          fixHead: true,
-          seprateIndexes: [1, gradesList.length - 2],
+              /// fixBoth
+              CustomDataTable(
+                datas: gradesList,
+                fixTail: true,
+                fixHead: true,
+                seprateIndexes: [1, gradesList.length - 2],
+              )
+            ],
+          ),
         ),
       ),
     );

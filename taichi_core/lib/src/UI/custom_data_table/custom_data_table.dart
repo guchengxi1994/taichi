@@ -128,23 +128,8 @@ class _CustomDataTableState extends State<CustomDataTable> {
           scrollDirection: Axis.horizontal,
           child: SingleChildScrollView(
             controller: tableController,
-            child: DataTable(
-                dataRowHeight: widget.dataRowHeight,
-                headingRowHeight: widget.headingRowHeight,
-                horizontalMargin: widget.horizontalMargin,
-                columnSpacing: widget.columnSpacing,
-                dividerThickness: widget.dividerThickness,
-                columns: columnNames.map((e) {
-                  return DataColumn(
-                      tooltip: e,
-                      numeric: false,
-                      label: Text(
-                        e,
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ));
-                }).toList(),
-                rows: widget.datas.map((e) => _getRowWithoutFixed(e)).toList()),
+            child: _buildTable(columnNames,
+                widget.datas.map((e) => _getRowWithoutFixed(e)).toList()),
           ),
         ),
       ));
@@ -172,25 +157,9 @@ class _CustomDataTableState extends State<CustomDataTable> {
                 controller: headController,
                 physics: const NeverScrollableScrollPhysics(),
                 child: SizedBox(
-                    child: DataTable(
-                  dataRowHeight: widget.dataRowHeight,
-                  headingRowHeight: widget.headingRowHeight,
-                  horizontalMargin: widget.horizontalMargin,
-                  columnSpacing: widget.columnSpacing,
-                  dividerThickness: widget.dividerThickness,
-                  columns:
-                      columnNames.sublist(0, widget.seprateIndexes[0]).map((e) {
-                    return DataColumn(
-                        tooltip: e,
-                        numeric: false,
-                        label: Text(
-                          e,
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ));
-                  }).toList(),
-                  rows: first,
-                )),
+                  child: _buildTable(
+                      columnNames.sublist(0, widget.seprateIndexes[0]), first),
+                ),
               )),
           const VerticalDivider(
             color: Colors.black,
@@ -210,27 +179,9 @@ class _CustomDataTableState extends State<CustomDataTable> {
                         },
                         child: SingleChildScrollView(
                           controller: tableController,
-                          child: DataTable(
-                            dataRowHeight: 40,
-                            headingRowHeight: 55,
-                            horizontalMargin: 20,
-                            columnSpacing: 50,
-                            dividerThickness: 2,
-                            columns: columnNames
-                                .sublist(widget.seprateIndexes[0])
-                                .map((e) {
-                              return DataColumn(
-                                  tooltip: e,
-                                  numeric: false,
-                                  label: Text(
-                                    e,
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ));
-                            }).toList(),
-                            rows: second,
-                          ),
+                          child: _buildTable(
+                              columnNames.sublist(widget.seprateIndexes[0]),
+                              second),
                         ),
                       ))))
         ],
@@ -266,27 +217,9 @@ class _CustomDataTableState extends State<CustomDataTable> {
                         },
                         child: SingleChildScrollView(
                           controller: tableController,
-                          child: DataTable(
-                            dataRowHeight: 40,
-                            headingRowHeight: 55,
-                            horizontalMargin: 20,
-                            columnSpacing: 50,
-                            dividerThickness: 2,
-                            columns: columnNames
-                                .sublist(0, widget.seprateIndexes[0])
-                                .map((e) {
-                              return DataColumn(
-                                  tooltip: e,
-                                  numeric: false,
-                                  label: Text(
-                                    e,
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ));
-                            }).toList(),
-                            rows: first,
-                          ),
+                          child: _buildTable(
+                              columnNames.sublist(0, widget.seprateIndexes[0]),
+                              first),
                         ),
                       )))),
           const VerticalDivider(
@@ -300,25 +233,9 @@ class _CustomDataTableState extends State<CustomDataTable> {
                 controller: tailController,
                 physics: const NeverScrollableScrollPhysics(),
                 child: SizedBox(
-                    child: DataTable(
-                  dataRowHeight: widget.dataRowHeight,
-                  headingRowHeight: widget.headingRowHeight,
-                  horizontalMargin: widget.horizontalMargin,
-                  columnSpacing: widget.columnSpacing,
-                  dividerThickness: widget.dividerThickness,
-                  columns:
-                      columnNames.sublist(widget.seprateIndexes[0]).map((e) {
-                    return DataColumn(
-                        tooltip: e,
-                        numeric: false,
-                        label: Text(
-                          e,
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ));
-                  }).toList(),
-                  rows: second,
-                )),
+                  child: _buildTable(
+                      columnNames.sublist(widget.seprateIndexes[0]), second),
+                ),
               )),
         ],
       ));
@@ -339,13 +256,6 @@ class _CustomDataTableState extends State<CustomDataTable> {
         third.add(i[2]);
       }
 
-      // print(columnNames.sublist(0, widget.seprateIndexes[0]));
-      // print(columnNames.sublist(
-      //     widget.seprateIndexes[0], widget.seprateIndexes[1]));
-      // print(columnNames.sublist(widget.seprateIndexes[1]));
-
-      // print(second[0].cells.length);
-
       return _wrapper(
           child: Row(
         children: [
@@ -356,25 +266,9 @@ class _CustomDataTableState extends State<CustomDataTable> {
                 controller: headController,
                 physics: const NeverScrollableScrollPhysics(),
                 child: SizedBox(
-                    child: DataTable(
-                  dataRowHeight: widget.dataRowHeight,
-                  headingRowHeight: widget.headingRowHeight,
-                  horizontalMargin: widget.horizontalMargin,
-                  columnSpacing: widget.columnSpacing,
-                  dividerThickness: widget.dividerThickness,
-                  columns:
-                      columnNames.sublist(0, widget.seprateIndexes[0]).map((e) {
-                    return DataColumn(
-                        tooltip: e,
-                        numeric: false,
-                        label: Text(
-                          e,
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ));
-                  }).toList(),
-                  rows: first,
-                )),
+                  child: _buildTable(
+                      columnNames.sublist(0, widget.seprateIndexes[0]), first),
+                ),
               )),
           const VerticalDivider(
             color: Colors.black,
@@ -394,28 +288,10 @@ class _CustomDataTableState extends State<CustomDataTable> {
                         },
                         child: SingleChildScrollView(
                           controller: tableController,
-                          child: DataTable(
-                            dataRowHeight: 40,
-                            headingRowHeight: 55,
-                            horizontalMargin: 20,
-                            columnSpacing: 50,
-                            dividerThickness: 2,
-                            columns: columnNames
-                                .sublist(widget.seprateIndexes[0],
-                                    widget.seprateIndexes[1])
-                                .map((e) {
-                              return DataColumn(
-                                  tooltip: e,
-                                  numeric: false,
-                                  label: Text(
-                                    e,
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ));
-                            }).toList(),
-                            rows: second,
-                          ),
+                          child: _buildTable(
+                              columnNames.sublist(widget.seprateIndexes[0],
+                                  widget.seprateIndexes[1]),
+                              second),
                         ),
                       )))),
           const VerticalDivider(
@@ -429,25 +305,9 @@ class _CustomDataTableState extends State<CustomDataTable> {
                 controller: tailController,
                 physics: const NeverScrollableScrollPhysics(),
                 child: SizedBox(
-                    child: DataTable(
-                  dataRowHeight: widget.dataRowHeight,
-                  headingRowHeight: widget.headingRowHeight,
-                  horizontalMargin: widget.horizontalMargin,
-                  columnSpacing: widget.columnSpacing,
-                  dividerThickness: widget.dividerThickness,
-                  columns:
-                      columnNames.sublist(widget.seprateIndexes[1]).map((e) {
-                    return DataColumn(
-                        tooltip: e,
-                        numeric: false,
-                        label: Text(
-                          e,
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ));
-                  }).toList(),
-                  rows: third,
-                )),
+                  child: _buildTable(
+                      columnNames.sublist(widget.seprateIndexes[1]), third),
+                ),
               )),
         ],
       ));
@@ -524,5 +384,25 @@ class _CustomDataTableState extends State<CustomDataTable> {
     }
 
     return true;
+  }
+
+  Widget _buildTable(List<String> columns, List<DataRow> rows) {
+    return DataTable(
+        dataRowHeight: 40,
+        headingRowHeight: 55,
+        horizontalMargin: 20,
+        columnSpacing: 50,
+        dividerThickness: 2,
+        columns: columns.map((e) {
+          return DataColumn(
+              tooltip: e,
+              numeric: false,
+              label: Text(
+                e,
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ));
+        }).toList(),
+        rows: rows);
   }
 }
