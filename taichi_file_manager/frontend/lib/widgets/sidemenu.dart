@@ -19,7 +19,6 @@ class SideMenu extends StatefulWidget {
 }
 
 class _SideMenuState extends State<SideMenu> {
-  final Key _key = const ValueKey(22);
   final TreeController _controller = TreeController(allNodesExpanded: true);
   final ScrollController scrollbarController = ScrollController();
   final ScrollController menubarController = ScrollController();
@@ -40,6 +39,9 @@ class _SideMenuState extends State<SideMenu> {
   }
 
   Widget buildTree() {
+    EntityFolder res = context.watch<FileTreeController>().structure;
+    TreeNode node = res.toTreeNode(context);
+
     return SizedBox(
       width: AppStyle.sidemenuWidth,
       child: Scrollbar(
@@ -63,56 +65,10 @@ class _SideMenuState extends State<SideMenu> {
                   ),
                 ),
                 TreeView(
+                  indent: 20,
                   treeController: _controller,
                   nodes: [
-                    MyTreeNode(
-                        content: InkWell(
-                          onTap: () {
-                            if (!isCollapsed) {
-                              _controller.collapseAll();
-                            } else {
-                              _controller.expandAll();
-                            }
-
-                            isCollapsed = !isCollapsed;
-
-                            setState(() {});
-
-                            context
-                                .read<FileTreeController>()
-                                .changeTreeNodeName("Root");
-                          },
-                          child: const Text(
-                            "Root",
-                            style: AppStyle.form2CommonTitle,
-                          ),
-                        ),
-                        nodeName: 'Root'),
-                    TreeNode(
-                      content: Icon(Icons.audiotrack),
-                      children: [
-                        TreeNode(content: Text("node 21")),
-                        TreeNode(
-                          content: Text("node 22"),
-                          key: _key,
-                          children: [
-                            TreeNode(
-                              content: Icon(Icons.sentiment_very_satisfied),
-                            ),
-                          ],
-                        ),
-                        TreeNode(content: Text("node 23"), children: [
-                          TreeNode(
-                              content: Icon(Icons.sentiment_very_satisfied),
-                              children: [
-                                TreeNode(
-                                  content:
-                                      Text("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
-                                ),
-                              ]),
-                        ]),
-                      ],
-                    ),
+                    node,
                   ],
                 )
               ],
@@ -141,6 +97,7 @@ class _SideMenuState extends State<SideMenu> {
     return [TreeNode(content: Text(parsedJson.toString()))];
   }
 
+  @Deprecated("Just for test")
   Widget buildTree2() {
     try {
       var parsedJson = json.decode("""
@@ -168,7 +125,7 @@ class _SideMenuState extends State<SideMenu> {
     return Container(
       height: MediaQuery.of(context).size.height,
       color: AppStyle.lightBlue,
-      child: buildTree2(),
+      child: buildTree(),
     );
   }
 }

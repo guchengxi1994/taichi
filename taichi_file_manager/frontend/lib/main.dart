@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => MenuController()),
-        ChangeNotifierProvider(create: (_) => FileTreeController()),
+        ChangeNotifierProvider(create: (_) => FileTreeController()..init()),
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,

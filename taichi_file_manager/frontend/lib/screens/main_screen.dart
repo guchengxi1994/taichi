@@ -7,8 +7,10 @@ import 'package:taichi_file_manager/controllers/menu_controller.dart';
 
 import '../utils/common.dart';
 import '../widgets/future_builder.dart';
-import '../widgets/sidemenu.dart' deferred as sidemenu;
-import '../widgets/appbar.dart' deferred as appbar;
+import 'package:taichi_file_manager/widgets/sidemenu.dart' deferred as sidemenu;
+import 'package:taichi_file_manager/widgets/appbar.dart' deferred as appbar;
+import 'package:taichi_file_manager/widgets/main_screen_body.dart'
+    deferred as body;
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -20,12 +22,14 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   var loadSidemenuLib;
   var loadAppbarLib;
+  var loadBodyLib;
 
   @override
   void initState() {
     super.initState();
     loadSidemenuLib = sidemenu.loadLibrary();
     loadAppbarLib = appbar.loadLibrary();
+    loadBodyLib = body.loadLibrary();
   }
 
   @override
@@ -57,7 +61,13 @@ class _MainScreenState extends State<MainScreen> {
             builder: (context) =>
                 sidemenu.SideMenu(type: ScreenTypeUtils.getScreenType(context)),
           ),
-          body: const Center(child: Text("body")),
+          body: Padding(
+            padding: const EdgeInsets.all(20),
+            child: FutureLoaderWidget(
+              loadWidgetFuture: loadBodyLib,
+              builder: (context) => body.MainScreenBody(),
+            ),
+          ),
         ))
       ],
     );
