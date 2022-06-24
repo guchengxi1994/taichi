@@ -1,0 +1,23 @@
+
+name: taichi_admin Build and Deploy
+on: [push]
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter_version: '3.0.1'
+          channel: 'stable'
+      - name: "Web Build 🔧"
+        run: |
+          cd taichi_admin/
+          flutter pub get
+          flutter build web --release --base-href="/taichi/"  --web-renderer html
+      - name: "Web Deploy 🚀"
+        # https://github.com/JamesIves/github-pages-deploy-action
+        uses: JamesIves/github-pages-deploy-action@v4.3.3
+        with:
+          branch: taichi_admin_templete
+          folder: ./taichi_admin/build/web
