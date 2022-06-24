@@ -19,3 +19,5 @@ export './src/UI/simple_date_picker/taichi_simple_date_picker.dart'
 export './src/UI/dropdown_search/dropdown_search.dart' show DropDownSearch;
 export './src/UI/custom_data_table/custom_data_table.dart';
 export './src/UI/custom_data_table/base_data.dart';
+export './src/UI/custom_tooltip/custom_tooltip.dart'
+    show CustomTooltip, HowToolTipShow;
