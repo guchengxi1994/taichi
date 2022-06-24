@@ -36,3 +36,6 @@ taichi:
 [5.taichi admin templete](./taichi_admin/README.md) taichi 多端自适应管理平台，在线[demo](https://guchengxi1994.github.io/taichi/#/)
 
 [6.taichi China map](./taichi_china_map/README.md) 中国地图，以后会做个江苏的
+
+[7.taichi file manager](./taichi_file_manager/README.md) taichi文件管理
+

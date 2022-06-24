@@ -84,6 +84,7 @@ class EntityFolder {
           content: InkWell(
             onTap: () {
               context.read<FileTreeController>().changeTreeNodeName(name);
+              context.read<FileTreeController>().changeCurrentEntity(this);
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -105,6 +106,7 @@ class EntityFolder {
           content: InkWell(
             onTap: () {
               context.read<FileTreeController>().changeTreeNodeName(name);
+              context.read<FileTreeController>().changeCurrentEntity(this);
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -385,6 +387,7 @@ class EntityFile {
         content: InkWell(
       onTap: () {
         context.read<FileTreeController>().changeTreeNodeName(name);
+        debugPrint("这里要去打开特定文件");
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
