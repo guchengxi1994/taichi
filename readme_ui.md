@@ -6,7 +6,7 @@
 
 <details>
   <summary>
-    例如：
+    代码样例：
   </summary>
 
 
@@ -32,7 +32,7 @@ class MainPage extends StatelessWidget {
 
 <details>
   <summary>
-    例如：
+    代码样例：
   </summary>
 
 
@@ -65,7 +65,7 @@ class MainPage extends StatelessWidget {
 
 <details>
   <summary>
-    例如：
+    代码样例：
   </summary>
 
 
@@ -106,7 +106,7 @@ class MainPage extends StatelessWidget {
 
 <details>
   <summary>
-    例如：
+    代码样例：
   </summary>
 
 
@@ -137,7 +137,7 @@ class Page2 extends StatelessWidget {
 
 <details>
   <summary>
-    例如：
+    代码样例：
   </summary>
 
 
@@ -197,7 +197,7 @@ class _Page3State extends State<Page3> {
 
 <details>
   <summary>
-    例如：
+    代码样例：
   </summary>
 </details>
 
@@ -206,7 +206,7 @@ class _Page3State extends State<Page3> {
 
 <details>
   <summary>
-    例如：
+    代码样例：
   </summary>
 </details>
 
@@ -215,7 +215,7 @@ class _Page3State extends State<Page3> {
 
 <details>
   <summary>
-    例如：
+    代码样例：
   </summary>
 
 
@@ -246,7 +246,7 @@ class Page4 extends StatelessWidget {
 
 <details>
   <summary>
-    例如：
+    代码样例：
   </summary>
 
 
@@ -300,11 +300,8 @@ class Page5 extends StatelessWidget {
 
 <details>
   <summary>
-    例如：
+    代码样例：
   </summary>
-
-  
-
 
 
 ``` dart
@@ -367,6 +364,280 @@ class Page6 extends StatelessWidget {
 
 </details>
 
-## 2. 日历/日程表
+## 2. 日历/日程（calendar_view）
+...
 
-。。。
+## 3. 自定义表格（[custom_data_table](taichi_core/lib/src/UI/custom_data_table/custom_data_table.dart)）
+
+<details>
+  <summary>
+    代码样例：
+  </summary>
+
+
+``` dart
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    List<TabelDataModel> gradesList = [
+      TabelDataModel('嬴政', 1, 89, 88, 100, 76, 81, 77, 95, 85, 80),
+      TabelDataModel('刘邦', 2, 95, 100, 90, 72, 65, 88, 66, 79, 96),
+      TabelDataModel('刘秀', 3, 100, 67, 87, 96, 89, 69, 79, 78, 73),
+      TabelDataModel('曹丕', 4, 85, 75, 86, 91, 100, 66, 100, 90, 83),
+      TabelDataModel('司马炎', 5, 89, 88, 100, 76, 81, 77, 95, 85, 80),
+      TabelDataModel('杨坚', 6, 95, 100, 90, 72, 65, 88, 66, 79, 96),
+      TabelDataModel('李渊', 7, 100, 67, 87, 96, 89, 69, 79, 78, 73),
+      TabelDataModel('赵匡胤', 8, 85, 75, 86, 91, 100, 66, 100, 90, 83),
+      TabelDataModel('忽必烈', 9, 89, 88, 100, 76, 81, 77, 95, 85, 80),
+      TabelDataModel('朱元璋', 10, 95, 100, 90, 72, 65, 88, 66, 79, 96),
+      TabelDataModel('皇太极', 11, 100, 67, 87, 96, 89, 69, 79, 78, 73),
+    ];
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              /// fixHead
+              CustomDataTable(
+                datas: gradesList,
+                fixHead: true,
+                seprateIndexes: const [2],
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+
+              /// fixTail
+              CustomDataTable(
+                datas: gradesList,
+                fixTail: true,
+                seprateIndexes: [gradesList.length - 2],
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+
+              /// fixBoth
+              CustomDataTable(
+                datas: gradesList,
+                fixTail: true,
+                fixHead: true,
+                seprateIndexes: [1, gradesList.length - 2],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TabelDataModel extends BaseData {
+  String name;
+  int studentId;
+  int language;
+  int math;
+  int english;
+  int physical;
+  int chemistry;
+  int biological;
+  int geography;
+  int political;
+  int history;
+  bool isSelected;
+
+  TabelDataModel(
+    this.name,
+    this.studentId,
+    this.language,
+    this.math,
+    this.english,
+    this.physical,
+    this.chemistry,
+    this.biological,
+    this.geography,
+    this.political,
+    this.history, {
+    this.isSelected = false,
+  });
+
+  @override
+  Map<String, dynamic> toMap() {
+    return {
+      "姓名": name,
+      "id": studentId,
+      "语文": language,
+      "数学": math,
+      "外语": english,
+      "物理": physical,
+      "化学": chemistry,
+      "生物": biological,
+      "地理": political,
+      "历史": history
+    };
+  }
+}
+```
+
+</details>
+
+
+![image](md_images/20220624-1.gif)
+
+## 4. 自定义tooltip（[custom_tooltip](taichi_core/lib/src/UI/custom_tooltip/custom_tooltip.dart)）
+
+<details>
+  <summary>
+    代码样例：
+  </summary>
+
+
+``` dart
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(100),
+                child: CustomTooltip(
+                  tooltip: Container(
+                    color: Colors.transparent,
+                    // color: Colors.blue,
+                    width: 100,
+                  ),
+                  child: const Text("this is for test"),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(100),
+                child: CustomTooltip(
+                  howToolTipShow: HowToolTipShow.onMouseHover,
+                  tooltip: Container(
+                    color: Colors.transparent,
+                    // color: Colors.blue,
+                    width: 100,
+                  ),
+                  child: const Text("this is for test2"),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+
+</details>
+
+![image](md_images/20220624-2.gif)
+
+## 5. 下拉搜索([dropdown_search](taichi_core/lib/src/UI/dropdown_search/dropdown_search.dart))
+
+<details>
+  <summary>
+    代码样例：
+  </summary>
+
+
+``` dart
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final List<String> l = ["I", "love", "China"];
+  final TextEditingController controller = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Row(
+        children: [Expanded(child: Container()), DropDownSearch(datas: l)],
+      ),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: HomePage(),
+    );
+  }
+}
+```
+
+</details>
+
+![image](md_images/20220624-3.gif)
+
+## 日期选择器([simple_date_picker](taichi_core/lib/src/UI/simple_date_picker/taichi_simple_date_picker.dart))
+
+<details>
+  <summary>
+    代码样例：
+  </summary>
+
+
+``` dart
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(100),
+                child: SimpleDatePicker(),
+              ),
+              Container(
+                width: 100,
+                height: 50,
+                color: Colors.blue,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(100),
+                child: DatePickerWithOverlay(),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+
+</details>
+
+![image](md_images/20220624-4.gif)
+
+> 两种是不一样的实现方法，一种是基于Visibility,另一种是基于Overlay
