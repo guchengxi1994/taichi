@@ -20,7 +20,17 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Row(
-        children: [Expanded(child: Container()), DropDownSearch(datas: l)],
+        children: [
+          Expanded(child: Container()),
+          DropDownSearch(
+              onBoxItemTap: (s) {
+                debugPrint("[clicked item]:$s");
+              },
+              onTextChange: (s) {
+                debugPrint("[text change]:$s");
+              },
+              datas: l)
+        ],
       ),
     );
   }

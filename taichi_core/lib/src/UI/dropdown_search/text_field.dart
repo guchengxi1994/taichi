@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-typedef TextCallback = void Function(String s);
+typedef StringCallback = Function(String s);
 
 class DropdownSearchTextField extends StatelessWidget {
   const DropdownSearchTextField(
@@ -17,7 +17,7 @@ class DropdownSearchTextField extends StatelessWidget {
   final double height;
   final String hintText;
   final VoidCallback onIconTap;
-  final TextCallback? onTextChange;
+  final StringCallback? onTextChange;
 
   @override
   Widget build(BuildContext context) {

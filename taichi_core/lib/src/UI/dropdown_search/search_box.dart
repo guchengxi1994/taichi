@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-typedef ItemTapCallBack = String Function(int index);
+typedef ItemTapCallBack = Function(int index);
 
 class SearchBox extends StatefulWidget {
   const SearchBox(

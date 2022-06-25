@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:taichi/src/UI/dropdown_search/dropdown_search_provider.dart';
 
 import 'search_box.dart';
 import 'text_field.dart';
@@ -17,6 +15,7 @@ class DropDownSearch extends StatelessWidget {
       this.searchBoxHeight = 300,
       this.textFieldWidth = 300,
       this.hintText = "do_something",
+      this.onBoxItemTap,
       this.onTextChange})
       : super(key: key);
   final List<String> datas;
@@ -28,38 +27,42 @@ class DropDownSearch extends StatelessWidget {
   final double searchBoxWidth;
   final double searchBoxHeight;
   final String hintText;
-  final TextCallback? onTextChange;
+  final StringCallback? onTextChange;
+  final StringCallback? onBoxItemTap;
 
   OverlayEntry? _overlayEntry;
-
+  late List<String> d = datas;
   final GlobalKey<SearchBoxState> boxkey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => DropdownSearchController()..init(datas),
-      builder: (c, s) {
-        return CompositedTransformTarget(
-          link: layerLink,
-          child: DropdownSearchTextField(
-            width: textFieldWidth,
-            height: textFieldHeight,
-            hintText: hintText,
-            controller: controller,
-            onTextChange: (s) {
-              c.read<DropdownSearchController>().changeSearchCondition(s);
-              List<String> d = c.read<DropdownSearchController>().fliteredData;
-              if (boxkey.currentState != null) {
-                boxkey.currentState?.changeDatas(d);
+    return CompositedTransformTarget(
+        link: layerLink,
+        child: DropdownSearchTextField(
+          width: textFieldWidth,
+          height: textFieldHeight,
+          hintText: hintText,
+          controller: controller,
+          onTextChange: (s) {
+            d = datas
+                .where(
+                  (element) => element.contains(s),
+                )
+                .toList();
+            if (boxkey.currentState != null) {
+              if (s == "") {
+                d = datas;
               }
-            },
-            onIconTap: () {
-              _toggleOverlay(c);
-            },
-          ),
-        );
-      },
-    );
+              boxkey.currentState?.changeDatas(d);
+            }
+            if (onTextChange != null) {
+              onTextChange!(s);
+            }
+          },
+          onIconTap: () {
+            _toggleOverlay(context);
+          },
+        ));
   }
 
   void _toggleOverlay(BuildContext context) {
@@ -85,10 +88,10 @@ class DropDownSearch extends StatelessWidget {
                 width: searchBoxWidth,
                 height: searchBoxHeight,
                 onItemTap: (index) {
-                  controller.text = context
-                      .read<DropdownSearchController>()
-                      .fliteredData[index];
-                  return controller.text;
+                  controller.text = d[index];
+                  if (onBoxItemTap != null) {
+                    onBoxItemTap!(controller.text);
+                  }
                 },
               ),
             ),
