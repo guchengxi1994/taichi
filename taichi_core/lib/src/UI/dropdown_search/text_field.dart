@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:taichi/src/UI/dropdown_search/dropdown_search_provider.dart';
 
 typedef TextCallback = void Function(String s);
 
@@ -30,7 +28,6 @@ class DropdownSearchTextField extends StatelessWidget {
       child: TextField(
         controller: controller,
         onChanged: (s) {
-          context.read<DropdownSearchController>().changeSearchCondition(s);
           if (onTextChange != null) {
             onTextChange!(s);
           }

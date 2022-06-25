@@ -32,6 +32,8 @@ class DropDownSearch extends StatelessWidget {
 
   OverlayEntry? _overlayEntry;
 
+  final GlobalKey<SearchBoxState> boxkey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -44,7 +46,13 @@ class DropDownSearch extends StatelessWidget {
             height: textFieldHeight,
             hintText: hintText,
             controller: controller,
-            onTextChange: onTextChange,
+            onTextChange: (s) {
+              c.read<DropdownSearchController>().changeSearchCondition(s);
+              List<String> d = c.read<DropdownSearchController>().fliteredData;
+              if (boxkey.currentState != null) {
+                boxkey.currentState?.changeDatas(d);
+              }
+            },
             onIconTap: () {
               _toggleOverlay(c);
             },
@@ -72,10 +80,10 @@ class DropDownSearch extends StatelessWidget {
             child: Material(
               // color: Colors.amber,
               child: SearchBox(
+                key: boxkey,
+                datas: datas,
                 width: searchBoxWidth,
                 height: searchBoxHeight,
-                ancestorContext: context,
-                searchStr: context.watch<DropdownSearchController>().searchStr,
                 onItemTap: (index) {
                   controller.text = context
                       .read<DropdownSearchController>()
