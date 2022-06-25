@@ -17,6 +17,7 @@ class DropdownSearchController extends ChangeNotifier {
 
   void changeSearchCondition(String condition) {
     searchStr = condition;
+    debugPrint("[searchStr changed]: $searchStr");
     notifyListeners();
   }
 }

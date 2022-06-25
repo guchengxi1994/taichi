@@ -15,7 +15,9 @@ class DropDownSearch extends StatelessWidget {
       this.textFieldHeight = 50,
       this.searchBoxWidth = 300,
       this.searchBoxHeight = 300,
-      this.textFieldWidth = 300})
+      this.textFieldWidth = 300,
+      this.hintText = "do_something",
+      this.onTextChange})
       : super(key: key);
   final List<String> datas;
   final TextEditingController controller = TextEditingController();
@@ -25,6 +27,8 @@ class DropDownSearch extends StatelessWidget {
   final double textFieldHeight;
   final double searchBoxWidth;
   final double searchBoxHeight;
+  final String hintText;
+  final TextCallback? onTextChange;
 
   OverlayEntry? _overlayEntry;
 
@@ -38,8 +42,9 @@ class DropDownSearch extends StatelessWidget {
           child: DropdownSearchTextField(
             width: textFieldWidth,
             height: textFieldHeight,
-            hintText: "do_something",
+            hintText: hintText,
             controller: controller,
+            onTextChange: onTextChange,
             onIconTap: () {
               _toggleOverlay(c);
             },
@@ -75,6 +80,7 @@ class DropDownSearch extends StatelessWidget {
                   controller.text = context
                       .read<DropdownSearchController>()
                       .fliteredData[index];
+                  return controller.text;
                 },
               ),
             ),

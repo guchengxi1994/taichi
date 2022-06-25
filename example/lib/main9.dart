@@ -13,7 +13,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<String> l = ["I", "love", "China"];
+  // final List<String> l = ["I", "love", "China"];
+  final List<String> l = ["维尔利环保"];
   final TextEditingController controller = TextEditingController();
 
   @override

@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'dropdown_search_provider.dart';
 
-typedef ItemTapCallBack = void Function(int index);
+typedef ItemTapCallBack = String Function(int index);
 
 class SearchBox extends StatelessWidget {
   SearchBox(
