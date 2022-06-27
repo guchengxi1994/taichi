@@ -11,7 +11,6 @@ library taichi;
 
 export './src/UI/taichi/taichi.dart';
 export './src/UI/loader/loader.dart';
-export './src/UI/group_choose/group_choose_widget.dart';
 export './src/utils/taichi_utils.dart' show TaichiDevUtils;
 export './src/UI/calendar_view/calendar_view.dart';
 export './src/UI/simple_date_picker/taichi_simple_date_picker.dart'

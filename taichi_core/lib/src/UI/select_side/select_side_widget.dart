@@ -81,8 +81,8 @@ class _wrapper extends StatelessWidget {
 }
 
 // ignore: must_be_immutable
-class GroupChooseWidget extends StatelessWidget {
-  GroupChooseWidget(
+class SelectSideWidget extends StatelessWidget {
+  SelectSideWidget(
       {Key? key,
       required this.width,
       required this.height,
@@ -147,7 +147,7 @@ class GroupChooseWidget extends StatelessWidget {
   }
 }
 
-class TaichiGroupChoose {
+class TaichiSelectSide {
   /// NP, short for no provider
   static Widget simpleNP() {
     return Container();
@@ -165,7 +165,7 @@ class TaichiGroupChoose {
           right: right,
         ),
       builder: (context, _) {
-        return GroupChooseWidget(
+        return SelectSideWidget(
             height: height,
             width: width,
             leftSideColor: leftSideColor,

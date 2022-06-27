@@ -16,8 +16,10 @@ class DropDownSearch extends StatelessWidget {
       this.textFieldWidth = 300,
       this.hintText = "do_something",
       this.onBoxItemTap,
-      this.onTextChange})
-      : super(key: key);
+      this.onTextChange,
+      required this.initialString})
+      : assert(datas.contains(initialString)),
+        super(key: key);
   final List<String> datas;
   final TextEditingController controller = TextEditingController();
   final LayerLink layerLink = LayerLink();
@@ -29,6 +31,7 @@ class DropDownSearch extends StatelessWidget {
   final String hintText;
   final StringCallback? onTextChange;
   final StringCallback? onBoxItemTap;
+  final String initialString;
 
   OverlayEntry? _overlayEntry;
   late List<String> d = datas;
@@ -36,6 +39,8 @@ class DropDownSearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    controller.text = initialString;
+
     return CompositedTransformTarget(
         link: layerLink,
         child: DropdownSearchTextField(
@@ -92,6 +97,8 @@ class DropDownSearch extends StatelessWidget {
                   if (onBoxItemTap != null) {
                     onBoxItemTap!(controller.text);
                   }
+                  _hideOverlay();
+                  show = !show;
                 },
               ),
             ),

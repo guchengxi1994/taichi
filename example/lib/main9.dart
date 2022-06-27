@@ -15,6 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final List<String> l = ["I", "love", "China"];
   final TextEditingController controller = TextEditingController();
+  late String selecedString = "China";
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +24,12 @@ class _HomePageState extends State<HomePage> {
         children: [
           Expanded(child: Container()),
           DropDownSearch(
+              initialString: selecedString,
               onBoxItemTap: (s) {
                 debugPrint("[clicked item]:$s");
+                setState(() {
+                  selecedString = s;
+                });
               },
               onTextChange: (s) {
                 debugPrint("[text change]:$s");
