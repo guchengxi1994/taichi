@@ -53,7 +53,7 @@ const RESOURCES = {
 "assets/assets/images/demo.png": "13e9c72ec37fac220397aa819fa1ef2d",
 "assets/assets/images/0.jpg": "92d1545d90ec7ead183bf75ac146d213",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
-"assets/NOTICES": "f5825f11af247f07c1915f10a9620f2e",
+"assets/NOTICES": "3de8165d0401b91162634d9a441a274f",
 "main.dart.js_36.part.js": "79e1cc26d8feb49c36607ac16eca3271",
 "main.dart.js_26.part.js": "1ed40923624cadc8b59f3619ce63dec3",
 "main.dart.js_41.part.js": "89375387e3b68ce0351189171de2d95f",
