@@ -20,13 +20,13 @@ dependencies:
     # path: D:/github_repo/taichi/taichi_core
     git:
         url: https://github.com/guchengxi1994/taichi
-        ref: builder
+        ref: dev
         path: taichi_core
   taichi_china_map:
     # path: ../taichi_china_map
     git:
         url: https://github.com/guchengxi1994/taichi
-        ref: builder
+        ref: dev
         path: taichi_china_map
 
 

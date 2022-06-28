@@ -8,11 +8,7 @@
  * @LastEditTime: 2022-06-26 08:42:37
  */
 
-enum ExpTypes { math, logic, custom }
+library taichi_valuate;
 
-class Valuate {
-  String expression;
-  ExpTypes type;
-
-  Valuate({required this.expression, required this.type});
-}
+export './calculate/boolean_quatenion_operation.dart';
+export './calculate/integer_quatenion_operation.dart';
