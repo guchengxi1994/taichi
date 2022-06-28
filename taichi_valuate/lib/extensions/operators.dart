@@ -3,17 +3,6 @@ import 'package:lpinyin/lpinyin.dart';
 
 final chineseRegex = RegExp("[\\u4e00-\\u9fa5]+");
 
-class TString {
-  String expression;
-  TString({required this.expression});
-}
-
-extension ToTString on String {
-  TString toTString() {
-    return TString(expression: this);
-  }
-}
-
 extension MathExtension on String {
   double? square() {
     final double? v = double.tryParse(this);
@@ -158,5 +147,14 @@ extension Compare on String {
   /// use [isBool] before use this function
   bool convertStringToBool() {
     return this == "true";
+  }
+
+  bool isNull() {
+    return this == "null";
+  }
+
+  /// use [isNull] before use this function
+  String convertStringToNull() {
+    return "null";
   }
 }

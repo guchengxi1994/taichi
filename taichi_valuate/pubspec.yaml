@@ -4,7 +4,7 @@ introduction: valuate from strings
 
 homepage: https://github.com/guchengxi1994/taichi
 
-version: 0.0.1 # dev1
+version: 0.0.2 # dev2
 
 environment: 
   sdk: ">=2.16.2 <3.0.0"

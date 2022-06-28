@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'package:taichi_valuate/calculate/boolean_quatenion_operation.dart';
-import 'package:taichi_valuate/extensions/operators.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -30,6 +29,12 @@ void main() {
 
   /// with "()"
   final BooleanQuatenionOperation operation6 =
-      BooleanQuatenionOperation(expression: "5 != 6 && (7 == 8 && (9 >= 10))");
-  print(operation6.getResult());
+      BooleanQuatenionOperation(expression: "5 != 6 && (7 >= 8 && (9 <= 10))");
+
+  final BooleanQuatenionOperation operation8 =
+      BooleanQuatenionOperation(expression: "5 != 6 || (7 >= 8 && (9 <= 10))");
+  test("测试bool值", () {
+    expect(operation6.getResult(), false);
+    expect(operation8.getResult(), true);
+  });
 }

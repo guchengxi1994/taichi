@@ -11,6 +11,9 @@ void main() {
 
   final operaterRegex = RegExp("[=]{2}|[!][=]|[>][=]|[>]|[<][=]|[<]");
 
+  final queRegex =
+      RegExp("[^|&]*(==|>=|<=|!=|>|<)[^|&]*|(true)|(false)|(null)");
+
   final operaterRegex1 = RegExp(r"(&&|\|\|)");
 
   final stringRegex1 = RegExp(
@@ -45,4 +48,8 @@ void main() {
   print(testStr.indexOf("r.obj==p.obj"));
   print("================================================================");
   print(operaterRegex1.allMatches(testStr5).map((e) => e.group(0)).toList());
+
+  print(
+    queRegex.allMatches("5!=6&&7==8&&false").map((e) => e.group(0)!).toList(),
+  );
 }

@@ -6,31 +6,46 @@ import 'package:taichi_valuate/extensions/operators.dart';
 
 final operaterRegex1 = RegExp(r"(&&|\|\|)");
 final operaterRegex2 = RegExp("[=]{2}|[!][=]|[>][=]|[>]|[<][=]|[<]");
-final queRegex = RegExp("[^|&]*(==|>=|<=|!=|>|<)[^|&]*");
+final queRegex = RegExp("[^|&]*(==|>=|<=|!=|>|<)[^|&]*|(true)|(false)|(null)");
 
 /// get boolean result from a string
 ///
 /// Usage:
 ///
 /// ```dart
-/// /// without "()"
+/// /// without "()""
 /// final BooleanQuatenionOperation operation =
-///      BooleanQuatenionOperation(expression: "5 != 6 && 7 == 8 && 9 >= 10");
-///  final BooleanQuatenionOperation operation2 =
-///      BooleanQuatenionOperation(expression: "5 != 6");
-///  final BooleanQuatenionOperation operation3 =
-///      BooleanQuatenionOperation(expression: "5 < 6");
-///  final BooleanQuatenionOperation operation4 =
-///      BooleanQuatenionOperation(expression: " 6>5");
-///  final BooleanQuatenionOperation operation5 =
+///     BooleanQuatenionOperation(expression: "5 != 6 && 7 == 8 && 9 >= 10");
+/// final BooleanQuatenionOperation operation2 =
+///     BooleanQuatenionOperation(expression: "5 != 6");
+/// final BooleanQuatenionOperation operation3 =
+///     BooleanQuatenionOperation(expression: "5 < 6");
+/// final BooleanQuatenionOperation operation4 =
+///     BooleanQuatenionOperation(expression: " 6>5");
+/// final BooleanQuatenionOperation operation5 =
 ///     BooleanQuatenionOperation(expression: " 6》5");
+/// final BooleanQuatenionOperation operation7 =
+///     BooleanQuatenionOperation(expression: " 9>=10");
+
 /// test("测试bool值", () {
 ///   expect(operation.getResult(), false);
 ///   expect(operation2.getResult(), true);
 ///   expect(operation3.getResult(), true);
 ///   expect(operation4.getResult(), true);
 ///   expect(operation5.getResult(), null);
-///  });
+///   expect(operation7.getResult(), false);
+/// });
+
+/// /// with "()"
+/// final BooleanQuatenionOperation operation6 =
+///     BooleanQuatenionOperation(expression: "5 != 6 && (7 >= 8 && (9 <= 10))");
+
+/// final BooleanQuatenionOperation operation8 =
+///     BooleanQuatenionOperation(expression: "5 != 6 || (7 >= 8 && (9 <= 10))");
+/// test("测试bool值", () {
+///   expect(operation6.getResult(), false);
+///   expect(operation8.getResult(), true);
+/// });
 /// ```
 class BooleanQuatenionOperation extends AbstractOperation {
   BooleanQuatenionOperation({required String expression})
@@ -40,7 +55,11 @@ class BooleanQuatenionOperation extends AbstractOperation {
   bool? getResult() {
     expression = expression.replaceAll(" ", "");
     if (expression.contains("(") || expression.contains(")")) {
-      print(_getResultWithBracket(expression));
+      final String? s = _getResultWithBracket(expression);
+      if (s != null) {
+        return _getResultWithoutBracket(s);
+      }
+      return null;
     } else {
       return _getResultWithoutBracket(expression);
     }
@@ -48,23 +67,21 @@ class BooleanQuatenionOperation extends AbstractOperation {
 
   String? _getResultWithBracket(String ex) {
     String exCopy = ex;
+
     final bracketResult = exCopy.getBracketMatches();
-    if (bracketResult.matches == false) {
-      return null;
-    }
     for (final i in bracketResult.results) {
       final s = ex.substring(i.item1 + 1, i.item2);
-      // print("[substr]:$s");
-      print("[s1]:$s");
       if (!s.contains("(") && !s.contains(")")) {
         final bool? result = _getResultWithoutBracket(s);
         exCopy = exCopy.replaceAll("($s)", result.toString());
       } else {
-        print("[s2]:$s");
         final String? result = _getResultWithBracket(s);
-        print("[result]:$result");
-        exCopy = exCopy.replaceAll("($s)", result.toString());
+        exCopy = exCopy.replaceAll(s, result.toString());
       }
+    }
+
+    if (exCopy.contains("(") && exCopy.contains(")")) {
+      return _getResultWithBracket(exCopy);
     }
 
     return exCopy;
@@ -103,6 +120,10 @@ class BooleanQuatenionOperation extends AbstractOperation {
   }
 
   bool? _getResultFromQue(String que) {
+    if (que.isBool()) {
+      return que.convertStringToBool();
+    }
+
     String? operator;
     if (que.contains("==")) {
       operator = "==";
