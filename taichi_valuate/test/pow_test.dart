@@ -1,4 +1,4 @@
-import 'package:taichi_valuate/extensions/on_strings.dart';
+import 'package:taichi_valuate/extensions/operators.dart';
 import 'package:test/test.dart';
 
 void main() {

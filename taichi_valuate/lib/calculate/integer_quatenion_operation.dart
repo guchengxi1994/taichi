@@ -4,7 +4,21 @@ import 'package:taichi_valuate/calculate/abstract_operation.dart';
 
 /// modified from https://www.jianshu.com/p/2803901ef9e0
 ///
-/// original version was written by java
+/// original version was written in java
+///
+/// Usage:
+///
+/// ```dart
+///  IntegerQuatenionOperation operation =
+///      IntegerQuatenionOperation(expression: "48*((70-65)-43)+8*1");
+///  IntegerQuatenionOperation operation2 =
+///      IntegerQuatenionOperation(expression: "4*(6+78)+53-9/2+45*8");
+
+///  test("测试是不是相等的", () {
+///    expect(operation.getResult(), -1816);
+///    expect(operation2.getResult(), 744);
+///   });
+/// ```
 class IntegerQuatenionOperation extends AbstractOperation {
   IntegerQuatenionOperation({required String expression})
       : super(expression: expression);
