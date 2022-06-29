@@ -13,26 +13,41 @@ abstract class AbsAccessModel {
   bool isVisible(String? pageName, String? widgetName);
 }
 
-class AccessModel extends AbsAccessModel {
+class AccessModel {
   String? userName;
-  String? pageName;
-  String? widgetName;
-  List<String>? accesses;
+  List<PageAccessModel>? pageAccesses;
 
-  AccessModel({
-    this.accesses,
-    this.pageName,
-    this.userName,
-    this.widgetName,
-  });
+  AccessModel({this.userName, this.pageAccesses});
+}
+
+class PageAccessModel extends AbsAccessModel {
+  String? pageName;
+  List<WidgetAccessModel>? widgetAccesses;
+
+  PageAccessModel({this.pageName, this.widgetAccesses});
 
   @override
   bool canAccess(String? pageName, String? widgetName) {
-    return false;
+    throw UnimplementedError();
   }
 
   @override
   bool isVisible(String? pageName, String? widgetName) {
-    return false;
+    throw UnimplementedError();
+  }
+}
+
+class WidgetAccessModel extends AbsAccessModel {
+  String? widgetName;
+  WidgetAccessModel({this.widgetName});
+
+  @override
+  bool canAccess(String? pageName, String? widgetName) {
+    throw UnimplementedError();
+  }
+
+  @override
+  bool isVisible(String? pageName, String? widgetName) {
+    throw UnimplementedError();
   }
 }

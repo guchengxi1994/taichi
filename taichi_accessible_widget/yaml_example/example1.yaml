@@ -1,0 +1,4 @@
+access:
+  username: testuser
+  accesses: 
+    - main/widget1/true/false
