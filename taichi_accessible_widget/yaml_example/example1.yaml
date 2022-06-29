@@ -1,4 +1,6 @@
-access:
-  username: testuser
-  accesses: 
-    - main/widget1/true/false
+#/pageName/widgetName/visiable/accessible
+
+rules:
+  - role: test user
+    sources:
+      - pagename == /main && widgetname == widget1 && visiable == true && accessible == false
