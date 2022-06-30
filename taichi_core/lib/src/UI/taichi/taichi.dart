@@ -16,6 +16,7 @@ part './t_overlay_widget.dart';
 part './t_auto_rotate_widget.dart';
 part './t_split_widget.dart';
 part './t_uchiha.dart';
+part "./t_moon_sun_widget.dart";
 
 class TaichiGraph {
   static Widget simple({required double size}) {
@@ -37,6 +38,10 @@ class TaichiGraph {
       size: size,
       color: color,
     );
+  }
+
+  static Widget moonSun({double size = 300}) {
+    return _TaichiMoonSunWidget(size: size);
   }
 
   static Widget splited(
