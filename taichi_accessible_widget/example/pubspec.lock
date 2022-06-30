@@ -176,15 +176,13 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.0+1"
+    version: "0.0.1"
   taichi_valuate:
     dependency: transitive
     description:
-      path: taichi_valuate
-      ref: dev
-      resolved-ref: "12f6e892fc09980deba551e5f1bd54c6ee0d19df"
-      url: "https://github.com/guchengxi1994/taichi"
-    source: git
+      path: "../../taichi_valuate"
+      relative: true
+    source: path
     version: "0.0.2"
   term_glyph:
     dependency: transitive

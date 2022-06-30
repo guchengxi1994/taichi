@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 /*
  * @Descripttion: 
  * @version: 
@@ -7,11 +9,19 @@
  * @LastEditors: xiaoshuyui
  * @LastEditTime: 2022-06-29 20:38:16
  */
-import 'package:access_widget_example/routers.dart';
+import 'package:taichi_accessible_widget/lib.dart';
+
+import 'routers.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => AccessController()
+      ..initFromAsset("assets/role.yaml")
+      ..changeRole("test user"),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

@@ -166,11 +166,9 @@ packages:
   taichi_valuate:
     dependency: "direct main"
     description:
-      path: taichi_valuate
-      ref: dev
-      resolved-ref: "650e9b8123832161246452d97c451bf070edfe3b"
-      url: "https://github.com/guchengxi1994/taichi"
-    source: git
+      path: "../taichi_valuate"
+      relative: true
+    source: path
     version: "0.0.2"
   term_glyph:
     dependency: transitive

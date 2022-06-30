@@ -1,0 +1,9 @@
+rules:
+  - role: test user
+    resources:
+      - pagename == /page2 && widgetname == CenterText && visible == true && accessible == true
+      - pagename == /page2 && widgetname == ebutton && visible == true && accessible == false
+  - role: admin
+    resources:
+      - pagename == /page2 && widgetname == CenterText && visible == false && accessible == false
+      - pagename == /page2 && widgetname == ebutton && visible == true && accessible == true

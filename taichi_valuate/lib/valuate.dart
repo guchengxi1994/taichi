@@ -11,4 +11,5 @@
 library taichi_valuate;
 
 export './calculate/boolean_quatenion_operation.dart';
+export './calculate/calculate_tools.dart';
 export './calculate/integer_quatenion_operation.dart';

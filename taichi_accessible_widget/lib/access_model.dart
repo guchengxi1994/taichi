@@ -13,18 +13,26 @@ abstract class AbsAccessModel {
   bool isVisible(String? pageName, String? widgetName);
 }
 
-class AccessModel {
-  String? userName;
-  List<PageAccessModel>? pageAccesses;
+class AccessModel extends AbsAccessModel {
+  List<Rules>? rules;
+  AccessModel({this.rules});
 
-  AccessModel({this.userName, this.pageAccesses});
-}
+  AccessModel.fromJson(Map<String, dynamic> json) {
+    if (json['rules'] != null) {
+      rules = <Rules>[];
+      json['rules'].forEach((v) {
+        rules!.add(Rules.fromJson(v));
+      });
+    }
+  }
 
-class PageAccessModel extends AbsAccessModel {
-  String? pageName;
-  List<WidgetAccessModel>? widgetAccesses;
-
-  PageAccessModel({this.pageName, this.widgetAccesses});
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (rules != null) {
+      data['rules'] = rules!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 
   @override
   bool canAccess(String? pageName, String? widgetName) {
@@ -37,17 +45,46 @@ class PageAccessModel extends AbsAccessModel {
   }
 }
 
-class WidgetAccessModel extends AbsAccessModel {
-  String? widgetName;
-  WidgetAccessModel({this.widgetName});
+class Rules {
+  String? role;
+  List<String>? resources;
 
-  @override
-  bool canAccess(String? pageName, String? widgetName) {
-    throw UnimplementedError();
+  Rules({this.role, this.resources});
+
+  Rules.fromJson(Map<String, dynamic> json) {
+    role = json['role'];
+    resources = json['resources'].cast<String>();
   }
 
-  @override
-  bool isVisible(String? pageName, String? widgetName) {
-    throw UnimplementedError();
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['role'] = role;
+    data['resources'] = resources;
+    return data;
+  }
+
+  String? grep(String pageName, String widgetName) {
+    String regString =
+        "(pagename==$pageName[^&|]*|widgetname==$widgetName[^&|]*)";
+    // print(regString);
+    // print("resources:$resources");
+    final RegExp r = RegExp(regString);
+    if (resources == null || resources!.isEmpty) {
+      return null;
+    }
+    for (final i in resources!) {
+      final res =
+          r.allMatches(i.replaceAll(" ", "")).map((e) => e.group(0)).toList();
+      if (res.length != 2) {
+        continue;
+      }
+
+      if (res.contains("pagename==$pageName") &&
+          res.contains("widgetname==$widgetName")) {
+        return i;
+      }
+    }
+
+    return null;
   }
 }
