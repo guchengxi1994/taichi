@@ -202,7 +202,7 @@ class _Page3State extends State<Page3> {
 </details>
 
 
-### 1.7 基于2.6的载入动画
+### 1.7 基于1.6的载入动画
 
 <details>
   <summary>
