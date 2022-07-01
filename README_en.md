@@ -7,7 +7,7 @@
 
 A(n) (combinition of) interesting UI widget(s) and tools😏.
 
-## 1.安装
+## 1.Install
 
 ```
 taichi:
@@ -18,7 +18,7 @@ taichi:
 
 > if you want to use something new, try branch `dev` or `builder`
 
-## 2. 功能
+## 2. Features
 
 > ✔️ means basic stable. The function may not be complete, but it does not affect the use
 >
