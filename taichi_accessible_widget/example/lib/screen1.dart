@@ -12,14 +12,11 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:taichi_accessible_widget/lib.dart';
 
 import 'routers.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:yaml/yaml.dart';
-// ignore: depend_on_referenced_packages
-import 'package:provider/provider.dart';
 
 class Screen1 extends StatefulWidget {
   const Screen1({Key? key}) : super(key: key);
@@ -45,8 +42,6 @@ class _Screen1State extends State<Screen1> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("[page name]:${ModalRoute.of(context)?.settings.name}");
-    debugPrint("provider:${context.watch<AccessController>()}");
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

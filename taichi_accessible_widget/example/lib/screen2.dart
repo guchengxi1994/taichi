@@ -10,10 +10,9 @@
  * @LastEditTime: 2022-06-29 20:28:04
  */
 import 'package:flutter/material.dart';
-import 'package:taichi_accessible_widget/access_controller.dart';
-import 'package:taichi_accessible_widget/access_stateless_widget.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
+import 'package:taichi_accessible_widget/lib.dart';
 
 class Screen2 extends StatelessWidget {
   const Screen2({Key? key}) : super(key: key);
@@ -43,7 +42,7 @@ class Screen2 extends StatelessWidget {
               widgetName: 'CenterText',
               child: const Text("center"),
             ),
-            AccessStatelessWidget(
+            AccessStatefulWidget(
               widgetName: 'ebutton',
               child: ElevatedButton(
                   onPressed: () {
