@@ -8,12 +8,7 @@
  * @LastEditTime: 2022-06-28 21:56:05
  */
 
-abstract class AbsAccessModel {
-  bool canAccess(String? pageName, String? widgetName);
-  bool isVisible(String? pageName, String? widgetName);
-}
-
-class AccessModel extends AbsAccessModel {
+class AccessModel {
   List<Rules>? rules;
   AccessModel({this.rules});
 
@@ -32,16 +27,6 @@ class AccessModel extends AbsAccessModel {
       data['rules'] = rules!.map((v) => v.toJson()).toList();
     }
     return data;
-  }
-
-  @override
-  bool canAccess(String? pageName, String? widgetName) {
-    throw UnimplementedError();
-  }
-
-  @override
-  bool isVisible(String? pageName, String? widgetName) {
-    throw UnimplementedError();
   }
 }
 
