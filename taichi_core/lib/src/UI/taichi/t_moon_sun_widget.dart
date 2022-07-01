@@ -6,7 +6,7 @@ class _TaichiMoonSunWidget extends StatelessWidget {
     required this.size,
   }) : super(key: key);
   final double size;
-  final Color? color1 = Colors.black;
+  final Color? color1 = const Color.fromARGB(255, 13, 26, 46);
   final Color? color2 = const Color.fromARGB(255, 176, 232, 243);
 
   @override
@@ -15,13 +15,13 @@ class _TaichiMoonSunWidget extends StatelessWidget {
       height: size,
       width: size,
       decoration: BoxDecoration(
-          gradient: const LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [
-                Color.fromARGB(255, 97, 194, 232),
-                Color.fromARGB(255, 176, 232, 243),
-              ]),
+          // gradient: const LinearGradient(
+          //     begin: Alignment.centerLeft,
+          //     end: Alignment.centerRight,
+          //     colors: [
+          //       Color.fromARGB(255, 138, 218, 234),
+          //       Color.fromARGB(255, 176, 232, 243),
+          //     ]),
           boxShadow: const [
             BoxShadow(
                 color: Color.fromARGB(255, 176, 232, 243),
@@ -29,7 +29,7 @@ class _TaichiMoonSunWidget extends StatelessWidget {
                 blurRadius: 20,
                 spreadRadius: 15),
           ],
-          color: color2,
+          // color: color2,
           borderRadius: BorderRadius.circular(0.5 * size),
           border: Border.all(color: color1!, width: 1)),
       child: Stack(children: [
@@ -43,9 +43,34 @@ class _TaichiMoonSunWidget extends StatelessWidget {
               height: size,
               width: 0.5 * size,
               decoration: BoxDecoration(
-                  color: color1,
+                  gradient: LinearGradient(
+                      begin: Alignment.centerRight,
+                      end: Alignment.centerLeft,
+                      colors: [const Color.fromARGB(255, 41, 62, 67), color1!]),
                   border: Border(left: BorderSide(color: color1!)))),
         )),
+
+        // right side
+        Positioned(
+            top: 0,
+            left: 0.5 * size,
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(size),
+                  topRight: Radius.circular(size)),
+              child: Container(
+                  height: size - 2,
+                  width: 0.5 * size - 2,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [
+                          Color.fromARGB(255, 138, 218, 234),
+                          Color.fromARGB(255, 176, 232, 243),
+                        ]),
+                  )),
+            )),
 
         // center  circle
         Positioned(
@@ -73,8 +98,8 @@ class _TaichiMoonSunWidget extends StatelessWidget {
                   width: 0.25 * size,
                   decoration: BoxDecoration(
                       gradient: const LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.topRight,
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
                           colors: [
                             Color.fromARGB(255, 97, 194, 232),
                             Color.fromARGB(255, 138, 218, 234),
@@ -85,17 +110,24 @@ class _TaichiMoonSunWidget extends StatelessWidget {
 
         // center  circle
         Positioned(
-            bottom: 0,
+            bottom: -2,
             right: 0.25 * size,
             child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(0.25 * size)),
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(size),
+                  topRight: Radius.circular(size)),
               // BorderRadius.only(bottomLeft: Radius.circular(0.25 * size)),
               child: Container(
                 height: 0.5 * size,
-                width: 0.5 * size,
-                decoration: BoxDecoration(
-                  color: color1,
-                ),
+                width: 0.25 * size,
+                decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.centerRight,
+                        end: Alignment.centerLeft,
+                        colors: [
+                      Color.fromARGB(255, 66, 101, 108),
+                      Color.fromARGB(255, 41, 62, 67),
+                    ])),
               ),
             )),
 
@@ -237,10 +269,10 @@ class _TaichiMoonSunWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(0.125 * size),
-                boxShadow: const [
+                boxShadow: [
                   BoxShadow(
-                      color: Colors.white,
-                      offset: Offset(0, 0),
+                      color: Colors.red[50]!,
+                      offset: const Offset(0, 0),
                       blurRadius: 2,
                       spreadRadius: 2)
                 ],
@@ -254,18 +286,204 @@ class _TaichiMoonSunWidget extends StatelessWidget {
             width: 0.2 * size,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.black,
+                color: Color.fromARGB(255, 41, 62, 67),
                 borderRadius: BorderRadius.circular(0.125 * size),
-                gradient: const LinearGradient(
-                    begin: Alignment.bottomRight,
-                    end: Alignment.topLeft,
-                    colors: [
-                      Color.fromARGB(255, 16, 25, 29),
-                      Color.fromARGB(255, 20, 23, 23),
-                    ]),
               ),
             )),
+
+        Positioned(
+            bottom: 0.1 * 1.5 * size,
+            left: 0.5 * size - 0.2 * 0.5 * size,
+            height: 0.2 * size,
+            width: 0.2 * size,
+            child: Opacity(
+              opacity: 0.3,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(0.125 * size),
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.white,
+                        offset: Offset(0, 0),
+                        blurRadius: 2,
+                        spreadRadius: 2)
+                  ],
+                ),
+              ),
+            )),
+
+        /// stars
+        Positioned(
+            bottom: 0.1 * 1.5 * size,
+            left: 0.5 * size - 0.2 * 0.5 * size,
+            height: 1,
+            width: 1,
+            child: Opacity(
+              opacity: 1,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(0.125 * size),
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.white,
+                        offset: Offset(0, 0),
+                        blurRadius: 1,
+                        spreadRadius: 1)
+                  ],
+                ),
+              ),
+            )),
+
+        Positioned(
+            bottom: 0.15 * 1.5 * size,
+            left: 0.5 * size - 0.3 * 0.5 * size,
+            height: 1,
+            width: 1,
+            child: Opacity(
+              opacity: 1,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(0.125 * size),
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.white,
+                        offset: Offset(0, 0),
+                        blurRadius: 1,
+                        spreadRadius: 1)
+                  ],
+                ),
+              ),
+            )),
+        Positioned(
+            top: 0.15 * 1.5 * size,
+            left: 0.3 * 0.5 * size,
+            height: 1,
+            width: 1,
+            child: Opacity(
+              opacity: 1,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(0.125 * size),
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.white,
+                        offset: Offset(0, 0),
+                        blurRadius: 1,
+                        spreadRadius: 1)
+                  ],
+                ),
+              ),
+            )),
+        Positioned(
+            top: 0.25 * size,
+            left: 0.35 * 0.5 * size,
+            height: 1,
+            width: 1,
+            child: Opacity(
+              opacity: 1,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(0.125 * size),
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.white,
+                        offset: Offset(0, 0),
+                        blurRadius: 1,
+                        spreadRadius: 1)
+                  ],
+                ),
+              ),
+            )),
+        Positioned(
+            top: 0.45 * size,
+            left: 0.45 * 0.5 * size,
+            height: 1,
+            width: 1,
+            child: Opacity(
+              opacity: 1,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(0.125 * size),
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.white,
+                        offset: Offset(0, 0),
+                        blurRadius: 1,
+                        spreadRadius: 1)
+                  ],
+                ),
+              ),
+            )),
+        Positioned(
+            top: 0.5 * size,
+            left: 0.7 * 0.5 * size,
+            height: 1,
+            width: 1,
+            child: Opacity(
+              opacity: 1,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(0.125 * size),
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.white,
+                        offset: Offset(0, 0),
+                        blurRadius: 1,
+                        spreadRadius: 1)
+                  ],
+                ),
+              ),
+            )),
+        ...buildStars(),
       ]),
     );
+  }
+
+  List<Widget> buildStars() {
+    List<Widget> results = [];
+    for (int i = 0; i < 30; i++) {
+      double top = Random().nextInt((1 * size - 50).ceil()) * 1.0 + 50;
+      double left = Random().nextInt((0.5 * size - 50).ceil()) * 1.0 + 50;
+
+      if ((top >= 0.65 * size &&
+              top <= 0.85 * size &&
+              left >= 0.375 * size &&
+              left <= 0.625 * size) ||
+          (top <= 0.5 * size && left >= 0.2 * size) ||
+          (left < 0.1 * size) ||
+          (top > 0.9 * size)) {
+        continue;
+      }
+
+      results.add(Positioned(
+          top: top,
+          left: left,
+          height: 1,
+          width: 1,
+          child: Opacity(
+            opacity: 1,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(0.125 * size),
+                boxShadow: const [
+                  BoxShadow(
+                      color: Colors.white,
+                      offset: Offset(0, 0),
+                      blurRadius: 1,
+                      spreadRadius: 1)
+                ],
+              ),
+            ),
+          )));
+    }
+    return results;
   }
 }

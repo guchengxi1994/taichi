@@ -4,9 +4,10 @@
 
 
 
-<img src="./md_images/taichi.gif" alt="taichi" width="20%" />
+<div align=center><img src="./md_images/logo.png" alt="taichi"  width="30%" /></div>
 
-> 别盯着logo看，搞不好晃眼睛
+> 这个logo使用`TaichiGraph`绘制生成的，使用`TaichiGraph.moonSun()`即可获得这个效果
+
 
 一个包含一个或者多个组件的组件以及工具库，主要是开发过程中自己做的一些组件/功能或者一些挑战自我的实现😏。
 
