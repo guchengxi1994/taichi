@@ -7,7 +7,7 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-06-29 20:28:04
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-06-29 20:28:04
+ * @LastEditTime: 2022-07-02 08:29:32
  */
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
@@ -30,6 +30,8 @@ class Screen2 extends StatelessWidget {
               } else {
                 context.read<AccessController>().changeRole("admin");
               }
+              debugPrint(
+                  "[length]:${context.read<AccessController>().ruleLength}");
             },
             icon: const Icon(Icons.change_circle))
       ]),

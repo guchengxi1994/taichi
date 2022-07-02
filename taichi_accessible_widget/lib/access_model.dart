@@ -5,14 +5,16 @@
  * @email: guchengxi1994@qq.com
  * @Date: 2022-06-28 21:29:47
  * @LastEditors: xiaoshuyui
- * @LastEditTime: 2022-06-28 21:56:05
+ * @LastEditTime: 2022-07-02 07:49:07
  */
 
 class AccessModel {
   List<Rules>? rules;
-  AccessModel({this.rules});
+  int? cacheMaxLength;
+  AccessModel({this.rules, this.cacheMaxLength});
 
   AccessModel.fromJson(Map<String, dynamic> json) {
+    cacheMaxLength = json['cacheMaxLength'];
     if (json['rules'] != null) {
       rules = <Rules>[];
       json['rules'].forEach((v) {
@@ -23,6 +25,7 @@ class AccessModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['cacheMaxLength'] = cacheMaxLength!;
     if (rules != null) {
       data['rules'] = rules!.map((v) => v.toJson()).toList();
     }

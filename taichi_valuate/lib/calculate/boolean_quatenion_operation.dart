@@ -152,6 +152,11 @@ class BooleanQuatenionOperation extends AbstractOperation {
 
       switch (operator) {
         case "==":
+          // [sth == *]
+          // * means all
+          if (right == "*") {
+            return true;
+          }
           return left == right;
         case ">=":
           return left >= right;
@@ -162,6 +167,11 @@ class BooleanQuatenionOperation extends AbstractOperation {
         case "<":
           return left < right;
         case "!=":
+          // [sth != *]
+          // * means all
+          if (right == "*") {
+            return false;
+          }
           return left != right;
         default:
           return null;

@@ -1,0 +1,6 @@
+cacheMaxLength: 100
+
+http:  # support regex
+  - role: test user
+    resources:
+      - /xxx/xxx    

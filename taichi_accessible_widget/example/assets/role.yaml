@@ -1,3 +1,4 @@
+cacheMaxLength: 100
 rules:
   - role: test user
     resources:
@@ -8,7 +9,3 @@ rules:
       - pagename == /page2 && widgetname == CenterText && visible == false && accessible == false
       - pagename == /page2 && widgetname == ebutton && visible == true && accessible == true
 
-http:  # support regex
-  - role: test user
-    resources:
-      - /xxx/xxx    
