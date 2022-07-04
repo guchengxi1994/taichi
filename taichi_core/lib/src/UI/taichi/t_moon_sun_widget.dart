@@ -449,8 +449,12 @@ class _TaichiMoonSunWidget extends StatelessWidget {
   List<Widget> buildStars() {
     List<Widget> results = [];
     for (int i = 0; i < 30; i++) {
-      double top = Random().nextInt((1 * size - 50).ceil()) * 1.0 + 50;
-      double left = Random().nextInt((0.5 * size - 50).ceil()) * 1.0 + 50;
+      double top =
+          Random().nextInt((1 * size - 50 * (size / 300)).ceil()) * 1.0 +
+              50 * (size / 300);
+      double left =
+          Random().nextInt((0.5 * size - -50 * (size / 300)).ceil()) * 1.0 +
+              50 * (size / 300);
 
       if ((top >= 0.65 * size &&
               top <= 0.85 * size &&
@@ -458,7 +462,8 @@ class _TaichiMoonSunWidget extends StatelessWidget {
               left <= 0.625 * size) ||
           (top <= 0.5 * size && left >= 0.2 * size) ||
           (left < 0.1 * size) ||
-          (top > 0.9 * size)) {
+          (top > 0.9 * size) ||
+          (top >= 0.5 * size && left >= 0.65 * size)) {
         continue;
       }
 

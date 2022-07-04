@@ -61,7 +61,7 @@ class _SideMenuState extends State<SideMenu> {
                   padding: const EdgeInsets.only(top: 20, bottom: 20),
                   child: Align(
                     alignment: Alignment.topCenter,
-                    child: TaichiGraph.simple(size: 100),
+                    child: TaichiGraph.moonSun(size: 200),
                   ),
                 ),
                 TreeView(
@@ -70,7 +70,7 @@ class _SideMenuState extends State<SideMenu> {
                   nodes: [
                     node,
                   ],
-                )
+                ),
               ],
             ),
           ),
