@@ -16,6 +16,7 @@ import 'package:taichi_admin/screens/main_screen.dart';
 import 'controllers/main_page_controller.dart';
 
 /// this is an example
+/// add sth.
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
