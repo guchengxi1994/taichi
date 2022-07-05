@@ -9,6 +9,8 @@ import 'package:flutter_simple_treeview/flutter_simple_treeview.dart';
 import 'package:provider/provider.dart';
 import 'package:taichi_file_manager/controllers/file_tree_controller.dart';
 
+import 'file_response.dart';
+
 enum FileType { folder, file }
 
 class CanOperateFiles {
@@ -248,14 +250,15 @@ EntityFolder? toStructured(FlattenObject object,
   int maxDepth = 0;
   for (var s in object.path) {
     if (!isAFile(s)) {
-      // print(s);
       var slist = s.split("/");
       // slist.remove("..");
       // slist.remove("root");
+      // print(slist.length);
 
       for (int i = 2; i < slist.length; i++) {
         EntityFolder _en;
         if (i == 2) {
+          // print("name:${slist[i]}");
           _en = EntityFolder(
               name: slist[i],
               depth: i - 1,
@@ -280,7 +283,12 @@ EntityFolder? toStructured(FlattenObject object,
       }
     }
   }
-  // print(allFolders.length);
+  // print(maxDepth);
+  // for (final i in object.files) {
+  //   if (i.depth > maxDepth) {
+  //     maxDepth = i.depth;
+  //   }
+  // }
 
   Map<int, List<EntityFolder>> _depthEntityMap = {};
   _depthEntityMap[0] = [entityFolder];
@@ -291,7 +299,7 @@ EntityFolder? toStructured(FlattenObject object,
     _depthEntityMap[i] = _res;
   }
 
-  // print(_depthEntityMap);
+  // print("_depthEntityMap:$_depthEntityMap");
 
   generateFromMap(_depthEntityMap, maxDepth, object.files);
   // print(jsonEncode(_depthEntityMap[0]![0].toJson()));
@@ -301,14 +309,23 @@ EntityFolder? toStructured(FlattenObject object,
 
 void generateFromMap(Map<int, List<EntityFolder>> depthEntityMap, int maxDepth,
     List<EntityFile> files) {
+  // print(maxDepth);
+
   for (int index = maxDepth; index > 0; index--) {
     for (var j in depthEntityMap[index]!) {
+      // print("j:${j.toJson()}");
       for (var i in depthEntityMap[index - 1]!) {
+        // print("i:${i.toJson()}");
         List<EntityFile> caches = [];
 
         for (var f in files) {
           if (f.fatherPath.endsWith(i.name)) {
             i.addFile(f);
+            caches.add(f);
+          }
+
+          if (f.fatherPath.endsWith(j.name)) {
+            j.addFile(f);
             caches.add(f);
           }
         }
@@ -381,6 +398,15 @@ class EntityFile {
   String fatherPath = "root";
 
   String timestamp = "2015-06-07 08:09:10";
+
+  EntityFile.fromSavedFile(SavedFiles s) {
+    name = s.name!;
+    savePath = s.savePath;
+    tags = s.tags;
+    depth = s.depth!;
+    fatherPath = s.fatherPath!;
+    timestamp = s.timestamp!;
+  }
 
   TreeNode toTreeNode(BuildContext context) {
     return TreeNode(

@@ -39,7 +39,11 @@ class _SideMenuState extends State<SideMenu> {
   }
 
   Widget buildTree() {
-    EntityFolder res = context.watch<FileTreeController>().structure;
+    EntityFolder? res = context.watch<FileTreeController>().structure;
+    if (res == null) {
+      return Container();
+    }
+
     TreeNode node = res.toTreeNode(context);
 
     return SizedBox(

@@ -23,11 +23,18 @@ class MainScreenAppbar extends StatelessWidget {
       // actions: buildAppbarActions(),
       actions: [
         IconButton(
+            tooltip: "在此处添加一个逻辑目录",
+            onPressed: () {},
+            icon: const Icon(Icons.add_box)),
+        IconButton(
+            tooltip: "上传一个文件",
             onPressed: () {
               debugPrint(
-                  "[controller ]: ${json.encode(flatten(context.read<FileTreeController>().structure).files[1].toJson())}");
+                  "[controller ]: ${json.encode(flatten(context.read<FileTreeController>().structure!).files[1].toJson())}");
             },
-            icon: const Icon(Icons.add))
+            icon: const Icon(Icons.add)),
+        IconButton(
+            tooltip: "同步数据", onPressed: () {}, icon: const Icon(Icons.sync)),
       ],
     );
   }

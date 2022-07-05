@@ -12,9 +12,14 @@ import 'file_widget.dart';
 class MainScreenBody extends StatelessWidget {
   const MainScreenBody({Key? key}) : super(key: key);
 
-  List<Widget> renderFiles(BuildContext context, List<Object> list, int depth,
+  List<Widget> renderFiles(BuildContext context, List<Object>? list, int? depth,
       {String? fatherPath}) {
     List<Widget> widgets = [];
+
+    if (list == null || depth == null) {
+      return [];
+    }
+
     for (int i = 0; i < list.length; i++) {
       if (list[i].runtimeType == EntityFile) {
         widgets.add(FileWidget(
@@ -52,6 +57,13 @@ class MainScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    EntityFolder? res = context.watch<FileTreeController>().structure;
+    if (res == null) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
     return Stack(
       children: renderFiles(
           context,

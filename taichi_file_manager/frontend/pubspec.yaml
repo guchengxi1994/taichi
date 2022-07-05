@@ -22,6 +22,7 @@ dependencies:
     #     ref: dev
     #     path: taichi_core
   dio: 4.0.6
+  fluttertoast: ^8.0.9
 
 dev_dependencies:
   flutter_test:
