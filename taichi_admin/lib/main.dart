@@ -10,13 +10,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:taichi_accessible_widget/lib.dart';
 import 'package:taichi_admin/controllers/menu_controller.dart';
-import 'package:taichi_admin/screens/main_screen.dart';
-
+import 'package:taichi_admin/routers.dart';
 import 'controllers/main_page_controller.dart';
 
-/// this is an example
-/// add sth.
+/// this is an admin templete
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -32,10 +31,16 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => MainPageController(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => AccessController()
+            ..initFromAsset("assets/role.yaml")
+            ..changeRole("test user"),
+        )
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: MainScreen(),
+        routes: Routers.routers,
+        initialRoute: Routers.splash,
       ),
     );
   }

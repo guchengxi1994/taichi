@@ -1,0 +1,10 @@
+cacheMaxLength: 100
+rules:
+  - role: test user
+    resources:
+      - pagename == /main && widgetname == chinamap && visible == false && accessible == false
+      - pagename == /main && widgetname == chart && visible == false && accessible == false
+  - role: admin
+    resources:
+      - pagename == /main && widgetname == chinamap && visible == true && accessible == true
+      - pagename == /main && widgetname == chart && visible == true && accessible == true

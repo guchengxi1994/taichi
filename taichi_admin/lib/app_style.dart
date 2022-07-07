@@ -49,4 +49,6 @@ class AppStyle {
     letterSpacing: 0.2,
     color: Colors.black, // was lightText
   );
+
+  static const Color shimmerColor = Color.fromARGB(255, 199, 87, 173);
 }

@@ -55,6 +55,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     var route = context.watch<MainPageController>().currentRoute;
+    // debugPrint("[page name]:${ModalRoute.of(context)?.settings.name}");
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,

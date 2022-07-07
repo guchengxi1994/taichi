@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:taichi_accessible_widget/lib.dart';
 import 'package:taichi_admin/app_style.dart';
 import 'package:taichi_admin/controllers/menu_controller.dart';
 import 'package:taichi_admin/utils/common.dart';
@@ -54,58 +55,60 @@ class _DashboardLeftPartState extends State<DashboardLeftPart> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        FutureLoaderWidget(
-            builder: (context) {
-              if (widget.type == ScreenType.desktop) {
-                if (context.watch<MenuController>().isExpanded) {
-                  return Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: chinamap.ChinaMap(
+        AccessStatefulWidget(
+            widgetName: "chinamap",
+            child: FutureLoaderWidget(
+                builder: (context) {
+                  if (widget.type == ScreenType.desktop) {
+                    if (context.watch<MenuController>().isExpanded) {
+                      return Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: chinamap.ChinaMap(
+                          onClick: (s) {
+                            debugPrint("[current area]:$s");
+                          },
+                          toLeft: 20 + AppStyle.sidemenuWidth,
+                          toTop: 20 + AppStyle.appbarHeight,
+                          mapColor: const {"北京": Colors.red, "江苏": Colors.blue},
+                        ),
+                      );
+                    }
+
+                    return Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: chinamap.ChinaMap(
+                        toLeft: AppStyle.collapseSidemenuWidth + 20,
+                        toTop: AppStyle.appbarHeight + 20,
+                        onClick: (s) {
+                          debugPrint("[current area]:$s");
+                        },
+                        mapColor: const {"北京": Colors.red, "江苏": Colors.blue},
+                      ),
+                    );
+                  } else if (widget.type == ScreenType.tablet) {
+                    return chinamap.ChinaMap(
+                      mapScale: 0.8,
+                      toTop: AppStyle.appbarHeight,
+                      isDisplayOverlay: false,
                       onClick: (s) {
                         debugPrint("[current area]:$s");
                       },
-                      toLeft: 20 + AppStyle.sidemenuWidth,
-                      toTop: 20 + AppStyle.appbarHeight,
                       mapColor: const {"北京": Colors.red, "江苏": Colors.blue},
-                    ),
-                  );
-                }
-
-                return Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: chinamap.ChinaMap(
-                    toLeft: AppStyle.collapseSidemenuWidth + 20,
-                    toTop: AppStyle.appbarHeight + 20,
-                    onClick: (s) {
-                      debugPrint("[current area]:$s");
-                    },
-                    mapColor: const {"北京": Colors.red, "江苏": Colors.blue},
-                  ),
-                );
-              } else if (widget.type == ScreenType.tablet) {
-                return chinamap.ChinaMap(
-                  mapScale: 0.8,
-                  toTop: AppStyle.appbarHeight,
-                  isDisplayOverlay: false,
-                  onClick: (s) {
-                    debugPrint("[current area]:$s");
-                  },
-                  mapColor: const {"北京": Colors.red, "江苏": Colors.blue},
-                );
-              } else {
-                return chinamap.ChinaMap(
-                  mapScale: 0.8,
-                  showNames: false,
-                  toTop: AppStyle.appbarHeight,
-                  isDisplayOverlay: false,
-                  onClick: (s) {
-                    debugPrint("[current area]:$s");
-                  },
-                  mapColor: const {"北京": Colors.red, "江苏": Colors.blue},
-                );
-              }
-            },
-            loadWidgetFuture: loadChinaMapFuture),
+                    );
+                  } else {
+                    return chinamap.ChinaMap(
+                      mapScale: 0.8,
+                      showNames: false,
+                      toTop: AppStyle.appbarHeight,
+                      isDisplayOverlay: false,
+                      onClick: (s) {
+                        debugPrint("[current area]:$s");
+                      },
+                      mapColor: const {"北京": Colors.red, "江苏": Colors.blue},
+                    );
+                  }
+                },
+                loadWidgetFuture: loadChinaMapFuture)),
         const SizedBox(
           height: 20,
         ),

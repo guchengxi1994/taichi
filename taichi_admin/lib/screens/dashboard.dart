@@ -10,6 +10,7 @@
  * @LastEditTime: 2022-06-11 18:54:26
  */
 import 'package:flutter/material.dart';
+import 'package:taichi_accessible_widget/lib.dart';
 import 'package:taichi_admin/utils/common.dart';
 import 'package:taichi_admin/widgets/future_builder.dart';
 import '../widgets/dashboard_left_part.dart' deferred as left;
@@ -55,13 +56,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
           if (widget.type == ScreenType.desktop)
-            Expanded(
-                flex: 1,
-                child: FutureLoaderWidget(
-                  builder: (context) =>
-                      right.DashboardRightPart(type: widget.type),
-                  loadWidgetFuture: loadRightFuture,
-                )),
+            AccessStatefulWidget(
+                widgetName: "chart",
+                child: Expanded(
+                    flex: 1,
+                    child: FutureLoaderWidget(
+                      builder: (context) =>
+                          right.DashboardRightPart(type: widget.type),
+                      loadWidgetFuture: loadRightFuture,
+                    ))),
         ],
       ),
     );

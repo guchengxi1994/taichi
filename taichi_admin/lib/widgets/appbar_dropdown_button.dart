@@ -8,6 +8,8 @@
  * @LastEditTime: 2022-06-13 21:56:56
  */
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:taichi_accessible_widget/lib.dart';
 
 import '../utils/common.dart';
 
@@ -15,10 +17,13 @@ class UserDropdownButton extends StatelessWidget {
   const UserDropdownButton({Key? key, required this.type}) : super(key: key);
   final ScreenType type;
 
-  List<DropdownMenuItem> generateItemList() {
+  List<DropdownMenuItem> generateItemList(BuildContext context) {
     final List<DropdownMenuItem> items = [];
     final DropdownMenuItem item1 = DropdownMenuItem(
-      onTap: () {},
+      onTap: () {
+        debugPrint("clicked pop");
+        Navigator.of(context).pop();
+      },
       value: '登出',
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,7 +37,14 @@ class UserDropdownButton extends StatelessWidget {
       ),
     );
     final DropdownMenuItem item2 = DropdownMenuItem(
-      onTap: () {},
+      onTap: () {
+        if (context.read<AccessController>().role == "admin") {
+          context.read<AccessController>().changeRole("test user");
+        } else {
+          context.read<AccessController>().changeRole("admin");
+        }
+        debugPrint("[length]:${context.read<AccessController>().role}");
+      },
       value: '切换账户',
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -63,7 +75,7 @@ class UserDropdownButton extends StatelessWidget {
             borderRadius: BorderRadius.circular((15.0))),
         height: 50,
         child: DropdownButton<dynamic>(
-          items: generateItemList(),
+          items: generateItemList(context),
           onChanged: (v) {
             // print(v);
           },
@@ -113,7 +125,7 @@ class UserDropdownButton extends StatelessWidget {
               borderRadius: BorderRadius.circular((15.0))),
           height: 50,
           child: DropdownButton<dynamic>(
-            items: generateItemList(),
+            items: generateItemList(context),
             onChanged: (v) {
               // print(v);
             },

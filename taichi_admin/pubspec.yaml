@@ -2,7 +2,7 @@ name: taichi_admin
 description: 一个flutter做的管理平台模板。 A flutter admin templete.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 2.0.0+1-pre
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -14,6 +14,7 @@ dependencies:
   provider: ^6.0.3
   file_picker: ^4.6.1
   pie_chart: ^5.3.1
+  shimmer: ^2.0.0
 
 
   taichi:
@@ -28,12 +29,20 @@ dependencies:
         url: https://github.com/guchengxi1994/taichi
         ref: dev
         path: taichi_china_map
+  
+  taichi_accessible_widget:
+    path: ../taichi_accessible_widget
+    # git:
+    #     url: https://github.com/guchengxi1994/taichi
+    #     ref: dev
+    #     path: taichi_china_map
 
 
 
 deferred-components:
   - name: taichi_admin_widgets
     libraries:
+      - package:taichi_admin/screens/main_screen.dart
       - package:taichi_admin/screens/dashboard.dart
       - package:taichi_admin/screens/from_screens/first_screen.dart
       - package:taichi_admin/screens/from_screens/second_screen.dart
@@ -68,6 +77,7 @@ flutter:
   assets:
     - assets/images/demo.png
     - assets/images/0.jpg
+    - assets/role.yaml
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

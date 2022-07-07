@@ -53,7 +53,7 @@ class _TableWidgetState extends State<TableWidget> {
         ColumnName(name: '学号'),
         ColumnName(name: '语文'),
         ColumnName(name: '数学'),
-        ColumnName(name: '英语'),
+        ColumnName(name: '计算机'),
         ColumnName(name: '物理'),
         ColumnName(name: '化学'),
         ColumnName(name: '生物'),
