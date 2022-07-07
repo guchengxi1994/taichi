@@ -9,6 +9,16 @@ class BaseModel(Model):
     class Meta:
         database = database
 
+class Bugs(BaseModel):
+    bug_content = TextField(null=True)
+    bug_id = AutoField()
+    bug_summary = CharField(null=True)
+    create_at = DateTimeField(constraints=[SQL("DEFAULT CURRENT_TIMESTAMP")], null=True)
+    is_fixed = IntegerField(constraints=[SQL("DEFAULT 0")], null=True)
+
+    class Meta:
+        table_name = 'bugs'
+
 class FileTags(BaseModel):
     file_id = IntegerField(null=True)
     is_deleted = IntegerField(constraints=[SQL("DEFAULT 0")], null=True)

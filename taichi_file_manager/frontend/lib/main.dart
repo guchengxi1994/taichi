@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:taichi_file_manager/screens/main_screen.dart';
+import 'package:taichi_file_manager/routers.dart';
 
 import 'controllers/menu_controller.dart';
 import 'controllers/file_tree_controller.dart';
+import 'controllers/role_controller.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,10 +19,12 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => MenuController()),
         ChangeNotifierProvider(create: (_) => FileTreeController()..init()),
+        ChangeNotifierProvider(create: (_) => RoleController())
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: MainScreen(),
+        routes: Routers.routers,
+        initialRoute: Routers.splash,
       ),
     );
   }
