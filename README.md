@@ -34,7 +34,7 @@ taichi:
 | taichi_UI_widgets(taichi_core)     | [太极UI组件](./readme_ui.md)                                 | 0.0.7+2                        | ✔️      |
 | taichi_fit                         | [太极屏幕自适应](./readme_fit.md)                            | 0.0.0-dev-1                    | ❌      |
 | taichi_board_designer              | [UI转代码生成工具](./readme_taichi_board.md)  ;在线[demo](https://guchengxi1994.github.io/taichi_board/) | 0.0.9-pre                      | ❌      |
-| taichi_admin                       | [taichi admin templete](./taichi_admin/README.md);在线[demo](https://guchengxi1994.github.io/taichi/#/) | 1.0.0+1                        | ✔️      |
+| taichi_admin                       | [taichi admin templete](./taichi_admin/README.md);在线[demo](https://guchengxi1994.github.io/taichi/#/) | 2.0.0+1                        | ✔️      |
 | taichi China map(taichi_china_map) | [中国地图](./taichi_china_map/README.md)                     | 0.0.3                          | ✔️      |
 | taichi_file_manager                | [taichi文件管理页面](./taichi_file_manager/README.md) （想做个文档管理工具） | frontend:0.0.2<br>backend:None | ❌      |
 

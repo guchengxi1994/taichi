@@ -2,7 +2,7 @@ name: taichi_admin
 description: 一个flutter做的管理平台模板。 A flutter admin templete.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 2.0.0+1-pre
+version: 2.0.0+1
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
