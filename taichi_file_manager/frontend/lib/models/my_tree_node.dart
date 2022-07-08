@@ -177,6 +177,7 @@ class EntityFolder {
 
 FlattenObject flatten(EntityFolder entityFolder) {
   var names = _getPath(entityFolder);
+  names = names.toSet().toList();
   // print(names);
   var files = _getFiles(entityFolder);
   // names = _merge(names);
@@ -189,6 +190,7 @@ List<String> _getPath(EntityFolder entityFolder) {
   for (var i in entityFolder.children) {
     if (i.runtimeType == EntityFile) {
       names.add("${(i as EntityFile).fatherPath}/${i.name}");
+      names.add((i).fatherPath);
     } else {
       if (!(i as EntityFolder).hasChildren) {
         var s = "${i.fatherPath}/${i.name}";
@@ -226,6 +228,11 @@ class FlattenObject {
   List<EntityFile> files;
 
   FlattenObject({this.files = const [], this.path = const []});
+
+  @override
+  String toString() {
+    return path.toString() + files.map((e) => e.toJson()).toList().toString();
+  }
 }
 
 EntityFolder? toStructured(FlattenObject object,
@@ -250,15 +257,15 @@ EntityFolder? toStructured(FlattenObject object,
   int maxDepth = 0;
   for (var s in object.path) {
     if (!isAFile(s)) {
+      // print(s);
       var slist = s.split("/");
+      // print(s);
       // slist.remove("..");
       // slist.remove("root");
-      // print(slist.length);
 
       for (int i = 2; i < slist.length; i++) {
         EntityFolder _en;
         if (i == 2) {
-          // print("name:${slist[i]}");
           _en = EntityFolder(
               name: slist[i],
               depth: i - 1,
@@ -279,16 +286,14 @@ EntityFolder? toStructured(FlattenObject object,
               name: name, depth: i - 1, children: [], fatherPath: fatherPath);
           if (maxDepth <= _en.depth) maxDepth = _en.depth;
         }
+        // print("[dddd]:${_en.toJson()}");
         if (!allFolders.contains(_en)) allFolders.add(_en);
       }
     }
   }
-  // print(maxDepth);
-  // for (final i in object.files) {
-  //   if (i.depth > maxDepth) {
-  //     maxDepth = i.depth;
-  //   }
-  // }
+  // print(allFolders.length);
+
+  // _depthEntityMap[1] = [entityFolder];
 
   Map<int, List<EntityFolder>> _depthEntityMap = {};
   _depthEntityMap[0] = [entityFolder];
@@ -299,7 +304,7 @@ EntityFolder? toStructured(FlattenObject object,
     _depthEntityMap[i] = _res;
   }
 
-  // print("_depthEntityMap:$_depthEntityMap");
+  // print(_depthEntityMap);
 
   generateFromMap(_depthEntityMap, maxDepth, object.files);
   // print(jsonEncode(_depthEntityMap[0]![0].toJson()));
@@ -310,32 +315,31 @@ EntityFolder? toStructured(FlattenObject object,
 void generateFromMap(Map<int, List<EntityFolder>> depthEntityMap, int maxDepth,
     List<EntityFile> files) {
   // print(maxDepth);
+  for (int index = maxDepth; index >= 0; index--) {
+    if (index > 0) {
+      for (var j in depthEntityMap[index]!) {
+        for (var i in depthEntityMap[index - 1]!) {
+          // List<EntityFile> caches = [];
 
-  for (int index = maxDepth; index > 0; index--) {
-    for (var j in depthEntityMap[index]!) {
-      // print("j:${j.toJson()}");
-      for (var i in depthEntityMap[index - 1]!) {
-        // print("i:${i.toJson()}");
-        List<EntityFile> caches = [];
+          for (var f in files) {
+            if (f.fatherPath.endsWith("${j.fatherPath}/${j.name}")) {
+              j.addFile(f);
+              // caches.add(f);
+            }
+          }
 
+          if (j.fatherPath.endsWith(i.name)) {
+            i.children.add(j);
+          }
+        }
+      }
+    } else {
+      for (var j in depthEntityMap[index]!) {
         for (var f in files) {
-          if (f.fatherPath.endsWith(i.name)) {
-            i.addFile(f);
-            caches.add(f);
-          }
-
-          if (f.fatherPath.endsWith(j.name)) {
+          if (f.fatherPath.endsWith("${j.fatherPath}/${j.name}")) {
             j.addFile(f);
-            caches.add(f);
+            // caches.add(f);
           }
-        }
-
-        for (var f in caches) {
-          files.remove(f);
-        }
-
-        if (j.fatherPath.endsWith(i.name)) {
-          i.children.add(j);
         }
       }
     }
@@ -547,5 +551,61 @@ bool isAFile(String s) {
   } else {
     var _tmp = s.substring(3);
     return _tmp.contains(".");
+  }
+}
+
+extension FindObject on EntityFolder {
+  Object? findObject(int dep, String objectName) {
+    if (depth == dep && name == objectName) {
+      return this;
+    }
+
+    for (var i in children) {
+      if (i is EntityFile) {
+        if (i.depth == dep && i.name == objectName) {
+          return i;
+        } else {
+          continue;
+        }
+      }
+
+      if (i is EntityFolder) {
+        if (i.depth == dep && i.name == objectName) {
+          return i;
+        } else {
+          var r = (i).findObject(dep, objectName);
+          if (r != null) {
+            return r;
+          } else {
+            continue;
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+}
+
+extension FindParent on EntityFile {
+  EntityFolder? findParent(EntityFolder en) {
+    if (depth == en.depth + 1 && fatherPath.endsWith(en.name)) {
+      return en;
+    }
+
+    for (var i in en.children) {
+      if (i is EntityFile) {
+        continue;
+      } else {
+        var f = findParent(i as EntityFolder);
+        if (f != null) {
+          return f;
+        } else {
+          continue;
+        }
+      }
+    }
+
+    return null;
   }
 }

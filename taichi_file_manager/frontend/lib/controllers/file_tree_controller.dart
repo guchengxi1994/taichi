@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_init_to_null
 
+// import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:taichi_file_manager/api.dart';
@@ -7,41 +9,7 @@ import 'package:taichi_file_manager/models/file_response.dart';
 import 'package:taichi_file_manager/models/my_tree_node.dart';
 import 'package:taichi_file_manager/utils/dio_utils.dart';
 
-class FileTreeController extends ChangeNotifier {
-  String _currentTreeNodeName = "";
-  String get currentTreeNodeName => _currentTreeNodeName;
-
-  changeTreeNodeName(String s) {
-    _currentTreeNodeName = s;
-    notifyListeners();
-  }
-
-  late EntityFolder? _entity = null;
-
-  init() async {
-    DioUtils dioUtils = DioUtils();
-    Response? response = await dioUtils.get(Server + Apis["getFile"]!);
-
-    if (response != null) {
-      // debugPrint(response.toString());
-      FileResponse res = FileResponse.fromJson(response.data);
-      List<EntityFile> files =
-          res.savedFiles!.map((e) => EntityFile.fromSavedFile(e)).toList();
-      List<String> paths = [];
-      for (final i in files) {
-        paths.add('${i.fatherPath}/${i.name}');
-        paths.add(i.fatherPath);
-      }
-      // debugPrint("[files]:${files.length}");
-      FlattenObject flattenObject = FlattenObject(files: files, path: paths);
-      EntityFolder? f = toStructured(flattenObject);
-      // debugPrint("[f]:${f?.toJson()}");
-      _entity = f;
-      // debugPrint("[flatten]:${flatten(_entity!).path}");
-      _currentEntity = _entity;
-    }
-
-//     String fileStructureStr = """
+// const String testStr = """
 //         {
 //     "name": "root",
 //     "children": [
@@ -78,13 +46,44 @@ class FileTreeController extends ChangeNotifier {
 //     "depth": 0,
 //     "fatherPath": ""
 // }
-//       """;
 
-//     _entity = EntityFolder.fromJson(jsonDecode(fileStructureStr));
+// """;
 
-//     debugPrint("[flatten]:${flatten(_entity!).path}");
+class FileTreeController extends ChangeNotifier {
+  String _currentTreeNodeName = "";
+  String get currentTreeNodeName => _currentTreeNodeName;
 
-//     _currentEntity = _entity;
+  changeTreeNodeName(String s) {
+    _currentTreeNodeName = s;
+    notifyListeners();
+  }
+
+  late EntityFolder? _entity = null;
+
+  init() async {
+    DioUtils dioUtils = DioUtils();
+    Response? response = await dioUtils.get(Server + Apis["getFile"]!);
+
+    if (response != null) {
+      // debugPrint(response.toString());
+      FileResponse res = FileResponse.fromJson(response.data);
+      List<EntityFile> files =
+          res.savedFiles!.map((e) => EntityFile.fromSavedFile(e)).toList();
+      List<String> paths = [];
+      for (final i in files) {
+        paths.add('${i.fatherPath}/${i.name}');
+        paths.add(i.fatherPath);
+      }
+
+      FlattenObject flattenObject = FlattenObject(
+          files: files.reversed.toList(), path: paths.reversed.toList());
+
+      EntityFolder? f = toStructured(flattenObject);
+      _entity = f;
+      _currentEntity = _entity;
+      _currentTreeNodeName = _entity?.name ?? "";
+    }
+
     notifyListeners();
   }
 
@@ -93,10 +92,26 @@ class FileTreeController extends ChangeNotifier {
   late EntityFolder? _currentEntity = null;
 
   List<Object>? get currentFolderContent => _currentEntity?.children;
-  int? get depth => _currentEntity?.depth;
+  int? get depth => (_currentEntity?.depth ?? 0) + 1;
+  String? get currentFatherPath => _getCurrentFatherPath();
+
+  String? _getCurrentFatherPath() {
+    if (depth == 1) {
+      return "../root";
+    } else {
+      return "${_currentEntity?.fatherPath ?? ""}/${_currentEntity?.name ?? ""}";
+    }
+  }
 
   changeCurrentEntity(EntityFolder e) {
     _currentEntity = e;
+    _currentTreeNodeName = e.name;
+    notifyListeners();
+  }
+
+  changeTree(EntityFolder e) {
+    // debugPrint("[entityfolder]:${e.toJson()}");
+    _entity = e;
     notifyListeners();
   }
 }
