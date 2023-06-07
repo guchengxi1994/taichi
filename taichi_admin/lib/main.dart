@@ -11,7 +11,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taichi_accessible_widget/lib.dart';
-import 'package:taichi_admin/controllers/menu_controller.dart';
+import 'package:taichi_admin/controllers/menu_controller.dart' as menu;
 import 'package:taichi_admin/routers.dart';
 import 'controllers/main_page_controller.dart';
 
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => MenuController(),
+          create: (_) => menu.MenuController(),
         ),
         ChangeNotifierProvider(
           create: (_) => MainPageController(),

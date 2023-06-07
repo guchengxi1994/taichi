@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taichi_accessible_widget/lib.dart';
 import 'package:taichi_admin/app_style.dart';
-import 'package:taichi_admin/controllers/menu_controller.dart';
+import 'package:taichi_admin/controllers/menu_controller.dart' as menu;
 import 'package:taichi_admin/utils/common.dart';
 import 'package:taichi_admin/widgets/future_builder.dart';
 import 'package:taichi_china_map/lib.dart' deferred as chinamap;
@@ -60,7 +60,7 @@ class _DashboardLeftPartState extends State<DashboardLeftPart> {
             child: FutureLoaderWidget(
                 builder: (context) {
                   if (widget.type == ScreenType.desktop) {
-                    if (context.watch<MenuController>().isExpanded) {
+                    if (context.watch<menu.MenuController>().isExpanded) {
                       return Padding(
                         padding: const EdgeInsets.all(20),
                         child: chinamap.ChinaMap(

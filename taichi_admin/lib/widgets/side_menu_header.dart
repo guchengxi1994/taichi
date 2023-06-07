@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:taichi/taichi.dart' show TaichiGraph;
 import 'package:taichi_admin/app_style.dart';
 
-import '../controllers/menu_controller.dart';
+import '../controllers/menu_controller.dart' as menu;
 import '../utils/common.dart';
 import 'dart:math' as math;
 
@@ -34,7 +34,7 @@ class SideMenuHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (context.watch<MenuController>().isExpanded) {
+    if (context.watch<menu.MenuController>().isExpanded) {
       return SizedBox(
         height: AppStyle.headerHeight,
         child: DrawerHeader(
@@ -48,7 +48,7 @@ class SideMenuHeader extends StatelessWidget {
                 left: 0,
                 child: InkWell(
                   onTap: () {
-                    context.read<MenuController>().changeExpansion(false);
+                    context.read<menu.MenuController>().changeExpansion(false);
                   },
                   child: Transform.rotate(
                     angle: math.pi / 4,
@@ -71,7 +71,7 @@ class SideMenuHeader extends StatelessWidget {
         alignment: Alignment.topCenter,
         child: InkWell(
           onTap: () {
-            context.read<MenuController>().changeExpansion(true);
+            context.read<menu.MenuController>().changeExpansion(true);
           },
           child: Transform.rotate(
             angle: math.pi / 2,

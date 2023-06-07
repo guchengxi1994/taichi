@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taichi_admin/controllers/main_page_controller.dart';
-import 'package:taichi_admin/controllers/menu_controller.dart';
+import 'package:taichi_admin/controllers/menu_controller.dart' as menu;
 
 import '../app_style.dart';
 import '../utils/common.dart';
@@ -14,7 +14,7 @@ class SideMenuBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (context.watch<MenuController>().isExpanded ||
+    if (context.watch<menu.MenuController>().isExpanded ||
         type != ScreenType.desktop) {
       return Column(
         children: const [

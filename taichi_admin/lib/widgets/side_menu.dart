@@ -12,7 +12,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taichi_admin/app_style.dart';
-import 'package:taichi_admin/controllers/menu_controller.dart';
+import 'package:taichi_admin/controllers/menu_controller.dart' as menu;
 import 'package:taichi_admin/widgets/future_builder.dart';
 import 'side_menu_header.dart' deferred as sidemenuheader;
 import 'side_menu_body.dart' deferred as sidemenubody;
@@ -58,7 +58,7 @@ class _SideMenuState extends State<SideMenu> {
   }
 
   Widget buildMenu() {
-    if (context.watch<MenuController>().isExpanded) {
+    if (context.watch<menu.MenuController>().isExpanded) {
       return SizedBox(
         // padding: const EdgeInsets.all(10),
         width: AppStyle.sidemenuWidth,

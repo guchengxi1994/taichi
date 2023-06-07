@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taichi_admin/app_style.dart';
 import 'package:taichi_admin/controllers/main_page_controller.dart';
-import 'package:taichi_admin/controllers/menu_controller.dart';
+import 'package:taichi_admin/controllers/menu_controller.dart' as menu;
 import 'package:taichi_admin/screens/form_screens/first_screen.dart'
     deferred as templete;
 import 'package:taichi_admin/screens/reserved_screen.dart' deferred as reserved;
@@ -78,7 +78,7 @@ class _MainScreenState extends State<MainScreen> {
                       type: ScreenTypeUtils.getScreenType(context),
                     )),
           ),
-          key: context.read<MenuController>().scaffoldKey,
+          key: context.read<menu.MenuController>().scaffoldKey,
           drawer: FutureLoaderWidget(
             loadWidgetFuture: loadSidemenuLib,
             builder: (context) =>
